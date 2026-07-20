@@ -1,0 +1,77 @@
+yna.co.kr,연합뉴스
+yonhapnews.co.kr,연합뉴스
+yonhap.co.kr,연합뉴스
+chosun.com,조선일보
+biz.chosun.com,조선비즈
+donga.com,동아일보
+joongang.co.kr,중앙일보
+hani.co.kr,한겨레
+khan.co.kr,경향신문
+mk.co.kr,매일경제
+hankyung.com,한국경제
+sedaily.com,서울경제
+edaily.co.kr,이데일리
+news1.kr,뉴스1
+newsis.com,뉴시스
+ytn.co.kr,YTN
+mbn.co.kr,MBN
+sbs.co.kr,SBS
+imbc.com,MBC
+kbs.co.kr,KBS
+news.kbs.co.kr,KBS
+hankookilbo.com,한국일보
+seoul.co.kr,서울신문
+fnnews.com,파이낸셜뉴스
+asiae.co.kr,아시아경제
+etnews.com,전자신문
+zdnet.co.kr,지디넷코리아
+dt.co.kr,디지털타임스
+moneys.co.kr,머니S
+newsway.co.kr,뉴스웨이
+heraldcorp.com,헤럴드경제
+news.mt.co.kr,머니투데이
+ekn.kr,에너지경제
+metroseoul.co.kr,메트로신문
+kmib.co.kr,국민일보
+segye.com,세계일보
+munhwa.com,문화일보
+dailian.co.kr,데일리안
+kukinews.com,쿠키뉴스
+jtbc.co.kr,JTBC
+tvchosun.com,TV조선
+channela.com,채널A
+itworld.co.kr,ITWorld
+bloter.net,블로터
+ddaily.co.kr,디지털데일리
+aitimes.com,AI타임스
+epnc.co.kr,이피앤씨
+ciokorea.com,CIO Korea
+itbiznews.com,IT비즈뉴스
+boannews.com,보안뉴스
+electimes.com,전기신문
+kwnews.co.kr,강원일보
+kado.net,강원도민일보
+jnilbo.com,전남일보
+kyeongin.com,경인일보
+idaegu.co.kr,대구신문
+busan.com,부산일보
+kookje.co.kr,국제신문
+reuters.com,Reuters
+bloomberg.com,Bloomberg
+techcrunch.com,TechCrunch
+theverge.com,The Verge
+datacenterdynamics.com,Data Center Dynamics
+cnbc.com,CNBC
+wsj.com,WSJ
+ft.com,Financial Times
+theregister.com,The Register
+venturebeat.com,VentureBeat
+nytimes.com,The New York Times
+apnews.com,AP
+cnn.com,CNN
+bbc.com,BBC
+axios.com,Axios
+businessinsider.com,Business Insider
+engadget.com,Engadget
+arstechnica.com,Ars Technica
+semafor.com,Semafor
