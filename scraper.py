@@ -19,6 +19,8 @@ import os
 import re
 import sys
 import time
+from dotenv import load_dotenv
+load_dotenv()
 from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html import escape, unescape
