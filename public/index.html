@@ -381,7 +381,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 15:01 업데이트
+      2026년 07월 23일 · 15:10 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -681,6 +681,9 @@
       pagerHtml += `<span class="pager-info">${st.page} / ${totalPages} 페이지 (총 ${total}건)</span>`;
       pagerHtml += `<button type="button" ${st.page >= totalPages ? "disabled" : ""} onclick="goToPage('${panelId}', ${st.page + 1})">›</button>`;
       pagerEl.innerHTML = pagerHtml;
+    }
+
+    function goToPage(panelId, page) {
 
     function goToPage(panelId, page) {
       panelState[panelId].page = page;
