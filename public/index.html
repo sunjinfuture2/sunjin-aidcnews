@@ -381,7 +381,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 15:12 업데이트
+      2026년 07월 23일 · 15:16 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -645,7 +645,7 @@
       const tag = item[tagKey] || "";
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(item.summary)}</p>` : "";
       const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(tag)}</span>` +
-        `<button type="button" class="ai-link" onclick="aiSummarizeUrl('${escapeHtml(item.link)}')">AI 요약하기</button></p>`;
+        `<button type="button" class="ai-link" data-title="${escapeHtml(item.title)}" onclick="aiSummarizeUrl('${escapeHtml(item.link)}', this.dataset.title)">AI 요약하기</button></p>`;
       return `<div class="org-group" data-tag="${escapeHtml(tag)}">` +
         `<div class="og-org"><span class="press">${escapeHtml(item.press || "")}</span></div>` +
         `<div class="og-items"><div class="item">` +
@@ -706,7 +706,7 @@
     function keywordItemToHtml(item) {
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(item.summary)}</p>` : "";
       const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(item._tagValue)}</span>` +
-        `<button type="button" class="ai-link" onclick="aiSummarizeUrl('${escapeHtml(item.link)}')">AI 요약하기</button></p>`;
+        `<button type="button" class="ai-link" data-title="${escapeHtml(item.title)}" onclick="aiSummarizeUrl('${escapeHtml(item.link)}', this.dataset.title)">AI 요약하기</button></p>`;
       return `<div class="org-group">` +
         `<div class="og-org"><span class="press cat-badge">${escapeHtml(item._category)}</span></div>` +
         `<div class="og-items"><div class="item">` +
