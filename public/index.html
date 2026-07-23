@@ -245,7 +245,9 @@
     position: fixed; right: 28px; bottom: 88px; z-index: 1000;
     width: 380px; max-width: calc(100vw - 56px); height: 500px;
     background: var(--paper); border: 1px solid var(--line);
-    box-shadow: 0 10px 34px rgba(0,0,0,0.18); display: none;
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+    display: none;
     flex-direction: column; overflow: hidden;
   }
   #aiChatPanel.open, #recentPanel.open { display: flex; }
@@ -267,24 +269,51 @@
   .r10-date { font-size: 11.5px; color: var(--ink-mute); }
   .r10-empty { padding: 20px 14px; font-size: 13px; color: var(--ink-mute); }
   .ai-chat-header {
-    background: var(--ink); color: #fff; padding: 14px 18px;
-    font-size: 13px; font-weight: 600; letter-spacing: 0.4px;
+    background: var(--ink); color: #fff; padding: 16px 20px;
+    font-size: 13.5px; font-weight: 600; letter-spacing: 0.3px;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .ai-chat-header button { background: none; border: none; color: #fff; font-size: 15px; cursor: pointer; }
-  #aiChatMessages { flex: 1; overflow-y: auto; padding: 14px; font-size: 13.5px; }
-  .ai-msg { margin-bottom: 10px; line-height: 1.6; white-space: pre-wrap; word-break: break-all; }
-  .ai-msg.user { text-align: right; }
-  .ai-msg.user .bubble { display: inline-block; background: var(--ink); color: #fff; padding: 8px 12px; max-width: 85%; text-align: left; }
-  .ai-msg.bot .bubble { display: inline-block; background: #f1f0ea; color: var(--ink); padding: 8px 12px; max-width: 85%; }
-  .ai-chat-input { border-top: 1px solid var(--line); padding: 10px; display: flex; gap: 6px; align-items: center; }
-  .ai-chat-input input[type="text"] {
-    flex: 1; border: 1px solid var(--line); padding: 9px 11px;
-    font-family: inherit; font-size: 13px; min-width: 0; background: var(--paper); color: var(--ink);
+  .ai-chat-header button {
+    background: rgba(255,255,255,0.12); border: none; color: #fff; font-size: 13px;
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s ease;
   }
+  .ai-chat-header button:hover { background: rgba(255,255,255,0.24); }
+  #aiChatMessages { flex: 1; overflow-y: auto; padding: 16px; font-size: 13.5px; background: var(--paper); }
+  .ai-msg { margin-bottom: 14px; line-height: 1.65; white-space: pre-wrap; word-break: break-all; }
+  .ai-msg.user { text-align: right; }
+  .ai-msg.user .bubble {
+    display: inline-block; background: var(--ink); color: #fff;
+    padding: 10px 14px; max-width: 85%; text-align: left;
+    border-radius: 16px 16px 4px 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .ai-msg.bot .bubble {
+    display: inline-block; background: #f1f0ea; color: var(--ink);
+    padding: 10px 14px; max-width: 85%;
+    border-radius: 16px 16px 16px 4px;
+  }
+  .ai-chat-input {
+    border-top: 1px solid var(--line); padding: 12px; display: flex; gap: 8px; align-items: center;
+    background: var(--paper);
+  }
+  .ai-chat-input input[type="text"] {
+    flex: 1; border: 1px solid var(--line); border-radius: 999px; padding: 9px 15px;
+    font-family: inherit; font-size: 13px; min-width: 0; background: #fff; color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+  .ai-chat-input input[type="text"]:focus { outline: none; border-color: var(--accent); }
   .ai-chat-input button {
-    background: var(--ink); color: #fff; border: none; padding: 9px 13px;
-    font-family: inherit; font-size: 13px; cursor: pointer; white-space: nowrap;
+    background: var(--accent); color: #fff; border: none; border-radius: 999px; padding: 9px 16px;
+    font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .ai-chat-input button:hover { background: var(--accent-hover); }
+  .ai-chat-input label {
+    background: #f1f0ea; color: var(--ink-soft); padding: 9px 13px; border-radius: 999px;
+    font-size: 13px; cursor: pointer; white-space: nowrap; transition: background 0.15s ease;
+  .ai-chat-input label:hover { background: #e4e2db; }
   }
   .ai-chat-input label {
     background: #f1f0ea; color: var(--ink-soft); padding: 9px 11px;
@@ -381,7 +410,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 15:27 업데이트
+      2026년 07월 23일 · 15:35 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
