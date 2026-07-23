@@ -381,7 +381,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 15:23 업데이트
+      2026년 07월 23일 · 15:27 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -677,9 +677,11 @@
       listEl.innerHTML = pageItems.map((it) => itemToHtml(it, st.tagKey)).join("");
 
       let pagerHtml = "";
+      pagerHtml += `<button type="button" ${st.page <= 1 ? "disabled" : ""} onclick="goToPage('${panelId}', 1)">«</button>`;
       pagerHtml += `<button type="button" ${st.page <= 1 ? "disabled" : ""} onclick="goToPage('${panelId}', ${st.page - 1})">‹</button>`;
       pagerHtml += `<span class="pager-info">${st.page} / ${totalPages} 페이지 (총 ${total}건)</span>`;
       pagerHtml += `<button type="button" ${st.page >= totalPages ? "disabled" : ""} onclick="goToPage('${panelId}', ${st.page + 1})">›</button>`;
+      pagerHtml += `<button type="button" ${st.page >= totalPages ? "disabled" : ""} onclick="goToPage('${panelId}', ${totalPages})">»</button>`;
       pagerEl.innerHTML = pagerHtml;
     }
 
