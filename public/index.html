@@ -102,6 +102,11 @@
   }
   .kw-sidebar-clear:hover { text-decoration: underline; }
   .kw-result-desc { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+  .kw-inline-link {
+    text-decoration: underline; text-decoration-color: var(--accent);
+    text-underline-offset: 2px; cursor: pointer; font-weight: 600;
+  }
+  .kw-inline-link:hover { color: var(--accent); }
   .cat-badge {
     display: inline-block; border: 1px solid var(--line-strong); border-radius: 6px;
     padding: 3px 9px; font-size: 12px; color: var(--ink-soft);
@@ -412,7 +417,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 23일 · 16:08 업데이트
+      2026년 07월 23일 · 16:33 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -664,6 +669,30 @@
       return (s || "").replace(/[&<>"']/g, (c) => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
       }[c]));
+    }
+
+    function escapeRegex(s) {
+      return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    /** OVERVIEW 문단에서, 오늘 실제로 수집된 지역명/기업명이 나오면 클릭 가능한 링크로 감싼다. */
+    function linkifyOverviewText(text) {
+      const names = Array.from(new Set([
+        ...panelState.local.all.map((it) => it.region).filter(Boolean),
+        ...panelState.listed.all.map((it) => it.company).filter(Boolean),
+        ...panelState.overseas.all.map((it) => it.company).filter(Boolean),
+      ])).sort((a, b) => b.length - a.length);
+
+      if (names.length === 0) return escapeHtml(text);
+
+      const pattern = new RegExp("(" + names.map(escapeRegex).join("|") + ")", "g");
+      const parts = text.split(pattern);
+      return parts.map((part, i) => {
+        if (i % 2 === 1) {
+          return `<span class="kw-inline-link" onclick="showKeywordResults('${escapeHtml(part)}')">${escapeHtml(part)}</span>`;
+        }
+        return escapeHtml(part);
+      }).join("");
     }
 
     function formatDateLabel(pubDateStr) {
@@ -933,7 +962,7 @@
         panelState.overseas.all = data.overseas || [];
 
         if (data.overview && data.overview.trim()) {
-          document.getElementById("overviewText").textContent = data.overview;
+          document.getElementById("overviewText").innerHTML = linkifyOverviewText(data.overview);
         }
 
         if (data.updated_at) {
