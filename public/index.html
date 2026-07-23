@@ -81,7 +81,7 @@
   }
   .tab-btn.active { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
   .kw-active-wrap {
-    position: absolute; right: 384px; top: 50%; transform: translateY(-50%);
+    position: absolute; right: 0; top: 100%; margin-top: 8px;
     display: flex; align-items: center;
   }
   .kw-round-btn {
@@ -92,8 +92,8 @@
   }
   .kw-round-btn .kw-close-x {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 13px; height: 13px; border-radius: 50%; background: rgba(255,255,255,0.3);
-    font-size: 10px; line-height: 1; cursor: pointer;
+    width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.3);
+    cursor: pointer; flex-shrink: 0;
   }
   .kw-round-btn .kw-close-x:hover { background: rgba(255,255,255,0.55); }
   .kw-sidebar-clear {
@@ -119,7 +119,7 @@
   /* ---------- 표 ---------- */
   .live-search-wrap { display: flex; gap: 6px; }
   .live-search-input {
-    width: 300px; max-width: 40vw; padding: 7px 12px; font-size: 13px;
+    width: 150px; max-width: 30vw; padding: 7px 12px; font-size: 13px;
     border: 1px solid var(--line-strong); border-radius: 6px;
     font-family: inherit; color: var(--ink);
   }
@@ -379,7 +379,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 10:47 업데이트
+      2026년 07월 23일 · 11:12 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -404,7 +404,7 @@
         <button class="tab-btn" data-tab="local" onclick="showTab('local')">지자체</button>
         <button class="tab-btn" data-tab="listed" onclick="showTab('listed')">국내 기업</button>
         <button class="tab-btn" data-tab="overseas" onclick="showTab('overseas')">해외 기업</button>
-        <span class="kw-active-wrap" id="keywordActiveWrap" style="display:none"><button type="button" class="kw-round-btn" onclick="showTab('keyword')"><span id="keywordActiveLabel">키워드</span><span class="kw-close-x" onclick="event.stopPropagation(); clearKeywordFilter();">×</span></button></span>
+        <span class="kw-active-wrap" id="keywordActiveWrap" style="display:none"><button type="button" class="kw-round-btn" onclick="showTab('keyword')"><span id="keywordActiveLabel">키워드</span><span class="kw-close-x" onclick="event.stopPropagation(); clearKeywordFilter();"><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7M7 1L1 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></span></button></span>
         <span class="live-search-wrap">
           <input type="text" class="live-search-input" id="liveSearchShared"
                  placeholder="제목·내용 검색" onkeydown="if(event.key==='Enter') onLiveSearchShared()">
