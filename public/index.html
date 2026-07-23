@@ -379,7 +379,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 12:49 업데이트
+      2026년 07월 23일 · 12:54 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -790,17 +790,32 @@
 
     function updateKeywordSidebar() {
       const counts = {};
+      const allItems = allCategoryItems(); // 전체 기사 목록 (지자체, 국내기업, 해외기업 통합)
+      
+      // 1. 부여된 태그들(지역명, 기업명)에서 고유 키워드 후보를 먼저 뽑아냅니다.
+      const uniqueKeywords = new Set();
       panelState.local.all.forEach((it) => {
-        if (it.region) counts[it.region] = (counts[it.region] || 0) + 1;
+        if (it.region) uniqueKeywords.add(it.region);
       });
       panelState.listed.all.forEach((it) => {
-        if (it.company) counts[it.company] = (counts[it.company] || 0) + 1;
+        if (it.company) uniqueKeywords.add(it.company);
       });
       panelState.overseas.all.forEach((it) => {
-        if (it.company) counts[it.company] = (counts[it.company] || 0) + 1;
+        if (it.company) uniqueKeywords.add(it.company);
       });
+
+      // 2. 키워드를 클릭했을 때와 완전히 동일한 조건(제목/요약 포함 여부)으로 실제 매칭 개수를 카운트합니다.
+      uniqueKeywords.forEach((kw) => {
+        const q = kw.toLowerCase();
+        const matchedCount = allItems.filter((it) =>
+          (it.title || "").toLowerCase().includes(q) || (it.summary || "").toLowerCase().includes(q)
+        ).length;
+        counts[kw] = matchedCount;
+      });
+      
       liveKeywordCounts = counts;
 
+      // 건수가 많은 순으로 정렬하여 상위 6개 노출
       const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
       const kwListEl = document.getElementById("keyword-list");
       if (sorted.length === 0) {
