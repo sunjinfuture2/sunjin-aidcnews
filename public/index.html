@@ -289,6 +289,8 @@
     border-radius: 16px 16px 4px 16px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   }
+  .ai-msg-link { color: inherit; text-decoration: none; }
+  .ai-msg-link:hover { text-decoration: underline; }
   .ai-msg.bot .bubble {
     display: inline-block; background: #f1f0ea; color: var(--ink);
     padding: 10px 14px; max-width: 85%;
@@ -410,7 +412,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 15:43 업데이트
+      2026년 07월 23일 · 15:46 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -560,8 +562,7 @@
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         a.textContent = text;
-        a.style.color = 'inherit';
-        a.style.textDecoration = 'underline';
+        a.className = 'ai-msg-link';
         bubble.appendChild(a);
       } else {
         bubble.textContent = text;
