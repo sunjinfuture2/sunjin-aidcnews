@@ -411,8 +411,8 @@
   </div>
 
   <div class="overview">
-    <div class="meta-right">
-      2026년 07월 23일 · 15:57 업데이트
+    <div class="meta-right" id="metaUpdatedAt">
+      2026년 07월 23일 · 16:08 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -934,6 +934,18 @@
 
         if (data.overview && data.overview.trim()) {
           document.getElementById("overviewText").textContent = data.overview;
+        }
+
+        if (data.updated_at) {
+          const d = new Date(data.updated_at);
+          const kst = new Date(d.getTime() + 9 * 60 * 60000);
+          const y = kst.getUTCFullYear();
+          const mo = kst.getUTCMonth() + 1;
+          const da = kst.getUTCDate();
+          const hh = String(kst.getUTCHours()).padStart(2, "0");
+          const mi = String(kst.getUTCMinutes()).padStart(2, "0");
+          document.getElementById("metaUpdatedAt").textContent =
+            `${y}년 ${mo}월 ${da}일 · ${hh}:${mi} 업데이트`;
         }
 
         ["local", "listed", "overseas"].forEach((panelId) => {
