@@ -381,7 +381,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 14:15 업데이트
+      2026년 07월 23일 · 14:30 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -406,7 +406,6 @@
         <button class="tab-btn" data-tab="local" onclick="showTab('local')">지자체</button>
         <button class="tab-btn" data-tab="listed" onclick="showTab('listed')">국내 기업</button>
         <button class="tab-btn" data-tab="overseas" onclick="showTab('overseas')">해외 기업</button>
-        <span class="kw-active-wrap" id="keywordActiveWrap" style="display:none"><button type="button" class="kw-round-btn" onclick="showTab('keyword')"><span id="keywordActiveLabel"></span><span class="kw-close-x" onclick="event.stopPropagation(); clearKeywordFilter();"><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7M7 1L1 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></span></button></span>
         <span class="live-search-wrap">
           <svg class="live-search-icon" onclick="onLiveSearchShared()" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.4"/>
@@ -737,54 +736,11 @@
 
     function resetFilterState() {
       activeKeywordTerm = null;
-      document.getElementById("keywordActiveWrap").style.display = "none";
       document.getElementById("kwSidebarClear").style.display = "none";
       document.getElementById("liveSearchShared").value = "";
       document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
     }
 
-    function showKeywordResults(kw, btn) {
-      if (activeKeywordTerm === kw) { clearKeywordFilter(); return; } // 같은 키워드 다시 클릭 -> 해제
-
-      activeKeywordTerm = kw;
-      document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-
-      // 검색과 동일한 필터링 기준 적용 (제목이나 요약에 키워드가 포함된 기사 모두 추출)
-      const q = kw.toLowerCase();
-      const matched = allCategoryItems().filter((it) =>
-        (it.title || "").toLowerCase().includes(q) || (it.summary || "").toLowerCase().includes(q)
-      );
-
-      document.getElementById("keywordActiveLabel").textContent = kw;
-      
-      // [수정된 부분] 키워드 클릭 시 주황색 버튼은 띄우지 않음 (검색 시에만 노출)
-      document.getElementById("keywordActiveWrap").style.display = "none"; 
-      document.getElementById("kwSidebarClear").style.display = "block";
-      
-      renderKeywordResults(matched, `'${kw}' 관련 기사 ${matched.length}건 (지자체·국내기업·해외기업 통합)`);
-      showTab("keyword");
-    }
-
-    function runGlobalSearch(term) {
-      const q = term.trim().toLowerCase();
-      if (!q) {
-        resetFilterState();
-        if (currentTab === "keyword") showTab("gov");
-        return;
-      }
-      activeKeywordTerm = null;
-      document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
-      document.getElementById("kwSidebarClear").style.display = "none"; // 검색은 사이드바 '필터 해제' 대상 아님
-
-      const matched = allCategoryItems().filter((it) =>
-        (it.title || "").toLowerCase().includes(q) || (it.summary || "").toLowerCase().includes(q)
-      );
-      document.getElementById("keywordActiveLabel").textContent = "검색";
-      document.getElementById("keywordActiveWrap").style.display = "flex";
-      renderKeywordResults(matched, `'${term}' 검색 결과 ${matched.length}건 (지자체·국내기업·해외기업 통합)`);
-      showTab("keyword");
-    }
 
     function clearKeywordFilter() {
       const wasKeyword = currentTab === "keyword";
