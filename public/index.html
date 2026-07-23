@@ -381,7 +381,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 14:30 업데이트
+      2026년 07월 23일 · 14:35 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -739,6 +739,45 @@
       document.getElementById("kwSidebarClear").style.display = "none";
       document.getElementById("liveSearchShared").value = "";
       document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
+    }
+
+    function showKeywordResults(kw, btn) {
+      if (activeKeywordTerm === kw) { clearKeywordFilter(); return; } // 같은 키워드 다시 클릭 -> 해제
+
+      activeKeywordTerm = kw;
+      document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      // 검색과 동일한 필터링 기준 적용 (제목이나 요약에 키워드가 포함된 기사 모두 추출)
+      const q = kw.toLowerCase();
+      const matched = allCategoryItems().filter((it) =>
+        (it.title || "").toLowerCase().includes(q) || (it.summary || "").toLowerCase().includes(q)
+      );
+
+      // 사이드바 '필터 해제 ×' 버튼 활성화
+      document.getElementById("kwSidebarClear").style.display = "block";
+      
+      renderKeywordResults(matched, `'${kw}' 관련 기사 ${matched.length}건 (지자체·국내기업·해외기업 통합)`);
+      showTab("keyword");
+    }
+
+    function runGlobalSearch(term) {
+      const q = term.trim().toLowerCase();
+      if (!q) {
+        resetFilterState();
+        if (currentTab === "keyword") showTab("gov");
+        return;
+      }
+      activeKeywordTerm = null;
+      document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
+      document.getElementById("kwSidebarClear").style.display = "none"; // 검색은 사이드바 '필터 해제' 대상 아님
+
+      const matched = allCategoryItems().filter((it) =>
+        (it.title || "").toLowerCase().includes(q) || (it.summary || "").toLowerCase().includes(q)
+      );
+      
+      renderKeywordResults(matched, `'${term}' 검색 결과 ${matched.length}건 (지자체·국내기업·해외기업 통합)`);
+      showTab("keyword");
     }
 
 
