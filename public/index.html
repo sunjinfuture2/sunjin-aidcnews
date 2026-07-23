@@ -410,7 +410,7 @@
 
   <div class="overview">
     <div class="meta-right">
-      2026년 07월 23일 · 15:40 업데이트
+      2026년 07월 23일 · 15:43 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -548,13 +548,24 @@
       document.getElementById('recentPanel').classList.toggle('open');
     }
 
-    function aiAddMsg(role, text) {
+    function aiAddMsg(role, text, linkUrl) {
       const box = document.getElementById('aiChatMessages');
       const div = document.createElement('div');
       div.className = 'ai-msg ' + role;
       const bubble = document.createElement('span');
       bubble.className = 'bubble';
-      bubble.textContent = text;
+      if (linkUrl) {
+        const a = document.createElement('a');
+        a.href = linkUrl;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = text;
+        a.style.color = 'inherit';
+        a.style.textDecoration = 'underline';
+        bubble.appendChild(a);
+      } else {
+        bubble.textContent = text;
+      }
       div.appendChild(bubble);
       box.appendChild(div);
       box.scrollTop = box.scrollHeight;
@@ -584,7 +595,7 @@
     function aiSummarizeUrl(url, title) {
       const panel = document.getElementById('aiChatPanel');
       if (!panel.classList.contains('open')) panel.classList.add('open');
-      aiAddMsg('user', title || url);
+      aiAddMsg('user', title || url, url);
       const loading = aiAddMsg('bot', '기사를 읽고 요약하는 중...');
       aiCallWorker({ url: url }, loading);
     }
