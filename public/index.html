@@ -417,7 +417,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 23일 · 16:44 업데이트
+      2026년 07월 23일 · 16:52 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -675,15 +675,13 @@
       return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
-    var allKnownNames = []; // Worker가 내려준 전체 지역명/기업명 목록 (loadLiveNews에서 채움)
-
-    /** OVERVIEW 문단에서, "검색했을 때 실제로 기사가 걸리는 이름"이면 클릭 가능한 링크로 감싼다. */
+    /** OVERVIEW 문단에서, 오늘 실제로 수집된 지역명/기업명이 나오면 클릭 가능한 링크로 감싼다. */
     function linkifyOverviewText(text) {
-      const allItems = allCategoryItems();
-      const names = allKnownNames.filter((name) => {
-        const q = name.toLowerCase();
-        return text.includes(name) && allItems.some((it) => matchesText(it, q));
-      }).sort((a, b) => b.length - a.length);
+      const names = Array.from(new Set([
+        ...panelState.local.all.map((it) => it.region).filter(Boolean),
+        ...panelState.listed.all.map((it) => it.company).filter(Boolean),
+        ...panelState.overseas.all.map((it) => it.company).filter(Boolean),
+      ])).sort((a, b) => b.length - a.length);
 
       if (names.length === 0) return escapeHtml(text);
 
@@ -962,11 +960,6 @@
         panelState.local.all = data.region || [];
         panelState.listed.all = data.company || [];
         panelState.overseas.all = data.overseas || [];
-        allKnownNames = [
-          ...(data.all_region_names || []),
-          ...(data.all_company_names || []),
-          ...(data.all_overseas_names || []),
-        ];
 
         if (data.overview && data.overview.trim()) {
           document.getElementById("overviewText").innerHTML = linkifyOverviewText(data.overview);
