@@ -139,7 +139,7 @@
   .report-close-btn:hover { border-color: var(--accent); color: var(--accent); }
 
   .report-doc { padding: 36px 44px 48px; }
-  .report-doc .r-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 8px; }
+  .report-doc .r-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 8px; color: #ff6900; }
   .report-doc .r-subtitle { font-size: 15px; color: var(--ink-soft); margin: 0 0 6px; }
   .report-doc .r-date { font-size: 12.5px; color: var(--ink-mute); margin: 0 0 24px; }
   .report-doc .r-rule { border-bottom: 1px solid var(--line-strong); margin-bottom: 24px; }
@@ -470,7 +470,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 10:05 업데이트
+      2026년 07월 24일 · 10:16 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -579,7 +579,7 @@
   <div id="reportModal" style="display:none">
     <div class="report-modal-inner">
       <div class="report-modal-topbar">
-        <button type="button" class="report-download-btn" onclick="window.print()">다운로드</button>
+        <button type="button" class="report-download-btn" onclick="downloadReportPDF()">다운로드</button>
         <button type="button" class="report-close-btn" onclick="closeReportModal()">닫기 ✕</button>
       </div>
       <div class="report-doc" id="reportDoc">
@@ -605,6 +605,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const AI_WORKER_URL = "https://ai-summary-claude.sunjinfuture2.workers.dev/";
     if (window.pdfjsLib) {
@@ -1038,11 +1039,94 @@
         : "";
 
       document.getElementById("reportDoc").innerHTML =
-        `<h1 class="r-title">${escapeHtml(report.title)}</h1>` +
+        `<h1 class="r-title">AI Data Center 일일 동향</h1>` +
         `<p class="r-subtitle">${escapeHtml(report.subtitle || "")}</p>` +
         `<p class="r-date">${escapeHtml(report.date)} 동향 · ㈜선진엔지니어링 종합건축사사무소</p>` +
         `<div class="r-rule"></div>` +
         paraHtml + refsHtml;
+    }
+
+    let _koreanFontReady = false;
+    async function ensureKoreanFont(pdf) {
+      if (_koreanFontReady) return;
+      const fontUrl = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/public/static/Pretendard-Regular.ttf";
+      const resp = await fetch(fontUrl);
+      if (!resp.ok) throw new Error("한글 폰트를 불러오지 못했습니다");
+      const buffer = await resp.arrayBuffer();
+      const bytes = new Uint8Array(buffer);
+      let binary = "";
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      const base64 = btoa(binary);
+      pdf.addFileToVFS("Pretendard-Regular.ttf", base64);
+      pdf.addFont("Pretendard-Regular.ttf", "Pretendard", "normal");
+      _koreanFontReady = true;
+    }
+
+    function hexToRgb(hex) {
+      const n = parseInt(hex.replace("#", ""), 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+
+    async function downloadReportPDF() {
+      const btn = document.querySelector(".report-download-btn");
+      const originalLabel = btn.textContent;
+      btn.textContent = "생성 중...";
+      btn.disabled = true;
+      try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
+        await ensureKoreanFont(pdf);
+        pdf.setFont("Pretendard", "normal");
+
+        const marginLeft = 20, marginRight = 20, pageWidth = 210;
+        const usableWidth = pageWidth - marginLeft - marginRight;
+        let y = 25;
+
+        function addBlock(text, size, color, gapAfter) {
+          if (!text) return;
+          pdf.setFontSize(size);
+          pdf.setTextColor(...hexToRgb(color));
+          const lines = pdf.splitTextToSize(text, usableWidth);
+          lines.forEach((line) => {
+            if (y > 280) { pdf.addPage(); y = 20; }
+            pdf.text(line, marginLeft, y);
+            y += size * 0.52;
+          });
+          y += gapAfter;
+        }
+
+        const subtitleEl = document.querySelector(".r-subtitle");
+        const dateEl = document.querySelector(".r-date");
+        const paraEls = document.querySelectorAll(".r-para");
+        const refEls = document.querySelectorAll(".r-ref");
+
+        addBlock("AI Data Center 일일 동향", 20, "#ff6900", 4);
+        if (subtitleEl) addBlock(subtitleEl.textContent, 12, "#555555", 2);
+        if (dateEl) addBlock(dateEl.textContent, 9, "#999999", 6);
+
+        pdf.setDrawColor(20, 19, 17);
+        pdf.line(marginLeft, y, pageWidth - marginRight, y);
+        y += 8;
+
+        paraEls.forEach((p) => addBlock(p.textContent, 10.5, "#141311", 5));
+
+        if (refEls.length) {
+          y += 4;
+          pdf.setDrawColor(228, 227, 221);
+          pdf.line(marginLeft, y, pageWidth - marginRight, y);
+          y += 8;
+          addBlock("참고 기사", 9, "#666666", 3);
+          refEls.forEach((r) => addBlock(r.textContent, 8.5, "#666666", 3));
+        }
+
+        const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+        pdf.save(`AI_Data_Center_일일동향_${todayStr}.pdf`);
+      } catch (e) {
+        alert("PDF 생성에 실패했습니다: " + e);
+      } finally {
+        btn.textContent = originalLabel;
+        btn.disabled = false;
+      }
     }
 
     function openReportModal() {
