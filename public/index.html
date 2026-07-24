@@ -478,7 +478,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 15:14 업데이트
+      2026년 07월 24일 · 15:23 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -711,38 +711,20 @@
         const buf = await file.arrayBuffer();
         const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
         let fullText = '';
-        const maxTextPages = Math.min(pdf.numPages, 20);
-        for (let i = 1; i <= maxTextPages; i++) {
+        const maxPages = Math.min(pdf.numPages, 20);
+        for (let i = 1; i <= maxPages; i++) {
           const page = await pdf.getPage(i);
           const content = await page.getTextContent();
           fullText += content.items.map(it => it.str).join(' ') + '\n';
           if (fullText.length > 12000) break;
         }
         fullText = fullText.replace(/\s+/g, ' ').trim();
-
-        if (fullText) {
-          loading.textContent = '요약하는 중...';
-          aiCallWorker({ text: fullText.slice(0, 12000) }, loading);
+        if (!fullText) {
+          loading.textContent = 'PDF에서 텍스트를 찾지 못했어요. 스캔 이미지 PDF일 수 있어요.';
           return;
         }
-
-        // 텍스트가 없으면(스캔 이미지 PDF) 페이지를 그림으로 찍어서 Claude가 직접 읽게 함
-        loading.textContent = '텍스트가 없는 스캔 문서로 보여요. 페이지를 이미지로 변환해서 읽는 중...';
-        const maxImgPages = Math.min(pdf.numPages, 10);
-        const images = [];
-        for (let i = 1; i <= maxImgPages; i++) {
-          const page = await pdf.getPage(i);
-          const viewport = page.getViewport({ scale: 1.5 });
-          const canvas = document.createElement('canvas');
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
-          const ctx = canvas.getContext('2d');
-          await page.render({ canvasContext: ctx, viewport }).promise;
-          images.push(canvas.toDataURL('image/jpeg', 0.85));
-        }
-
         loading.textContent = '요약하는 중...';
-        aiCallWorker({ images: images }, loading);
+        aiCallWorker({ text: fullText.slice(0, 12000) }, loading);
       } catch (e) {
         loading.textContent = 'PDF를 읽는 데 실패했어요.';
         console.error(e);
