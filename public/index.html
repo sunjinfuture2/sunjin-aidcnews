@@ -470,7 +470,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 10:16 업데이트
+      2026년 07월 24일 · 10:22 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1049,7 +1049,7 @@
     let _koreanFontReady = false;
     async function ensureKoreanFont(pdf) {
       if (_koreanFontReady) return;
-      const fontUrl = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/public/static/Pretendard-Regular.ttf";
+      const fontUrl = "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/nanumgothic/NanumGothic-Regular.ttf";
       const resp = await fetch(fontUrl);
       if (!resp.ok) throw new Error("한글 폰트를 불러오지 못했습니다");
       const buffer = await resp.arrayBuffer();
@@ -1057,8 +1057,8 @@
       let binary = "";
       for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
       const base64 = btoa(binary);
-      pdf.addFileToVFS("Pretendard-Regular.ttf", base64);
-      pdf.addFont("Pretendard-Regular.ttf", "Pretendard", "normal");
+      pdf.addFileToVFS("NanumGothic-Regular.ttf", base64);
+      pdf.addFont("NanumGothic-Regular.ttf", "NanumGothic", "normal");
       _koreanFontReady = true;
     }
 
@@ -1076,7 +1076,7 @@
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
         await ensureKoreanFont(pdf);
-        pdf.setFont("Pretendard", "normal");
+        pdf.setFont("NanumGothic", "normal");
 
         const marginLeft = 20, marginRight = 20, pageWidth = 210;
         const usableWidth = pageWidth - marginLeft - marginRight;
