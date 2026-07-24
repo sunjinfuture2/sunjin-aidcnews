@@ -474,7 +474,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 12:45 업데이트
+      2026년 07월 24일 · 12:52 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1122,27 +1122,20 @@
         const imgHeightMm = el.offsetHeight * PX_TO_MM;
         const marginLeftMm = (pageWidthMm - imgWidthMm) / 2 > 0 ? (pageWidthMm - imgWidthMm) / 2 : 0;
 
-        let heightLeftMm = imgHeightMm;
-        let positionMm = 0;
-        pdf.addImage(imgData, "PNG", marginLeftMm, positionMm, imgWidthMm, imgHeightMm);
-        addLinksForPage(1, 0);
-        heightLeftMm -= pageHeightMm;
+        const marginTopMm = 15, marginBottomMm = 15;
+        const usableHeightMm = pageHeightMm - marginTopMm - marginBottomMm;
+        const totalPages = Math.max(1, Math.ceil(imgHeightMm / usableHeightMm));
 
-        let pageNum = 1;
-        while (heightLeftMm > 0) {
-          positionMm -= pageHeightMm;
-          pdf.addPage();
-          pageNum++;
-          pdf.addImage(imgData, "PNG", marginLeftMm, positionMm, imgWidthMm, imgHeightMm);
-          addLinksForPage(pageNum, (pageNum - 1) * pageHeightMm);
-          heightLeftMm -= pageHeightMm;
-        }
+        for (let p = 0; p < totalPages; p++) {
+          if (p > 0) pdf.addPage();
+          const contentYStart = p * usableHeightMm;
+          const yPos = marginTopMm - contentYStart;
+          pdf.addImage(imgData, "PNG", marginLeftMm, yPos, imgWidthMm, imgHeightMm);
 
-        function addLinksForPage(pageIdx, pageStartMm) {
-          pdf.setPage(pageIdx);
+          pdf.setPage(p + 1);
           linkRects.forEach((r) => {
-            const yOnPage = r.y - pageStartMm;
-            if (yOnPage + r.h > 0 && yOnPage < pageHeightMm) {
+            const yOnPage = marginTopMm + (r.y - contentYStart);
+            if (yOnPage + r.h > marginTopMm - 1 && yOnPage < pageHeightMm - marginBottomMm + 1) {
               pdf.link(marginLeftMm + r.x, yOnPage, r.w, r.h, { url: r.url });
             }
           });
