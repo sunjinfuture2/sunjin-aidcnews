@@ -339,6 +339,15 @@
     font-size: 13.5px; font-weight: 600; letter-spacing: 0.3px;
     display: flex; justify-content: space-between; align-items: center;
   }
+  .ai-chat-header-actions { display: flex; align-items: center; gap: 6px; }
+  .ai-chat-clear-btn {
+    cursor: pointer; font-size: 11px; font-weight: 600; color: #fff;
+    background: rgba(255,255,255,0.12); border: none; border-radius: 999px;
+    padding: 0 10px; height: 26px; white-space: nowrap;
+    display: inline-flex; align-items: center;
+    font-family: inherit; transition: background 0.15s ease;
+  }
+  .ai-chat-clear-btn:hover { background: rgba(255,255,255,0.28); }
   .ai-chat-header button {
     background: rgba(255,255,255,0.12); border: none; color: #fff; font-size: 13px;
     width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
@@ -478,7 +487,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 16:12 업데이트
+      2026년 07월 24일 · 16:18 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -597,10 +606,12 @@
   </div>
 
   <div id="aiChatPanel">
-    <div class="ai-chat-header" style="justify-content: space-between;">
+    <div class="ai-chat-header">
       <span>AI 요약 도우미</span>
-      <button type="button" onclick="aiClearChat()" title="대화 지우기" style="all:unset; cursor:pointer; font-size:11px; color:#fff; background:rgba(255,255,255,0.12); border-radius:10px; padding:4px 9px; white-space:nowrap;">대화 내용 지우기</button>
-      <button type="button" onclick="toggleAiChat()">✕</button>
+      <span class="ai-chat-header-actions">
+        <button type="button" class="ai-chat-clear-btn" onclick="aiClearChat()" title="대화 내용 지우기">대화 내용 지우기</button>
+        <button type="button" onclick="toggleAiChat()">✕</button>
+      </span>
     </div>
     <div id="aiChatMessages">
       <div class="ai-msg bot"><span class="bubble">안녕하세요! 저는 기사 전문 요약 도우미예요🙂<br><br>· 기사 옆 "AI 요약하기" 버튼 클릭<br>· 기사 링크 붙여넣기<br>· 텍스트 형식의 PDF 파일 첨부<br><br>세 가지 중 하나로 요청해주세요.</span></div>
