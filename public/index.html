@@ -478,7 +478,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 15:34 업데이트
+      2026년 07월 24일 · 15:50 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1188,7 +1188,7 @@
         }
 
         const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-        pdf.save(`AI_Data_Center_일일동향_${todayStr}.pdf`);
+        pdf.save(`AI_Data_Center_일일동향_보고서_${todayStr}.pdf`);
       } catch (e) {
         alert("PDF 생성에 실패했습니다: " + e);
       } finally {
