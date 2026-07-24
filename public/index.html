@@ -151,6 +151,7 @@
   .report-doc .r-ref { font-size: 12px; line-height: 1.8; color: var(--ink-soft); }
   .report-doc .r-ref a { color: var(--ink-soft); }
   .report-doc .r-ref a:hover { color: var(--accent); }
+  .report-doc .r-ref-link { font-size: 10.5px; color: var(--ink-mute); margin: 2px 0 8px; word-break: break-all; }
   .report-doc .r-empty { font-size: 14px; color: var(--ink-mute); padding: 20px 0; }
 
   @media print {
@@ -470,7 +471,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 10:22 업데이트
+      2026년 07월 24일 · 10:26 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1019,7 +1020,10 @@
       ).join("");
     }
 
+    let _lastReportData = null;
+
     function renderReport(report) {
+      _lastReportData = report;
       if (!report) {
         document.getElementById("reportDoc").innerHTML =
           '<p class="r-empty">아직 생성된 보고서가 없습니다. 매일 오전 8시에 자동 생성됩니다.</p>';
@@ -1033,8 +1037,11 @@
       const refsHtml = (report.references || []).length
         ? `<div class="r-refs-title">참고 기사</div>` +
           report.references.map((r) =>
-            `<div class="r-ref">[${r.index}] ${escapeHtml(r.press || "")} · ` +
-            `<a href="${escapeHtml(r.link)}" target="_blank" rel="noopener">${escapeHtml(r.title)}</a></div>`
+            `<div class="r-ref">` +
+            `[${r.index}] ${escapeHtml(r.press || "")} · ` +
+            `<a href="${escapeHtml(r.link)}" target="_blank" rel="noopener">${escapeHtml(r.title)}</a>` +
+            `<div class="r-ref-link">${escapeHtml(r.link)}</div>` +
+            `</div>`
           ).join("")
         : "";
 
@@ -1110,13 +1117,17 @@
 
         paraEls.forEach((p) => addBlock(p.textContent, 10.5, "#141311", 5));
 
-        if (refEls.length) {
+        const refs = (_lastReportData && _lastReportData.references) || [];
+        if (refs.length) {
           y += 4;
           pdf.setDrawColor(228, 227, 221);
           pdf.line(marginLeft, y, pageWidth - marginRight, y);
           y += 8;
           addBlock("참고 기사", 9, "#666666", 3);
-          refEls.forEach((r) => addBlock(r.textContent, 8.5, "#666666", 3));
+          refs.forEach((r) => {
+            addBlock(`[${r.index}] ${r.press || ""} · ${r.title}`, 8.5, "#666666", 1);
+            addBlock(r.link, 7.5, "#999999", 3);
+          });
         }
 
         const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
