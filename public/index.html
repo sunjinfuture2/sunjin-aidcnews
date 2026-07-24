@@ -139,7 +139,8 @@
   .report-close-btn:hover { border-color: var(--accent); color: var(--accent); }
 
   .report-doc { padding: 36px 44px 48px; }
-  .report-doc .r-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 8px; color: #ff6900; }
+  .report-doc .r-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 4px; color: #ff6900; }
+  .report-doc .r-subtitle-line { font-size: 16px; font-weight: 700; color: var(--ink); margin: 0 0 20px; }
   .report-doc .r-date {
     font-size: 12.5px; color: var(--ink); font-weight: 700;
     text-align: right; margin: 0 0 6px;
@@ -473,7 +474,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 10:32 업데이트
+      2026년 07월 24일 · 10:35 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1047,9 +1048,11 @@
           ).join("")
         : "";
 
-      const subtitlePart = report.subtitle ? `: ${escapeHtml(report.subtitle)}` : "";
+      const subtitleHtml = report.subtitle
+        ? `<p class="r-subtitle-line">: ${escapeHtml(report.subtitle)}</p>` : "";
       document.getElementById("reportDoc").innerHTML =
-        `<h1 class="r-title">AI Data Center 일일 동향${subtitlePart}</h1>` +
+        `<h1 class="r-title">AI Data Center 일일 동향</h1>` +
+        subtitleHtml +
         `<p class="r-date">${escapeHtml(report.date)} 동향 · ㈜선진엔지니어링 종합건축사사무소</p>` +
         `<div class="r-rule"></div>` +
         paraHtml + refsHtml;
@@ -1107,9 +1110,12 @@
         const dateEl = document.querySelector(".r-date");
         const paraEls = document.querySelectorAll(".r-para");
 
-        const titleText = "AI Data Center 일일 동향" +
-          (_lastReportData && _lastReportData.subtitle ? `: ${_lastReportData.subtitle}` : "");
-        addBlock(titleText, 20, "#ff6900", 6);
+        addBlock("AI Data Center 일일 동향", 20, "#ff6900", 2);
+        if (_lastReportData && _lastReportData.subtitle) {
+          addBlock(`: ${_lastReportData.subtitle}`, 14, "#141311", 4);
+        } else {
+          y += 2;
+        }
 
         if (dateEl) {
           pdf.setFontSize(10);
