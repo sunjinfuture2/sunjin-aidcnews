@@ -478,7 +478,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 15:00 업데이트
+      2026년 07월 24일 · 15:14 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -728,7 +728,7 @@
 
         // 텍스트가 없으면(스캔 이미지 PDF) 페이지를 그림으로 찍어서 Claude가 직접 읽게 함
         loading.textContent = '텍스트가 없는 스캔 문서로 보여요. 페이지를 이미지로 변환해서 읽는 중...';
-        const maxImgPages = Math.min(pdf.numPages, 5);
+        const maxImgPages = Math.min(pdf.numPages, 10);
         const images = [];
         for (let i = 1; i <= maxImgPages; i++) {
           const page = await pdf.getPage(i);
