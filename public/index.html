@@ -138,7 +138,7 @@
   .report-download-btn:hover { background: #000; }
   .report-close-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  .report-doc { padding: 20px 44px 48px; }
+  .report-doc { padding: 36px 44px 48px; }
   .report-doc .r-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 4px; color: #ff6900; }
   .report-doc .r-subtitle-line { font-size: 16px; font-weight: 700; color: var(--ink); margin: 0 0 20px; }
   .report-doc .r-date {
@@ -1096,11 +1096,7 @@
         const el = document.getElementById("reportDoc");
         const PX_TO_MM = 25.4 / 96;
 
-        // --- 추가된 부분 1: 첫 페이지 이중 여백 방지를 위해 캡처 직전 상단 패딩 제거 ---
-        const originalPaddingTop = el.style.paddingTop;
-        el.style.paddingTop = "0px";
-
-        // 패딩이 제거된 상태에서 링크 위치를 계산해야 PDF 클릭 좌표가 정확히 일치함
+        // 링크가 걸린 요소들의 위치(el 기준)를 캡처 전에 미리 기록
         const linkEls = Array.from(el.querySelectorAll("a"));
         const linkRects = linkEls.map((a) => {
           const rect = a.getBoundingClientRect();
@@ -1115,22 +1111,18 @@
         });
 
         const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#ffffff" });
-        
-        // --- 추가된 부분 2: 캡처 완료 후 원래 패딩 복구 ---
-        el.style.paddingTop = originalPaddingTop;
-
         const imgData = canvas.toDataURL("image/png");
 
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
         const pageWidthMm = 210, pageHeightMm = 297;
 
+        // 화면에 보이던 실제 크기(px) 그대로 mm로 환산 (억지로 늘리지 않음)
         const imgWidthMm = el.offsetWidth * PX_TO_MM;
         const imgHeightMm = el.offsetHeight * PX_TO_MM;
         const marginLeftMm = (pageWidthMm - imgWidthMm) / 2 > 0 ? (pageWidthMm - imgWidthMm) / 2 : 0;
 
-        // --- 수정된 부분 3: 매 페이지 여백을 20px(약 5.3mm)과 동일하게 고정 ---
-        const marginTopMm = 5.3, marginBottomMm = 5.3;
+        const marginTopMm = 15, marginBottomMm = 15;
         const usableHeightMm = pageHeightMm - marginTopMm - marginBottomMm;
         const totalPages = Math.max(1, Math.ceil(imgHeightMm / usableHeightMm));
 
