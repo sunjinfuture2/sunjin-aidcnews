@@ -474,7 +474,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 10:35 업데이트
+      2026년 07월 24일 · 10:42 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1025,6 +1025,14 @@
 
     let _lastReportData = null;
 
+    function todayDateStr() {
+      const kst = new Date(Date.now() + 9 * 60 * 60000);
+      const y = kst.getUTCFullYear();
+      const m = String(kst.getUTCMonth() + 1).padStart(2, "0");
+      const d = String(kst.getUTCDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
     function renderReport(report) {
       _lastReportData = report;
       if (!report) {
@@ -1053,7 +1061,7 @@
       document.getElementById("reportDoc").innerHTML =
         `<h1 class="r-title">AI Data Center 일일 동향</h1>` +
         subtitleHtml +
-        `<p class="r-date">${escapeHtml(report.date)} 동향 · ㈜선진엔지니어링 종합건축사사무소</p>` +
+        `<p class="r-date">${todayDateStr()}</p>` +
         `<div class="r-rule"></div>` +
         paraHtml + refsHtml;
     }
@@ -1117,12 +1125,10 @@
           y += 2;
         }
 
-        if (dateEl) {
-          pdf.setFontSize(10);
-          pdf.setTextColor(...hexToRgb("#141311"));
-          pdf.text(dateEl.textContent, pageWidth - marginRight, y, { align: "right" });
-          y += 8;
-        }
+        pdf.setFontSize(10);
+        pdf.setTextColor(...hexToRgb("#141311"));
+        pdf.text(todayDateStr(), pageWidth - marginRight, y, { align: "right" });
+        y += 8;
 
         pdf.setDrawColor(20, 19, 17);
         pdf.line(marginLeft, y, pageWidth - marginRight, y);
