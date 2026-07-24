@@ -474,7 +474,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 10:57 업데이트
+      2026년 07월 24일 · 11:02 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -609,7 +609,6 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const AI_WORKER_URL = "https://ai-summary-claude.sunjinfuture2.workers.dev/";
@@ -1094,52 +1093,60 @@
       btn.textContent = "생성 중...";
       btn.disabled = true;
       try {
-        const el = document.getElementById("reportDoc");
-        const linkEls = Array.from(el.querySelectorAll(".r-ref-link"));
-
-        // 링크가 원래 있던 위치(el 기준 top)를 기록해두고, 캡처 직전에만 숨김
-        const positions = linkEls.map((le) => ({
-          top: le.offsetTop,
-          height: le.offsetHeight,
-          text: le.textContent,
-        }));
-        linkEls.forEach((le) => { le.style.visibility = "hidden"; });
-
-        const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#ffffff" });
-
-        linkEls.forEach((le) => { le.style.visibility = ""; });
-
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
-        const pageWidthMm = 210, pageHeightMm = 297;
-        const pxToMm = pageWidthMm / el.offsetWidth;
-        const imgHeightMm = (canvas.height * pageWidthMm) / canvas.width;
-        const imgData = canvas.toDataURL("image/png");
+        await ensureKoreanFont(pdf);
+        pdf.setFont("NanumGothic", "normal");
 
-        let heightLeftMm = imgHeightMm;
-        let positionMm = 0;
-        pdf.addImage(imgData, "PNG", 0, positionMm, pageWidthMm, imgHeightMm);
-        heightLeftMm -= pageHeightMm;
-        while (heightLeftMm > 0) {
-          positionMm -= pageHeightMm;
-          pdf.addPage();
-          pdf.addImage(imgData, "PNG", 0, positionMm, pageWidthMm, imgHeightMm);
-          heightLeftMm -= pageHeightMm;
+        const marginLeft = 20, marginRight = 20, pageWidth = 210;
+        const usableWidth = pageWidth - marginLeft - marginRight;
+        let y = 25;
+
+        function addBlock(text, size, color, gapAfter) {
+          if (!text) return;
+          pdf.setFontSize(size);
+          pdf.setTextColor(...hexToRgb(color));
+          const lines = pdf.splitTextToSize(text, usableWidth);
+          lines.forEach((line) => {
+            if (y > 280) { pdf.addPage(); y = 20; }
+            pdf.text(line, marginLeft, y);
+            y += size * 0.52;
+          });
+          y += gapAfter;
         }
 
-        // 링크(순수 영문·숫자)만 그 자리 위에 진짜 텍스트로 얹기 -> 드래그·복사 가능, 폰트 깨짐도 없음
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(7.5);
-        pdf.setTextColor(120, 120, 120);
-        const marginLeftMm = 44 * pxToMm;
+        const paraEls = document.querySelectorAll(".r-para");
 
-        positions.forEach((p) => {
-          const topMmInImage = p.top * pxToMm;
-          const pageIndex = Math.floor(topMmInImage / pageHeightMm);
-          const yOnPage = topMmInImage - pageIndex * pageHeightMm + (p.height * pxToMm) * 0.75;
-          pdf.setPage(pageIndex + 1);
-          pdf.text(p.text, marginLeftMm, yOnPage, { maxWidth: pageWidthMm - marginLeftMm * 2 });
-        });
+        addBlock("AI Data Center 일일 동향", 20, "#ff6900", 2);
+        if (_lastReportData && _lastReportData.subtitle) {
+          addBlock(`: ${_lastReportData.subtitle}`, 14, "#141311", 4);
+        } else {
+          y += 2;
+        }
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(...hexToRgb("#141311"));
+        pdf.text(todayDateStr(), pageWidth - marginRight, y, { align: "right" });
+        y += 8;
+
+        pdf.setDrawColor(20, 19, 17);
+        pdf.line(marginLeft, y, pageWidth - marginRight, y);
+        y += 8;
+
+        paraEls.forEach((p) => addBlock(p.textContent, 10.5, "#141311", 5));
+
+        const refs = (_lastReportData && _lastReportData.references) || [];
+        if (refs.length) {
+          y += 4;
+          pdf.setDrawColor(228, 227, 221);
+          pdf.line(marginLeft, y, pageWidth - marginRight, y);
+          y += 8;
+          addBlock("참고 기사", 9, "#333333", 3);
+          refs.forEach((r) => {
+            addBlock(`[${r.index}] ${r.press || ""} · ${r.title}`, 8.5, "#333333", 1);
+            addBlock(r.link, 7.5, "#777777", 3);
+          });
+        }
 
         const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
         pdf.save(`AI_Data_Center_일일동향_${todayStr}.pdf`);
