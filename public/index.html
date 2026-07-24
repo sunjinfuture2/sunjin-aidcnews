@@ -313,6 +313,10 @@
     flex-direction: column; overflow: hidden;
   }
   #aiChatPanel.open, #recentPanel.open { display: flex; }
+  #aiChatPanel.drag-over {
+    outline: 3px dashed var(--accent); outline-offset: -3px;
+    background: rgba(255, 105, 0, 0.06);
+  }
   #recent10List { flex: 1; overflow-y: auto; padding: 8px 14px; }
   .recent10-row {
     display: flex; flex-direction: column; gap: 5px; padding: 12px 0;
@@ -474,7 +478,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 24일 · 14:39 업데이트
+      2026년 07월 24일 · 14:48 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -693,10 +697,12 @@
       }
     }
 
-    async function aiHandlePdf(inputEl) {
-      const file = inputEl.files && inputEl.files[0];
+    async function processPdfFile(file) {
       if (!file) return;
-      inputEl.value = '';
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        alert('PDF 파일만 첨부할 수 있어요.');
+        return;
+      }
       const panel = document.getElementById('aiChatPanel');
       if (!panel.classList.contains('open')) panel.classList.add('open');
       aiAddMsg('user', 'PDF: ' + file.name);
@@ -724,6 +730,36 @@
         console.error(e);
       }
     }
+
+    async function aiHandlePdf(inputEl) {
+      const file = inputEl.files && inputEl.files[0];
+      inputEl.value = '';
+      await processPdfFile(file);
+    }
+
+    function aiSetupDragDrop() {
+      const panel = document.getElementById('aiChatPanel');
+      ['dragenter', 'dragover'].forEach((evt) => {
+        panel.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          panel.classList.add('drag-over');
+        });
+      });
+      ['dragleave', 'drop'].forEach((evt) => {
+        panel.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (evt === 'dragleave' && e.target !== panel) return;
+          panel.classList.remove('drag-over');
+        });
+      });
+      panel.addEventListener('drop', (e) => {
+        const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file) processPdfFile(file);
+      });
+    }
+    aiSetupDragDrop();
   </script>
 
   <!-- ===== 실시간 뉴스(지자체/국내기업/해외기업) ===== -->
