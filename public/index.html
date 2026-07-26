@@ -334,7 +334,7 @@
   .r10-title:hover { text-decoration: underline; color: var(--accent); }
   .r10-date { font-size: 11.5px; color: var(--ink-mute); }
   .r10-bottom {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; gap: 10px;
     margin-top: 4px;
   }
   .r10-empty { padding: 20px 14px; font-size: 13px; color: var(--ink-mute); }
@@ -463,23 +463,7 @@
     .live-pager button { padding: 5px 10px; font-size: 11px; }
     .pager-info { font-size: 11px; }
   }
-  /* ---------- 다크모드 ---------- */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: #e9e8e4; --ink-soft: #a9a8a2; --ink-mute: #7c7b76;
-      --line-strong: #e9e8e4; --line: #35342f;
-      --paper: #1d1c1a; --page: #141311;
-      --accent: #ff7a2b; --accent-hover: #ff955c;
-    }
-    
-    #aiChatToggle { background: #e9e8e4; color: #141311; }
-    #aiChatToggle:hover { background: #fff; }
-    .ai-chat-header { background: #2b2a27; }
-    .ai-msg.user .bubble { background: #e9e8e4; color: #141311; }
-    .ai-msg.bot .bubble { background: #2b2a27; color: var(--ink); }
-    .ai-chat-input label { background: #2b2a27; }
-    .ai-chat-input button { background: #e9e8e4; color: #141311; }
-  }
+  
 </style>
 </head>
 <body>
@@ -491,7 +475,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 08:45 업데이트
+      2026년 07월 27일 · 08:51 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
