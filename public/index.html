@@ -479,6 +479,146 @@
     .pager-info { font-size: 11px; }
   }
   
+
+  /* ================================================================
+     ✨ 생동감 있는 비주얼 레이어 (추가 효과 — 기존 규칙 위에 덧씌움)
+     ================================================================ */
+
+  @keyframes bgDrift {
+    0%   { background-position: 0% 0%, 100% 100%; }
+    50%  { background-position: 100% 50%, 0% 50%; }
+    100% { background-position: 0% 0%, 100% 100%; }
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(255,105,0,0.05), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(255,105,0,0.06), transparent 45%);
+    background-size: 160% 160%, 160% 160%;
+    animation: bgDrift 26s ease-in-out infinite;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .masthead { animation: fadeSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; position: relative; overflow: visible; }
+  .overview { animation: fadeSlideIn 0.7s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .tab-banner { animation: fadeSlideIn 0.7s 0.16s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(14px, -10px) scale(1.08); }
+  }
+  .masthead::before, .masthead::after {
+    content: ""; position: absolute; border-radius: 50%; filter: blur(38px);
+    z-index: -1; pointer-events: none;
+  }
+  .masthead::before {
+    width: 220px; height: 220px; top: -80px; left: -40px;
+    background: radial-gradient(circle, rgba(255,105,0,0.22), transparent 70%);
+    animation: orbFloat 9s ease-in-out infinite;
+  }
+  .masthead::after {
+    width: 160px; height: 160px; top: -40px; left: 220px;
+    background: radial-gradient(circle, rgba(255,105,0,0.14), transparent 70%);
+    animation: orbFloat 11s ease-in-out infinite reverse;
+  }
+  .doc-title {
+    background: linear-gradient(100deg, var(--ink) 30%, var(--accent) 55%, var(--ink) 80%);
+    background-size: 220% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: titleShine 7s linear infinite;
+  }
+  @keyframes titleShine { to { background-position: -220% center; } }
+
+  .overview {
+    position: relative; overflow: hidden;
+    box-shadow: 0 24px 60px rgba(20,19,17,0.10), 0 6px 18px rgba(20,19,17,0.06);
+    border: 1px solid rgba(255,105,0,0.08);
+  }
+  .overview::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent), #ffb066, var(--accent));
+    background-size: 200% auto; animation: titleShine 5s linear infinite;
+  }
+
+  @keyframes popIn {
+    0% { opacity: 0; transform: scale(0.7) translateY(10px); }
+    60% { opacity: 1; transform: scale(1.08) translateY(-2px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+  .stat .v { display: inline-block; animation: popIn 0.6s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  .stat:nth-of-type(2) .v { animation-delay: 0.4s; }
+  .stat:nth-of-type(3) .v { animation-delay: 0.5s; }
+
+  .tab-btn { position: relative; }
+  .tab-btn::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .tab-btn:hover::after { transform: scaleX(1); }
+  .tab-btn:hover { transform: translateY(-3px) scale(1.04); color: var(--ink); }
+  .tab-btn:active { transform: translateY(-1px) scale(0.98); }
+
+  .item, .recent10-row {
+    position: relative;
+  }
+  .item:hover {
+    transform: scale(1.018) translateY(-4px) rotate(-0.15deg);
+    box-shadow: 0 22px 44px rgba(255,105,0,0.14), 0 6px 16px rgba(20,19,17,0.09);
+    background: linear-gradient(180deg, #fff 0%, #fffaf5 100%);
+  }
+  .recent10-row:hover {
+    transform: scale(1.025) translateY(-2px);
+    box-shadow: 0 16px 32px rgba(255,105,0,0.16);
+  }
+
+  .row-title, .r10-title, .og-org a {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px;
+    transition: background-size 0.3s ease, color 0.2s ease;
+  }
+  .row-title:hover, .r10-title:hover, .og-org a:hover {
+    background-size: 100% 2px; text-decoration: none !important; color: var(--accent) !important;
+  }
+
+  .kw-inline-link { transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); display: inline-block; }
+  .kw-inline-link:hover { transform: scale(1.12) rotate(-1deg); }
+
+  @keyframes pulseRing {
+    0% { box-shadow: 0 6px 18px rgba(20,19,17,0.22), 0 0 0 0 rgba(255,105,0,0.35); }
+    70% { box-shadow: 0 6px 18px rgba(20,19,17,0.22), 0 0 0 14px rgba(255,105,0,0); }
+    100% { box-shadow: 0 6px 18px rgba(20,19,17,0.22), 0 0 0 0 rgba(255,105,0,0); }
+  }
+  #reportToggle { animation: pulseRing 2.6s ease-out infinite; }
+  #reportToggle:hover, #recentToggle:hover, #aiChatToggle:hover {
+    transform: translateY(-4px) scale(1.06) !important;
+    animation-play-state: paused;
+  }
+  #reportToggle:active, #recentToggle:active, #aiChatToggle:active { transform: scale(0.95) !important; }
+  #reportToggle, #recentToggle, #aiChatToggle {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+  }
+
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.94) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  #aiChatPanel.open, #recentPanel.open { animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  #reportModal .report-modal-inner { animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: var(--page); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent), #d95c00); border-radius: 10px;
+    border: 2px solid var(--page);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
 </style>
 </head>
 <body>
@@ -490,7 +630,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 15:28 업데이트
+      2026년 07월 27일 · 16:16 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
