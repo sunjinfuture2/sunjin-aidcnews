@@ -146,6 +146,13 @@
     text-align: right; margin: 0 0 6px;
   }
   .report-doc .r-rule { border-bottom: 1px solid var(--line-strong); margin-bottom: 24px; }
+  .report-doc .r-section { margin-bottom: 22px; }
+  .report-doc .r-section-label { margin-bottom: 8px; }
+  .report-doc .r-cat { color: #ff6900; font-weight: 800; font-size: 14px; }
+  .report-doc .r-sep { color: var(--line-strong); margin: 0 8px; }
+  .report-doc .r-sec-subtitle { font-weight: 700; font-size: 14px; color: var(--ink); }
+  .report-doc .r-section .r-para { margin: 0; }
+  .report-doc .r-para strong { font-weight: 800; }
   .report-doc .r-para { font-size: 14.5px; line-height: 1.9; color: var(--ink); margin: 0 0 18px; }
   .report-doc .r-refs-title {
     font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--ink);
@@ -475,7 +482,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 14:06 업데이트
+      2026년 07월 27일 · 14:15 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -597,7 +604,8 @@
         </button>
       </div>
       <div class="report-doc" id="reportDoc">
-        <p class="r-empty">불러오는 중...</p>
+        <div id="reportSummaryPart"><p class="r-empty">불러오는 중...</p></div>
+        <div id="reportRefsPart"></div>
       </div>
     </div>
   </div>
@@ -1136,17 +1144,41 @@
       return `${y}-${m}-${d}`;
     }
 
+    let _lastReportData = null;
+
+    function boldMarkup(escapedText) {
+      return escapedText.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    }
+
     function renderReport(report) {
       _lastReportData = report;
+      const summaryEl = document.getElementById("reportSummaryPart");
+      const refsEl = document.getElementById("reportRefsPart");
+
       if (!report) {
-        document.getElementById("reportDoc").innerHTML =
-          '<p class="r-empty">아직 생성된 보고서가 없습니다. 매일 오전 8시에 자동 생성됩니다.</p>';
+        summaryEl.innerHTML = '<p class="r-empty">아직 생성된 보고서가 없습니다. 매일 오전 8시에 자동 생성됩니다.</p>';
+        refsEl.innerHTML = "";
         return;
       }
 
-      const paraHtml = (report.paragraphs || [])
-        .map((p) => `<p class="r-para">${escapeHtml(p)}</p>`)
-        .join("");
+      const subtitleHtml = report.subtitle
+        ? `<p class="r-subtitle-line">: ${escapeHtml(report.subtitle)}</p>` : "";
+
+      const sectionsHtml = (report.sections || []).map((s) => {
+        const bodyHtml = boldMarkup(escapeHtml(s.body || ""));
+        return `<div class="r-section">` +
+          `<div class="r-section-label"><span class="r-cat">${escapeHtml(s.category)}</span>` +
+          `<span class="r-sep">|</span><span class="r-sec-subtitle">${escapeHtml(s.subtitle || "")}</span></div>` +
+          `<p class="r-para">${bodyHtml}</p>` +
+          `</div>`;
+      }).join("");
+
+      summaryEl.innerHTML =
+        `<h1 class="r-title">AI Data Center 일일 동향</h1>` +
+        subtitleHtml +
+        `<p class="r-date">${todayDateStr()}</p>` +
+        `<div class="r-rule"></div>` +
+        sectionsHtml;
 
       const refsHtml = (report.references || []).length
         ? `<div class="r-refs-title">참고 기사</div>` +
@@ -1157,15 +1189,7 @@
             `</div>`
           ).join("")
         : "";
-
-      const subtitleHtml = report.subtitle
-        ? `<p class="r-subtitle-line">: ${escapeHtml(report.subtitle)}</p>` : "";
-      document.getElementById("reportDoc").innerHTML =
-        `<h1 class="r-title">AI Data Center 일일 동향</h1>` +
-        subtitleHtml +
-        `<p class="r-date">${todayDateStr()}</p>` +
-        `<div class="r-rule"></div>` +
-        paraHtml + refsHtml;
+      refsEl.innerHTML = refsHtml;
     }
 
     let _koreanFontReady = false;
