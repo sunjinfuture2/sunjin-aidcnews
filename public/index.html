@@ -482,7 +482,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 14:20 업데이트
+      2026년 07월 27일 · 14:26 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -1215,13 +1215,37 @@
       const btn = document.querySelector(".report-download-btn");
       btn.disabled = true;
       try {
-        const el = document.getElementById("reportDoc");
         const PX_TO_MM = 25.4 / 96;
+        const pageWidthMm = 210, pageHeightMm = 297;
+        const marginTopMm = 15, marginBottomMm = 15;
+        const usableHeightMm = pageHeightMm - marginTopMm - marginBottomMm;
 
-        const linkEls = Array.from(el.querySelectorAll("a"));
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        // ---- 1페이지: 요약 부분 (넘치면 한 페이지에 맞게 축소) ----
+        const summaryEl = document.getElementById("reportSummaryPart");
+        const summaryCanvas = await html2canvas(summaryEl, { scale: 2, backgroundColor: "#ffffff" });
+        let sImgWidthMm = summaryEl.offsetWidth * PX_TO_MM;
+        let sImgHeightMm = (summaryCanvas.height * sImgWidthMm) / summaryCanvas.width;
+        let sMarginLeftMm = (pageWidthMm - sImgWidthMm) / 2 > 0 ? (pageWidthMm - sImgWidthMm) / 2 : 0;
+
+        if (sImgHeightMm > usableHeightMm) {
+          const scale = usableHeightMm / sImgHeightMm;
+          sImgWidthMm *= scale;
+          sImgHeightMm *= scale;
+          sMarginLeftMm = (pageWidthMm - sImgWidthMm) / 2;
+        }
+        const sTopMm = marginTopMm + (usableHeightMm - sImgHeightMm) / 2 > marginTopMm
+          ? marginTopMm : marginTopMm;
+        pdf.addImage(summaryCanvas.toDataURL("image/png"), "PNG", sMarginLeftMm, marginTopMm, sImgWidthMm, sImgHeightMm);
+
+        // ---- 2페이지부터: 참고 기사 (링크 포함, 여러 페이지로 이어질 수 있음) ----
+        const refsEl = document.getElementById("reportRefsPart");
+        const linkEls = Array.from(refsEl.querySelectorAll("a"));
         const linkRects = linkEls.map((a) => {
           const rect = a.getBoundingClientRect();
-          const elRect = el.getBoundingClientRect();
+          const elRect = refsEl.getBoundingClientRect();
           return {
             x: (rect.left - elRect.left) * PX_TO_MM,
             y: (rect.top - elRect.top) * PX_TO_MM,
@@ -1231,44 +1255,33 @@
           };
         });
 
-        const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#ffffff" });
-
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pageWidthMm = 210, pageHeightMm = 297;
-
-        const imgWidthMm = el.offsetWidth * PX_TO_MM;
-        const marginLeftMm = (pageWidthMm - imgWidthMm) / 2 > 0 ? (pageWidthMm - imgWidthMm) / 2 : 0;
-        const marginTopMm = 15, marginBottomMm = 15;
-        const usableHeightMm = pageHeightMm - marginTopMm - marginBottomMm;
-
-        const pxPerMm = canvas.width / imgWidthMm; // 캔버스 실제 배율(px/mm)
+        const refsCanvas = await html2canvas(refsEl, { scale: 2, backgroundColor: "#ffffff" });
+        const rImgWidthMm = refsEl.offsetWidth * PX_TO_MM;
+        const rMarginLeftMm = (pageWidthMm - rImgWidthMm) / 2 > 0 ? (pageWidthMm - rImgWidthMm) / 2 : 0;
+        const pxPerMm = refsCanvas.width / rImgWidthMm;
         const usableHeightPx = usableHeightMm * pxPerMm;
-        const totalPages = Math.max(1, Math.ceil(canvas.height / usableHeightPx));
+        const totalRefPages = Math.max(1, Math.ceil(refsCanvas.height / usableHeightPx));
 
-        for (let p = 0; p < totalPages; p++) {
-          if (p > 0) pdf.addPage();
+        for (let p = 0; p < totalRefPages; p++) {
+          pdf.addPage(); // 참고기사는 무조건 새 페이지(2페이지)부터 시작
 
           const srcY = p * usableHeightPx;
-          const sliceHeightPx = Math.min(usableHeightPx, canvas.height - srcY);
+          const sliceHeightPx = Math.min(usableHeightPx, refsCanvas.height - srcY);
 
-          // 이 페이지에 들어갈 부분만 실제로 잘라낸 새 캔버스를 만든다 (겹침/삐져나옴 방지)
           const pageCanvas = document.createElement("canvas");
-          pageCanvas.width = canvas.width;
+          pageCanvas.width = refsCanvas.width;
           pageCanvas.height = sliceHeightPx;
           const ctx = pageCanvas.getContext("2d");
-          ctx.drawImage(canvas, 0, srcY, canvas.width, sliceHeightPx, 0, 0, canvas.width, sliceHeightPx);
-          const sliceImgData = pageCanvas.toDataURL("image/png");
+          ctx.drawImage(refsCanvas, 0, srcY, refsCanvas.width, sliceHeightPx, 0, 0, refsCanvas.width, sliceHeightPx);
 
           const sliceHeightMm = sliceHeightPx / pxPerMm;
-          pdf.addImage(sliceImgData, "PNG", marginLeftMm, marginTopMm, imgWidthMm, sliceHeightMm);
+          pdf.addImage(pageCanvas.toDataURL("image/png"), "PNG", rMarginLeftMm, marginTopMm, rImgWidthMm, sliceHeightMm);
 
-          pdf.setPage(p + 1);
-          const contentYStartMm = (srcY / pxPerMm);
+          const contentYStartMm = srcY / pxPerMm;
           linkRects.forEach((r) => {
             const yOnPage = marginTopMm + (r.y - contentYStartMm);
             if (yOnPage + r.h > marginTopMm - 1 && yOnPage < marginTopMm + sliceHeightMm + 1) {
-              pdf.link(marginLeftMm + r.x, yOnPage, r.w, r.h, { url: r.url });
+              pdf.link(rMarginLeftMm + r.x, yOnPage, r.w, r.h, { url: r.url });
             }
           });
         }
