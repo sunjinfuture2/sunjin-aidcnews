@@ -130,14 +130,13 @@
     padding: 14px 20px; border-bottom: 1px solid var(--line);
   }
   .report-download-btn, .report-close-btn {
-    border: 1px solid var(--line-strong); border-radius: 50%; background: #fff;
+    border: none; background: transparent;
     width: 30px; height: 30px; padding: 0; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     font-family: inherit; color: var(--ink);
+    transition: color 0.15s ease;
   }
-  .report-download-btn { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .report-download-btn:hover { background: #000; }
-  .report-close-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .report-download-btn:hover, .report-close-btn:hover { color: #ff6900; }
 
   .report-doc { padding: 36px 44px 48px; }
   .report-doc .r-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 4px; color: #ff6900; }
@@ -476,7 +475,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 13:54 업데이트
+      2026년 07월 27일 · 13:56 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
