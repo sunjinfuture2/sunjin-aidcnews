@@ -479,87 +479,6 @@
     .pager-info { font-size: 11px; }
   }
   
-
-  /* ================================================================
-     차분하고 세련된 인터랙션 레이어 (박스/그림자 카드 없이, 절제된 움직임)
-     ================================================================ */
-
-  @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .masthead { animation: fadeSlideIn 0.6s ease-out both; }
-  .overview { animation: fadeSlideIn 0.6s 0.06s ease-out both; }
-  .tab-banner { animation: fadeSlideIn 0.6s 0.12s ease-out both; }
-
-  @keyframes lineDraw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  .doc-title { position: relative; display: inline-block; }
-  .doc-title::after {
-    content: ""; position: absolute; left: 0; bottom: -10px; height: 2px; width: 56px;
-    background: var(--accent); transform-origin: left;
-    animation: lineDraw 0.8s 0.3s cubic-bezier(0.65, 0, 0.35, 1) both;
-  }
-
-  .overview {
-    position: relative;
-    border-top: 2px solid var(--ink);
-  }
-
-  .tab-btn { position: relative; transition: color 0.25s ease; }
-  .tab-btn::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
-    background: var(--accent); transform: scaleX(0); transform-origin: left;
-    transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-  .tab-btn:hover::after { transform: scaleX(1); }
-  .tab-btn:hover { color: var(--ink); }
-
-  .item, .recent10-row {
-    position: relative; transition: background-color 0.3s ease;
-    border-left: 2px solid transparent;
-    padding-left: 14px; margin-left: -16px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
-  .item:hover, .recent10-row:hover {
-    background-color: rgba(255,105,0,0.035);
-    border-left-color: var(--accent);
-  }
-
-  .row-title, .r10-title, .og-org a {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1.5px;
-    transition: background-size 0.35s ease, color 0.25s ease;
-  }
-  .row-title:hover, .r10-title:hover, .og-org a:hover {
-    background-size: 100% 1.5px; text-decoration: none !important; color: var(--ink) !important;
-  }
-
-  .kw-inline-link { transition: color 0.2s ease; }
-
-  #reportToggle, #recentToggle, #aiChatToggle {
-    transition: transform 0.25s ease, background 0.2s ease, box-shadow 0.25s ease;
-  }
-  #reportToggle:hover, #recentToggle:hover, #aiChatToggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.28);
-  }
-  #reportToggle:active, #recentToggle:active, #aiChatToggle:active { transform: translateY(0); }
-
-  @keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  #aiChatPanel.open, #recentPanel.open { animation: modalFadeIn 0.25s ease-out both; }
-  #reportModal .report-modal-inner { animation: modalFadeIn 0.3s ease-out both; }
-
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: var(--page); }
-  ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 8px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
-  }
 </style>
 </head>
 <body>
@@ -571,7 +490,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 16:21 업데이트
+      2026년 07월 27일 · 16:24 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
