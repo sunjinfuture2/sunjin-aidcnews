@@ -476,7 +476,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 07월 27일 · 13:59 업데이트
+      2026년 07월 27일 · 14:01 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -586,13 +586,13 @@
     <div class="report-modal-inner">
       <div class="report-modal-topbar">
         <button type="button" class="report-download-btn" onclick="downloadReportPDF()" title="다운로드">
-          <svg width="21" height="21" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7.5 1V10M7.5 10L4 6.5M7.5 10L11 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 12.5H13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
           </svg>
         </button>
         <button type="button" class="report-close-btn" onclick="closeReportModal()" title="닫기">
-          <svg width="19" height="19" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1.5 1.5L11.5 11.5M11.5 1.5L1.5 11.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
           </svg>
         </button>
@@ -1192,8 +1192,6 @@
 
     async function downloadReportPDF() {
       const btn = document.querySelector(".report-download-btn");
-      const originalLabel = btn.textContent;
-      btn.textContent = "생성 중...";
       btn.disabled = true;
       try {
         const el = document.getElementById("reportDoc");
@@ -1259,7 +1257,6 @@
       } catch (e) {
         alert("PDF 생성에 실패했습니다: " + e);
       } finally {
-        btn.textContent = originalLabel;
         btn.disabled = false;
       }
     }
