@@ -523,7 +523,7 @@
 
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 08월 18일 · 14:29 업데이트
+      2026년 08월 18일 · 14:32 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -958,33 +958,43 @@
 
 
     /** 정부기관/공기업은 "기관별로 묶어서 보여주기" 방식이라 다른 탭과 렌더링 구조가 다르다. */
+    function govItemHtml(it) {
+      const summaryHtml = it.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(it.summary, 150))}</p>` : "";
+      return `<div class="item"><div class="c-title">` +
+        `<a class="row-title" href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>` +
+        summaryHtml + `</div><span class="c-date">${escapeHtml(formatGovDate(it.pubDate))}</span></div>`;
+    }
+    /** 정부기관/공기업은 "기관별로 묶어서, 오늘 것은 바로 보여주고 최근 5건은 더보기로 접기" 구조라
+     * 다른 탭과 렌더링 방식이 다르다(원본 scraper.py org_group()과 동일한 규칙). */
     function renderGovPanel(panelId, orgList) {
       document.getElementById("thead-" + panelId).innerHTML =
         '<div class="thead"><span class="c-org">기관</span>' +
         '<span class="c-title">제목</span><span class="c-date">게시일자</span></div>';
       const st = panelState[panelId];
-      const byOrg = {};
-      st.all.forEach((it) => {
-        (byOrg[it.org] = byOrg[it.org] || []).push(it);
-      });
+      const todayByOrg = {};
+      const recentByOrg = {};
+      st.today.forEach((it) => { (todayByOrg[it.org] = todayByOrg[it.org] || []).push(it); });
+      st.recent.forEach((it) => { (recentByOrg[it.org] = recentByOrg[it.org] || []).push(it); });
       const groupsHtml = orgList.map((org) => {
-        const items = byOrg[org] || [];
         const boardUrl = boardUrlMap[org] || "#";
+        const todayItems = todayByOrg[org] || [];
+        const recentItems = recentByOrg[org] || [];
+        const failed = govFailedOrgs.has(org);
         let bodyHtml;
-        if (govFailedOrgs.has(org)) {
+        if (failed) {
           bodyHtml = `<div class="item"><div class="c-title"><span class="msg fail">` +
             `사이트 접속에 실패하여 확인하지 못했습니다. 다음 자동 실행에서 다시 시도합니다.</span></div>` +
             `<span class="c-date">–</span></div>`;
-        } else if (items.length === 0) {
+        } else if (todayItems.length > 0) {
+          bodyHtml = todayItems.map(govItemHtml).join("");
+        } else {
           bodyHtml = `<div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div>` +
             `<span class="c-date">–</span></div>`;
-        } else {
-          bodyHtml = items.map((it) => {
-            const summaryHtml = it.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(it.summary, 150))}</p>` : "";
-            return `<div class="item"><div class="c-title">` +
-              `<a class="row-title" href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>` +
-              summaryHtml + `</div><span class="c-date">${escapeHtml(formatGovDate(it.pubDate))}</span></div>`;
-          }).join("");
+        }
+        // 접속 실패가 아니고, 최근 게시글이 있으면 "더보기"로 접어서 추가
+        if (!failed && recentItems.length > 0) {
+          bodyHtml += `<details class="more"><summary>최근 게시글<span class="more-cta"></span></summary>` +
+            recentItems.map(govItemHtml).join("") + `</details>`;
         }
         return `<div class="org-group"><div class="og-org">` +
           `<a href="${escapeHtml(boardUrl)}" target="_blank" rel="noopener">${escapeHtml(org)}</a></div>` +
@@ -1479,10 +1489,12 @@
         const resp = await fetch(NEWS_WORKER_URL);
         const data = await resp.json();
 
-        panelState.gov.all = (data.gov_today || []).filter((it) => GOV_AGENCIES_LIST.includes(it.org))
-          .concat((data.gov_recent || []).filter((it) => GOV_AGENCIES_LIST.includes(it.org)));
-        panelState.public.all = (data.gov_today || []).filter((it) => PUBLIC_ENTERPRISES_LIST.includes(it.org))
-          .concat((data.gov_recent || []).filter((it) => PUBLIC_ENTERPRISES_LIST.includes(it.org)));
+        panelState.gov.today = (data.gov_today || []).filter((it) => GOV_AGENCIES_LIST.includes(it.org));
+        panelState.gov.recent = (data.gov_recent || []).filter((it) => GOV_AGENCIES_LIST.includes(it.org));
+        panelState.public.today = (data.gov_today || []).filter((it) => PUBLIC_ENTERPRISES_LIST.includes(it.org));
+        panelState.public.recent = (data.gov_recent || []).filter((it) => PUBLIC_ENTERPRISES_LIST.includes(it.org));
+        panelState.gov.all = panelState.gov.today.concat(panelState.gov.recent);
+        panelState.public.all = panelState.public.today.concat(panelState.public.recent);
         govFailedOrgs.clear();
         (data.gov_failed || []).forEach((org) => govFailedOrgs.add(org));
         renderGovPanel("gov", GOV_AGENCIES_LIST);
