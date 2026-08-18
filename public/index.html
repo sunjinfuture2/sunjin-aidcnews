@@ -127,7 +127,6 @@
     display: inline-block; border: 1px solid var(--line-strong); border-radius: 6px;
     padding: 3px 9px; font-size: 12px; color: var(--ink-soft);
   }
-
   /* ---------- 일일 동향 보고서 ---------- */
   #reportModal {
     position: fixed; inset: 0; z-index: 2000;
@@ -152,7 +151,6 @@
     transition: color 0.15s ease;
   }
   .report-download-btn:hover, .report-close-btn:hover { color: #ff6900; }
-
   .report-doc { padding: 36px 44px 48px; }
   .report-doc .r-kicker { font-size: 12.5px; font-weight: 700; color: #ff6900; margin: 0 0 10px; }
   .report-doc .r-heading-row {
@@ -205,7 +203,6 @@
   .report-doc .r-ref a:hover { color: var(--accent); }
   .report-doc .r-ref-link { font-size: 10.5px; color: var(--ink-soft); margin: 2px 0 8px; word-break: break-all; font-weight: 400; }
   .report-doc .r-empty { font-size: 14px; color: var(--ink-mute); padding: 20px 0; }
-
   @media print {
     body * { visibility: hidden; }
     #reportModal, #reportModal * { visibility: visible; }
@@ -216,7 +213,6 @@
     .report-modal-inner { max-width: none; box-shadow: none; border-radius: 0; }
     .report-modal-topbar { display: none; }
   }
-
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
   .page-footer {
@@ -516,30 +512,27 @@
 </head>
 <body>
 <div class="sheet">
-
   <div class="masthead">
     <h1 class="doc-title">기관 및 업체별 <span class="doc-title-en">AI Data Center</span> 일일 동향</h1>
   </div>
-
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 08월 18일 · 15:00 업데이트
+      2026년 08월 18일 · 16:35 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
       <div class="label">OVERVIEW</div>
     </div>
     <div class="inner">
-      <p class="summary" id="overviewText">불러오는 중...</p>
+      <p class="summary" id="overviewText">오늘 <a href="https://www.msit.go.kr/bbs/list.do?sCode=user&amp;mPid=208&amp;mId=307" target="_blank" rel="noopener">과학기술정보통신부</a>·<a href="https://mcee.go.kr/home/web/index.do?menuId=10598" target="_blank" rel="noopener">기후에너지환경부</a>·<a href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c" target="_blank" rel="noopener">산업통상부</a>에서 신규 보도자료 4건이 등록됨.</p>
       <div class="stats">
-                <div class="stat"><span class="k">신규 보도자료</span><span class="v" id="stat-press-count">-</span></div>
+        <div class="stat"><span class="k">신규 보도자료</span><span class="v">4</span></div>
         <div class="stat"><span class="k">수집기사</span><span class="v" id="stat-news-total">0</span></div>
         <div class="stat"><span class="k">최다언급</span><span class="v word" id="stat-top-kw">-</span></div>
       </div>
     </div>
     <div class="rule"></div>
   </div>
-
   <div class="layout">
     <div class="main">
       <div class="tab-banner">
@@ -560,14 +553,8 @@
           </svg>
         </span>
       </div>
-      <div id="tab-gov" class="tab-panel active">
-      <div id="thead-gov"></div>
-      <div id="list-gov"><div class="msg-empty">불러오는 중...</div></div>
-      <div class="live-pager" id="pager-gov"></div></div>
-      <div id="tab-public" class="tab-panel">
-      <div id="thead-public"></div>
-      <div id="list-public"><div class="msg-empty">불러오는 중...</div></div>
-      <div class="live-pager" id="pager-public"></div></div>
+      <div id="tab-gov" class="tab-panel active"><div class="thead"><span class="c-org">기관</span><span class="c-title">제목</span><span class="c-date">게시일자</span></div><div class="org-group"><div class="og-org"><a href="https://www.msit.go.kr/bbs/list.do?sCode=user&amp;mPid=208&amp;mId=307" target="_blank" rel="noopener">과학기술정보통신부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187671" target="_blank" rel="noopener">국민의 아이디어를 인공지능 서비스로 구현, 「모두의 인공지능(AI) 실험실 인공지능(AI) 서비스 경진대회」 개최</a></div><span class="c-date">08-18</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187672" target="_blank" rel="noopener">｢독자 AI 파운데이션 모델｣ 프로젝트 2차 단계평가 결과 발표</a></div><span class="c-date">08-18</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187670" target="_blank" rel="noopener">복잡한 약물도 쉽게 재설계하는 분자 편집 기술 개발</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187669" target="_blank" rel="noopener">재난 현장의 핵심 정보를 손목 위에서, 재난안전통신망 전용 스마트워치 개발 추진</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187666" target="_blank" rel="noopener">서대문형무소 여옥사에서 입체 영상(홀로그램)으로 되살아난 유관순 열사를 만나다</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187667" target="_blank" rel="noopener">정부‧통신사업자, 불법 쓰레기 편지(불법스팸) 대응 현황 점검</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187668" target="_blank" rel="noopener">과기정통부 인사(과장급)</a></div><span class="c-date">08-14</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://mcee.go.kr/home/web/index.do?menuId=10598" target="_blank" rel="noopener">기후에너지환경부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1884290" target="_blank" rel="noopener">낙동강 본류 유류유출 대비 관계기관 합동 방제훈련 실시</a></div><span class="c-date">08-18</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1884260" target="_blank" rel="noopener">“제1회 5대강 사진 공모전- 섬진강의 자연과 생태” 개최</a></div><span class="c-date">08-17</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1884280" target="_blank" rel="noopener">(참고) 전기국가 전환, 전력수요 및 재생에너지 보급 전망 논의 12차 전기본 정책토론회(4차·5차) 개최</a></div><span class="c-date">08-15</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1884020" target="_blank" rel="noopener">국립공원에 남은 광복의 기억… 선열의 뜻과 역사를 품다</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1884040" target="_blank" rel="noopener">국무총리, 국내 최초 민간주도 전남광주신안군 소재 전남해상풍력 발전단지(96MW) 현장 방문</a></div><span class="c-date">08-13</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1883810" target="_blank" rel="noopener">2026년 상반기 민간 자동차검사소 합동점검, 불법·부실 검사소 23곳 적발</a></div><span class="c-date">08-13</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c" target="_blank" rel="noopener">산업통상부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172112/view" target="_blank" rel="noopener">한국 진출 브라질 기업 소통 간담회 개최</a></div><span class="c-date">08-18</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172110/view" target="_blank" rel="noopener">테라파워-한국 기업 간 SMR 협력으로 한국 원전기업 수출 공급망 확대</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172109/view" target="_blank" rel="noopener">(참고자료)美 무인항공기시스템(UAS)에 대한 무역확장법 232조 관세 발표</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172108/view" target="_blank" rel="noopener">(참고자료)&quot;AI·로봇으로 미래 국방 혁신 이끈다&quot;</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172107/view" target="_blank" rel="noopener">2026년 7월 정보통신산업(ICT) 수출입 동향</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172106/view" target="_blank" rel="noopener">리더십으로 M.AX 가속화,  산업부 간부 AX 교육 실시</a></div><span class="c-date">08-14</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.aikorea.go.kr/web/board/brdList.do?menu_cd=000012" target="_blank" rel="noopener">국가인공지능전략위원회</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=812" target="_blank" rel="noopener">(&#x27;26. 7. 22.) 지역·필수·공공의료 공백 해소 위한보건의료 AI 대전환</a></div><span class="c-date">07-22</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=801" target="_blank" rel="noopener">(&#x27;26. 7. 20.) 국가AI전략위, 「에이전틱 AI 시대 국가 AI 컴퓨팅 전략」 세미나 개최</a></div><span class="c-date">07-20</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=791" target="_blank" rel="noopener">(&#x27;26. 7. 14.) 국가AI전략위, ‘AI 데이터센터 산업생태계 육성 간담회’ 개최</a></div><span class="c-date">07-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=782" target="_blank" rel="noopener">(&#x27;26. 7. 8.) 국가AI전략위, ‘AI 시대의 데이터 가치평가’ 세미나 개최</a></div><span class="c-date">07-08</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=776" target="_blank" rel="noopener">(&#x27;26. 7. 7.) 국가AI전략위, 피지컬 AI가 이끄는 자율주행 혁신 간담회 개최</a></div><span class="c-date">07-07</span></div></details></div></div></div>
+      <div id="tab-public" class="tab-panel"><div class="thead"><span class="c-org">기관</span><span class="c-title">제목</span><span class="c-date">게시일자</span></div><div class="org-group"><div class="og-org"><a href="https://www.kepco.co.kr/home/media/newsroom/pr/boardList.do" target="_blank" rel="noopener">한국전력공사</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3131" target="_blank" rel="noopener">한전 - 한화에어로스페이스, 산업계 에너지 절감 ‘상생모델’ 제시</a></div><span class="c-date">08-13</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3130" target="_blank" rel="noopener">한전, ’26년 상반기 결산실적 발표</a></div><span class="c-date">08-12</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3129" target="_blank" rel="noopener">호남권·용인 반도체 메가프로젝트 적기 전력공급 위한 업무협약 체결</a></div><span class="c-date">08-12</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3128" target="_blank" rel="noopener">“이제 네이버페이(Npay)로 전기요금 낸다” 한전, 전기요금 청구·수납 디지털전환 박차</a></div><span class="c-date">08-11</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3127" target="_blank" rel="noopener">한전, 에너지 신산업 이끌 『한전기술지주』 공식 출범... “K-에너지 유니콘 키운다”</a></div><span class="c-date">08-07</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.kwater.or.kr/news/repoList.do?brdId=KO26&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=140887&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사-경찰청, 행정기관·공공기관 간 감사 협력 강화</a></div><span class="c-date">08-14</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=140885&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">윤석대 한국수자원공사 사장, 폭염·가뭄·녹조에 수질안전 총력</a></div><span class="c-date">08-13</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=140882&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">윤석대 한국수자원공사 사장, 경북 가뭄 대응 현장점검</a></div><span class="c-date">08-12</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=140854&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, 가뭄 극복 총력 대응… 전사 비상대책본부 강화</a></div><span class="c-date">08-05</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=140851&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, 미국 캘리포니아 주립대에 ‘AI·디지털트윈 첨단 물관리’ 노하우 전수</a></div><span class="c-date">08-04</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.nipa.kr/home/4-4-1" target="_blank" rel="noopener">정보통신산업진흥원</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16890" target="_blank" rel="noopener">정보통신산업진흥원, 한-아세안 인공지능 개발 창업 경진 대회(AI Youth Festa 2026) 참가 모집</a></div><span class="c-date">08-04</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16885" target="_blank" rel="noopener">정보통신산업진흥원, ‘2026 오픈소스 인공지능·소프트웨어 커뮤니티 발대식’ 개최</a></div><span class="c-date">07-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16884" target="_blank" rel="noopener">정보통신산업진흥원, 인공지능(AI) 시대에 맞춰 ‘소프트웨어사업 발주 역량 강화 교육’ 전면 개편</a></div><span class="c-date">07-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16868" target="_blank" rel="noopener">정보통신산업진흥원, 코리아스타트업포럼과 인공지능 혁신 성장을 위한 업무협약 체결</a></div><span class="c-date">07-24</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16853" target="_blank" rel="noopener">정보통신산업진흥원, 베트남·말레이시아에 한-아세안 디지털 아카데미 개소... 아세안 디지털 인재 양성 본격 추진</a></div><span class="c-date">07-14</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://nia.or.kr/site/nia_kor/ex/bbs/List.do?cbIdx=90549" target="_blank" rel="noopener">한국지능정보사회진흥원</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=29824&amp;parentSeq=29824" target="_blank" rel="noopener">NIA, 베트남 정보접근센터 기반 디지털 헬스케어·AI 협력 확대</a></div><span class="c-date">08-13</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=29816&amp;parentSeq=29816" target="_blank" rel="noopener">NIA, AI 시대 아·태 국제 연구망(APOnet) 협력 강화</a></div><span class="c-date">08-11</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=29775&amp;parentSeq=29775" target="_blank" rel="noopener">AI 첫 걸음(배움)부터, 개발, 창업까지 한 번에! 「모두의 AI 성장사다리 프로젝트」 본격 출범</a></div><span class="c-date">08-03</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=29762&amp;parentSeq=29762" target="_blank" rel="noopener">생성형 AI 시대, 청소년 AI윤리 역량 키운다</a></div><span class="c-date">07-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=29751&amp;parentSeq=29751" target="_blank" rel="noopener">재난안전데이터와 AI로 재난을 대응하다!</a></div><span class="c-date">07-28</span></div></details></div></div></div>
       <div id="tab-local" class="tab-panel">
       <div id="thead-local"></div>
       <div id="list-local"><div class="msg-empty">불러오는 중...</div></div>
@@ -586,7 +573,6 @@
         <div id="list-keyword"></div>
       </div>
     </div>
-
     <aside class="sidebar">
       <div class="side-group">
         <div class="side-label">오늘의 키워드</div>
@@ -599,14 +585,10 @@
       </div>
     </aside>
   </div>
-
   <div class="page-footer">㈜선진엔지니어링 종합건축사사무소</div>
-
 </div>
-
   <script>
     var currentTab = 'gov';
-
     function showTab(tab) {
       document.querySelectorAll('.tab-panel').forEach(function (el) { el.classList.remove('active'); });
       document.querySelectorAll('.tab-btn').forEach(function (el) { el.classList.remove('active'); });
@@ -619,13 +601,11 @@
       }
     }
   </script>
-
   <!-- ===== RECENT 10 / REPORT ===== -->
   <div class="floating-actions">
     <button id="reportToggle" onclick="openReportModal()" title="일일 동향 보고서">REPORT</button>
     <button id="recentToggle" onclick="toggleRecentPanel()" title="최근 10건">RECENT 10</button>
   </div>
-
   <div id="recentPanel">
     <div class="ai-chat-header">
       <span>최근 10건</span>
@@ -633,7 +613,6 @@
     </div>
     <div id="recent10List"><div class="r10-empty">불러오는 중...</div></div>
   </div>
-
   <!-- ===== 일일 동향 보고서 모달 ===== -->
   <div id="reportModal" style="display:none">
     <div class="report-modal-inner">
@@ -656,7 +635,6 @@
       </div>
     </div>
   </div>
-
   <div id="aiChatPanel">
     <div class="ai-chat-header">
       <span>AI 요약 도우미</span>
@@ -679,7 +657,6 @@
       <button type="button" onclick="aiSendText()">전송</button>
     </div>
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -689,17 +666,14 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
     }
-
     function toggleAiChat() {
       document.getElementById('recentPanel').classList.remove('open');
       document.getElementById('aiChatPanel').classList.toggle('open');
     }
-
     function toggleRecentPanel() {
       document.getElementById('aiChatPanel').classList.remove('open');
       document.getElementById('recentPanel').classList.toggle('open');
     }
-
     function aiAddMsg(role, text, linkUrl) {
       const box = document.getElementById('aiChatMessages');
       const div = document.createElement('div');
@@ -723,7 +697,6 @@
       saveChatHistory();
       return bubble;
     }
-
     function saveChatHistory() {
       const box = document.getElementById('aiChatMessages');
       const messages = Array.from(box.querySelectorAll('.ai-msg')).map((div) => {
@@ -741,7 +714,6 @@
         console.error('채팅 기록 저장 실패:', e);
       }
     }
-
     function loadChatHistory() {
       let saved;
       try {
@@ -754,13 +726,11 @@
       box.innerHTML = '';
       saved.forEach((m) => aiAddMsg(m.role, m.text, m.linkUrl || undefined));
     }
-
     function aiClearChat() {
       localStorage.removeItem('aiChatHistory');
       const box = document.getElementById('aiChatMessages');
       box.innerHTML = '<div class="ai-msg bot"><span class="bubble">안녕하세요! 저는 기사 전문 요약 도우미예요🙂<br><br>· 기사 옆 "AI 요약하기" 버튼 클릭<br>· 기사 링크 붙여넣기<br>· 텍스트 형식의 PDF 파일 첨부<br><br>세 가지 중 하나로 요청해주세요.</span></div>';
     }
-
     async function aiCallWorker(payload, loadingBubble) {
       try {
         const resp = await fetch(AI_WORKER_URL, {
@@ -782,7 +752,6 @@
         console.error(e);
       }
     }
-
     function aiSummarizeUrl(url, title) {
       const panel = document.getElementById('aiChatPanel');
       if (!panel.classList.contains('open')) panel.classList.add('open');
@@ -790,7 +759,6 @@
       const loading = aiAddMsg('bot', '기사를 읽고 요약하는 중...');
       aiCallWorker({ url: url }, loading);
     }
-
     function aiSendText() {
       const input = document.getElementById('aiChatText');
       const text = input.value.trim();
@@ -804,7 +772,6 @@
         aiCallWorker({ text: text }, loading);
       }
     }
-
     async function processPdfFile(file) {
       if (!file) return;
       if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
@@ -840,13 +807,11 @@
         saveChatHistory();
       }
     }
-
     async function aiHandlePdf(inputEl) {
       const file = inputEl.files && inputEl.files[0];
       inputEl.value = '';
       await processPdfFile(file);
     }
-
     function aiSetupDragDrop() {
       const panel = document.getElementById('aiChatPanel');
       ['dragenter', 'dragover'].forEach((evt) => {
@@ -872,25 +837,17 @@
     aiSetupDragDrop();
     loadChatHistory();
   </script>
-
-  <!-- ===== 실시간 뉴스(정부기관·공기업·지자체·국내기업·해외기업) ===== -->
-  <script type="application/json" id="board-url-map">{"과학기술정보통신부": "https://www.msit.go.kr/bbs/list.do?sCode=user&mPid=208&mId=307", "기후에너지환경부": "https://mcee.go.kr/home/web/index.do?menuId=10598", "산업통상부": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c", "국가인공지능전략위원회": "https://www.aikorea.go.kr/web/board/brdList.do?menu_cd=000012", "한국전력공사": "https://www.kepco.co.kr/home/media/newsroom/pr/boardList.do", "한국수자원공사": "https://www.kwater.or.kr/news/repoList.do?brdId=KO26&s_mid=36", "정보통신산업진흥원": "https://www.nipa.kr/home/4-4-1", "한국지능정보사회진흥원": "https://nia.or.kr/site/nia_kor/ex/bbs/List.do?cbIdx=90549"}</script>
+  <!-- ===== 실시간 뉴스(지자체/국내기업/해외기업) ===== -->
+  <script type="application/json" id="gov-public-candidates">[{"sort_ts": "2026-08-18T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "국민의 아이디어를 인공지능 서비스로 구현, 「모두의 인공지능(AI) 실험실 인공지능(AI) 서비스 경진대회」 개최", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187671", "disp": "08-18"}, {"sort_ts": "2026-08-18T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "｢독자 AI 파운데이션 모델｣ 프로젝트 2차 단계평가 결과 발표", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187672", "disp": "08-18"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "복잡한 약물도 쉽게 재설계하는 분자 편집 기술 개발", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187670", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "재난 현장의 핵심 정보를 손목 위에서, 재난안전통신망 전용 스마트워치 개발 추진", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187669", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "서대문형무소 여옥사에서 입체 영상(홀로그램)으로 되살아난 유관순 열사를 만나다", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187666", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "정부‧통신사업자, 불법 쓰레기 편지(불법스팸) 대응 현황 점검", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187667", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "과기정통부 인사(과장급)", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187668", "disp": "08-14"}, {"sort_ts": "2026-08-18T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "낙동강 본류 유류유출 대비 관계기관 합동 방제훈련 실시", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1884290", "disp": "08-18"}, {"sort_ts": "2026-08-17T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "“제1회 5대강 사진 공모전- 섬진강의 자연과 생태” 개최", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1884260", "disp": "08-17"}, {"sort_ts": "2026-08-15T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "(참고) 전기국가 전환, 전력수요 및 재생에너지 보급 전망 논의 12차 전기본 정책토론회(4차·5차) 개최", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1884280", "disp": "08-15"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "국립공원에 남은 광복의 기억… 선열의 뜻과 역사를 품다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1884020", "disp": "08-14"}, {"sort_ts": "2026-08-13T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "국무총리, 국내 최초 민간주도 전남광주신안군 소재 전남해상풍력 발전단지(96MW) 현장 방문", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1884040", "disp": "08-13"}, {"sort_ts": "2026-08-13T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "2026년 상반기 민간 자동차검사소 합동점검, 불법·부실 검사소 23곳 적발", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1883810", "disp": "08-13"}, {"sort_ts": "2026-08-18T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "한국 진출 브라질 기업 소통 간담회 개최", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172112/view", "disp": "08-18"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "테라파워-한국 기업 간 SMR 협력으로 한국 원전기업 수출 공급망 확대", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172110/view", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "(참고자료)美 무인항공기시스템(UAS)에 대한 무역확장법 232조 관세 발표", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172109/view", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "(참고자료)\"AI·로봇으로 미래 국방 혁신 이끈다\"", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172108/view", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "2026년 7월 정보통신산업(ICT) 수출입 동향", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172107/view", "disp": "08-14"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "리더십으로 M.AX 가속화,  산업부 간부 AX 교육 실시", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172106/view", "disp": "08-14"}, {"sort_ts": "2026-07-22T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 7. 22.) 지역·필수·공공의료 공백 해소 위한보건의료 AI 대전환", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=812", "disp": "07-22"}, {"sort_ts": "2026-07-20T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 7. 20.) 국가AI전략위, 「에이전틱 AI 시대 국가 AI 컴퓨팅 전략」 세미나 개최", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=801", "disp": "07-20"}, {"sort_ts": "2026-07-14T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 7. 14.) 국가AI전략위, ‘AI 데이터센터 산업생태계 육성 간담회’ 개최", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=791", "disp": "07-14"}, {"sort_ts": "2026-07-08T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 7. 8.) 국가AI전략위, ‘AI 시대의 데이터 가치평가’ 세미나 개최", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=782", "disp": "07-08"}, {"sort_ts": "2026-07-07T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 7. 7.) 국가AI전략위, 피지컬 AI가 이끄는 자율주행 혁신 간담회 개최", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=776", "disp": "07-07"}, {"sort_ts": "2026-08-13T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전 - 한화에어로스페이스, 산업계 에너지 절감 ‘상생모델’ 제시", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3131", "disp": "08-13"}, {"sort_ts": "2026-08-12T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, ’26년 상반기 결산실적 발표", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3130", "disp": "08-12"}, {"sort_ts": "2026-08-12T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "호남권·용인 반도체 메가프로젝트 적기 전력공급 위한 업무협약 체결", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3129", "disp": "08-12"}, {"sort_ts": "2026-08-11T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "“이제 네이버페이(Npay)로 전기요금 낸다” 한전, 전기요금 청구·수납 디지털전환 박차", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3128", "disp": "08-11"}, {"sort_ts": "2026-08-07T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 에너지 신산업 이끌 『한전기술지주』 공식 출범... “K-에너지 유니콘 키운다”", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3127", "disp": "08-07"}, {"sort_ts": "2026-08-14T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사-경찰청, 행정기관·공공기관 간 감사 협력 강화", "link": "https://www.kwater.or.kr/news/repoView.do?seq=140887&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "08-14"}, {"sort_ts": "2026-08-13T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "윤석대 한국수자원공사 사장, 폭염·가뭄·녹조에 수질안전 총력", "link": "https://www.kwater.or.kr/news/repoView.do?seq=140885&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "08-13"}, {"sort_ts": "2026-08-12T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "윤석대 한국수자원공사 사장, 경북 가뭄 대응 현장점검", "link": "https://www.kwater.or.kr/news/repoView.do?seq=140882&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "08-12"}, {"sort_ts": "2026-08-05T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 가뭄 극복 총력 대응… 전사 비상대책본부 강화", "link": "https://www.kwater.or.kr/news/repoView.do?seq=140854&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "08-05"}, {"sort_ts": "2026-08-04T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 미국 캘리포니아 주립대에 ‘AI·디지털트윈 첨단 물관리’ 노하우 전수", "link": "https://www.kwater.or.kr/news/repoView.do?seq=140851&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "08-04"}, {"sort_ts": "2026-08-04T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 한-아세안 인공지능 개발 창업 경진 대회(AI Youth Festa 2026) 참가 모집", "link": "https://www.nipa.kr/home/4-4-1/16890", "disp": "08-04"}, {"sort_ts": "2026-07-30T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, ‘2026 오픈소스 인공지능·소프트웨어 커뮤니티 발대식’ 개최", "link": "https://www.nipa.kr/home/4-4-1/16885", "disp": "07-30"}, {"sort_ts": "2026-07-30T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 인공지능(AI) 시대에 맞춰 ‘소프트웨어사업 발주 역량 강화 교육’ 전면 개편", "link": "https://www.nipa.kr/home/4-4-1/16884", "disp": "07-30"}, {"sort_ts": "2026-07-24T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 코리아스타트업포럼과 인공지능 혁신 성장을 위한 업무협약 체결", "link": "https://www.nipa.kr/home/4-4-1/16868", "disp": "07-24"}, {"sort_ts": "2026-07-14T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 베트남·말레이시아에 한-아세안 디지털 아카데미 개소... 아세안 디지털 인재 양성 본격 추진", "link": "https://www.nipa.kr/home/4-4-1/16853", "disp": "07-14"}, {"sort_ts": "2026-08-13T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, 베트남 정보접근센터 기반 디지털 헬스케어·AI 협력 확대", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=29824&parentSeq=29824", "disp": "08-13"}, {"sort_ts": "2026-08-11T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, AI 시대 아·태 국제 연구망(APOnet) 협력 강화", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=29816&parentSeq=29816", "disp": "08-11"}, {"sort_ts": "2026-08-03T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "AI 첫 걸음(배움)부터, 개발, 창업까지 한 번에! 「모두의 AI 성장사다리 프로젝트」 본격 출범", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=29775&parentSeq=29775", "disp": "08-03"}, {"sort_ts": "2026-07-30T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "생성형 AI 시대, 청소년 AI윤리 역량 키운다", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=29762&parentSeq=29762", "disp": "07-30"}, {"sort_ts": "2026-07-28T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "재난안전데이터와 AI로 재난을 대응하다!", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=29751&parentSeq=29751", "disp": "07-28"}]</script>
   <script>
     const NEWS_WORKER_URL = "https://naver-news-cache.sunjinfuture2.workers.dev";
-    const GOV_AGENCIES_LIST = ["과학기술정보통신부", "기후에너지환경부", "산업통상부", "국가인공지능전략위원회"];
-    const PUBLIC_ENTERPRISES_LIST = ["한국전력공사", "한국수자원공사", "정보통신산업진흥원", "한국지능정보사회진흥원"];
     const PAGE_SIZE = 20;
     const panelState = {
-      gov:      { all: [], filtered: [], page: 1, tagKey: "org" },
-      public:   { all: [], filtered: [], page: 1, tagKey: "org" },
       local:    { all: [], filtered: [], page: 1, tagKey: "region" },
       listed:   { all: [], filtered: [], page: 1, tagKey: "company" },
       overseas: { all: [], filtered: [], page: 1, tagKey: "company" },
     };
-    const govFailedOrgs = new Set();
-    const boardUrlMap = JSON.parse(document.getElementById("board-url-map").textContent);
     let liveKeywordCounts = {};
-
     function truncateSummary(text, maxLen) {
       if (!text) return "";
       if (text.length <= maxLen) return text;
@@ -901,11 +858,9 @@
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
       }[c]));
     }
-
     function escapeRegex(s) {
       return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-
     /** OVERVIEW 문단에서, 오늘 실제로 수집된 지역명/기업명이 나오면 클릭 가능한 링크로 감싼다. */
     function linkifyOverviewText(text) {
       const names = Array.from(new Set([
@@ -913,9 +868,7 @@
         ...panelState.listed.all.map((it) => it.company).filter(Boolean),
         ...panelState.overseas.all.map((it) => it.company).filter(Boolean),
       ])).sort((a, b) => b.length - a.length);
-
       if (names.length === 0) return escapeHtml(text);
-
       const pattern = new RegExp("(" + names.map(escapeRegex).join("|") + ")", "g");
       const parts = text.split(pattern);
       return parts.map((part, i) => {
@@ -925,7 +878,6 @@
         return escapeHtml(part);
       }).join("");
     }
-
     function formatDateLabel(pubDateStr) {
       const d = new Date(pubDateStr);
       if (isNaN(d)) return "-";
@@ -935,13 +887,11 @@
       const mi = String(d.getMinutes()).padStart(2, "0");
       return `${mm}-${dd}<br>${hh}:${mi}`;
     }
-
     function renderThead(panelId) {
       document.getElementById("thead-" + panelId).innerHTML =
         '<div class="thead"><span class="c-org">언론사</span>' +
         '<span class="c-title">제목</span><span class="c-date">게시일자</span></div>';
     }
-
     function itemToHtml(item, tagKey) {
       const tag = item[tagKey] || "";
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(item.summary, 150))}</p>` : "";
@@ -955,69 +905,11 @@
         `<span class="c-date">${formatDateLabel(item.pubDate)}</span>` +
         `</div></div></div>`;
     }
-
-
-    /** 정부기관/공기업은 "기관별로 묶어서 보여주기" 방식이라 다른 탭과 렌더링 구조가 다르다. */
-    function govItemHtml(it) {
-      const summaryHtml = it.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(it.summary, 150))}</p>` : "";
-      return `<div class="item"><div class="c-title">` +
-        `<a class="row-title" href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>` +
-        summaryHtml + `</div><span class="c-date">${escapeHtml(formatGovDate(it.pubDate))}</span></div>`;
-    }
-    /** 정부기관/공기업은 "기관별로 묶어서, 오늘 것은 바로 보여주고 최근 5건은 더보기로 접기" 구조라
-     * 다른 탭과 렌더링 방식이 다르다(원본 scraper.py org_group()과 동일한 규칙). */
-    function renderGovPanel(panelId, orgList) {
-      document.getElementById("thead-" + panelId).innerHTML =
-        '<div class="thead"><span class="c-org">기관</span>' +
-        '<span class="c-title">제목</span><span class="c-date">게시일자</span></div>';
-      const st = panelState[panelId];
-      const todayByOrg = {};
-      const recentByOrg = {};
-      st.today.forEach((it) => { (todayByOrg[it.org] = todayByOrg[it.org] || []).push(it); });
-      st.recent.forEach((it) => { (recentByOrg[it.org] = recentByOrg[it.org] || []).push(it); });
-      const groupsHtml = orgList.map((org) => {
-        const boardUrl = boardUrlMap[org] || "#";
-        const todayItems = todayByOrg[org] || [];
-        const recentItems = recentByOrg[org] || [];
-        const failed = govFailedOrgs.has(org);
-        let bodyHtml;
-        if (failed) {
-          bodyHtml = `<div class="item"><div class="c-title"><span class="msg fail">` +
-            `사이트 접속에 실패하여 확인하지 못했습니다. 다음 자동 실행에서 다시 시도합니다.</span></div>` +
-            `<span class="c-date">–</span></div>`;
-        } else if (todayItems.length > 0) {
-          bodyHtml = todayItems.map(govItemHtml).join("");
-        } else {
-          bodyHtml = `<div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div>` +
-            `<span class="c-date">–</span></div>`;
-        }
-        // 접속 실패가 아니고, 최근 게시글이 있으면 "더보기"로 접어서 추가
-        if (!failed && recentItems.length > 0) {
-          bodyHtml += `<details class="more"><summary>최근 게시글<span class="more-cta"></span></summary>` +
-            recentItems.map(govItemHtml).join("") + `</details>`;
-        }
-        return `<div class="org-group"><div class="og-org">` +
-          `<a href="${escapeHtml(boardUrl)}" target="_blank" rel="noopener">${escapeHtml(org)}</a></div>` +
-          `<div class="og-items">${bodyHtml}</div></div>`;
-      }).join("");
-      document.getElementById("list-" + panelId).innerHTML = groupsHtml;
-      document.getElementById("pager-" + panelId).innerHTML = "";
-    }
-    /** 보도자료 날짜는 연도 없이 월-일만 표시 (scraper.py 원본 규칙과 동일) */
-    function formatGovDate(dateStr) {
-      const m = (dateStr || "").match(/(\d{4})[.\-](\d{1,2})[.\-](\d{1,2})/);
-      if (!m) return dateStr || "-";
-      return `${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`;
-    }
-
-
-
     function renderPanelPage(panelId) {
       const st = panelState[panelId];
       const listEl = document.getElementById("list-" + panelId);
       const pagerEl = document.getElementById("pager-" + panelId);
       const total = st.filtered.length;
-
       if (total === 0) {
         listEl.innerHTML = '<div class="org-group"><div class="og-org"></div>' +
           '<div class="og-items"><div class="item"><div class="c-title">' +
@@ -1025,14 +917,11 @@
         pagerEl.innerHTML = "";
         return;
       }
-
       const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
       if (st.page > totalPages) st.page = totalPages;
       const start = (st.page - 1) * PAGE_SIZE;
       const pageItems = st.filtered.slice(start, start + PAGE_SIZE);
-
       listEl.innerHTML = pageItems.map((it) => itemToHtml(it, st.tagKey)).join("");
-
       let pagerHtml = "";
       pagerHtml += `<button type="button" ${st.page <= 1 ? "disabled" : ""} onclick="goToPage('${panelId}', 1)">«</button>`;
       pagerHtml += `<button type="button" ${st.page <= 1 ? "disabled" : ""} onclick="goToPage('${panelId}', ${st.page - 1})">‹</button>`;
@@ -1041,27 +930,22 @@
       pagerHtml += `<button type="button" ${st.page >= totalPages ? "disabled" : ""} onclick="goToPage('${panelId}', ${totalPages})">»</button>`;
       pagerEl.innerHTML = pagerHtml;
     }
-
     function goToPage(panelId, page) {
       panelState[panelId].page = page;
       renderPanelPage(panelId);
     }
-
     const CATEGORY_LABELS = { local: "지자체", listed: "국내기업", overseas: "해외기업" };
-
     function tagItemsWithCategory(panelId) {
       const tagKey = panelState[panelId].tagKey;
       return panelState[panelId].all.map((it) => Object.assign({}, it, {
         _category: CATEGORY_LABELS[panelId], _tagValue: it[tagKey] || "",
       }));
     }
-
     function allCategoryItems() {
       return [].concat(
         tagItemsWithCategory("local"), tagItemsWithCategory("listed"), tagItemsWithCategory("overseas")
       );
     }
-
     function keywordItemToHtml(item) {
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(item.summary, 150))}</p>` : "";
       const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(item._tagValue)}</span>` +
@@ -1074,7 +958,6 @@
         `<span class="c-date">${formatDateLabel(item.pubDate)}</span>` +
         `</div></div></div>`;
     }
-
     function renderKeywordResults(items, descText) {
       document.getElementById("kwResultDesc").textContent = descText;
       document.getElementById("thead-keyword").innerHTML =
@@ -1090,23 +973,18 @@
       const sorted = items.slice().sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
       listEl.innerHTML = sorted.map(keywordItemToHtml).join("");
     }
-
     var activeKeywordTerm = null;
-
     function resetFilterState() {
       activeKeywordTerm = null;
       document.getElementById("kwSidebarClear").style.display = "none";
       document.getElementById("liveSearchShared").value = "";
       document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
     }
-
     function showKeywordResults(kw, btn) {
       if (activeKeywordTerm === kw) { clearKeywordFilter(); return; } // 같은 키워드 다시 클릭 -> 해제
-
       activeKeywordTerm = kw;
       document.querySelectorAll(".kw-row").forEach((b) => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
-
       // 검색과 동일한 필터링 기준 적용 (제목이나 요약에 키워드가 포함된 기사 모두 추출)
       const q = kw.toLowerCase();
       const matched = allCategoryItems().filter((it) =>
@@ -1120,7 +998,6 @@
       renderKeywordResults(matched, `'${kw}' 관련 기사 ${matched.length}건 (지자체·국내기업·해외기업 통합)`);
       showTab("keyword");
     }
-
     function runGlobalSearch(term) {
       const q = term.trim().toLowerCase();
       if (!q) {
@@ -1140,23 +1017,18 @@
       renderKeywordResults(matched, `'${term}' 검색 결과 ${matched.length}건 (지자체·국내기업·해외기업 통합)`);
       showTab("keyword");
     }
-
-
     function clearKeywordFilter() {
       const wasKeyword = currentTab === "keyword";
       resetFilterState();
       if (wasKeyword) showTab("gov");
     }
-
     function onLiveSearchShared() {
       runGlobalSearch(document.getElementById("liveSearchShared").value);
     }
-
     function clearSearchInput() {
       document.getElementById("liveSearchShared").value = "";
       runGlobalSearch("");
     }
-
     function updateKeywordSidebar() {
       const counts = {};
       const allItems = allCategoryItems(); // 전체 기사 목록 (지자체, 국내기업, 해외기업 통합)
@@ -1172,7 +1044,6 @@
       panelState.overseas.all.forEach((it) => {
         if (it.company) uniqueKeywords.add(it.company);
       });
-
       // 2. 키워드를 클릭했을 때와 완전히 동일한 조건(제목/요약 포함 여부)으로 실제 매칭 개수를 카운트합니다.
       uniqueKeywords.forEach((kw) => {
         const q = kw.toLowerCase();
@@ -1183,7 +1054,6 @@
       });
       
       liveKeywordCounts = counts;
-
       // 건수가 많은 순으로 정렬하여 상위 6개 노출
       const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
       const kwListEl = document.getElementById("keyword-list");
@@ -1196,26 +1066,17 @@
           `<span class="kw-count">${cnt}건</span></button>`
         ).join("");
       }
-
       const totalNews = panelState.local.all.length + panelState.listed.all.length + panelState.overseas.all.length;
       document.getElementById("stat-news-total").textContent = totalNews;
       document.getElementById("stat-top-kw").textContent = sorted.length ? sorted[0][0] : "-";
     }
-
     function updateRecent10() {
+      const govPublic = JSON.parse(document.getElementById("gov-public-candidates").textContent)
+        .map((c) => ({
+          ts: new Date(c.sort_ts).getTime(), category: c.category, org: c.org,
+          title: c.title, link: c.link, disp: c.disp,
+        }));
       const liveCandidates = [];
-      panelState.gov.all.forEach((it) => {
-        liveCandidates.push({
-          ts: new Date(it.pubDate).getTime(), category: "정부기관", org: it.org,
-          title: it.title, link: it.link, disp: formatGovDate(it.pubDate),
-        });
-      });
-      panelState.public.all.forEach((it) => {
-        liveCandidates.push({
-          ts: new Date(it.pubDate).getTime(), category: "공기업", org: it.org,
-          title: it.title, link: it.link, disp: formatGovDate(it.pubDate),
-        });
-      });
       panelState.local.all.forEach((it) => {
         liveCandidates.push({
           ts: new Date(it.pubDate).getTime(), category: "지자체", org: it.region || "지자체",
@@ -1237,8 +1098,7 @@
           disp: formatDateLabel(it.pubDate).replace("<br>", " "),
         });
       });
-
-      const merged = liveCandidates.sort((a, b) => b.ts - a.ts).slice(0, 10);
+      const merged = govPublic.concat(liveCandidates).sort((a, b) => b.ts - a.ts).slice(0, 10);
       const listEl = document.getElementById("recent10List");
       if (merged.length === 0) {
         listEl.innerHTML = '<div class="r10-empty">표시할 자료가 없습니다</div>';
@@ -1255,9 +1115,7 @@
         `</div></div>`
       ).join("");
     }
-
     let _lastReportData = null;
-
     function todayDateStr() {
       const kst = new Date(Date.now() + 9 * 60 * 60000);
       const dayOfWeek = kst.getUTCDay(); // 0=일, 6=토
@@ -1271,25 +1129,20 @@
       const d = String(target.getUTCDate()).padStart(2, "0");
       return `${y}-${m}-${d}`;
     }
-
     function boldMarkup(escapedText) {
       return escapedText.replace(/\*\*(.+?)\*\*/g, "$1");
     }
-
     function renderReport(report) {
       _lastReportData = report;
       const summaryEl = document.getElementById("reportSummaryPart");
       const refsEl = document.getElementById("reportRefsPart");
-
       if (!report) {
         summaryEl.innerHTML = '<p class="r-empty">아직 생성된 보고서가 없습니다. 매일 오전 8시에 자동 생성됩니다.</p>';
         refsEl.innerHTML = "";
         return;
       }
-
       const byCategory = {};
       (report.sections || []).forEach((s) => { byCategory[s.category] = s; });
-
       function renderSection(s, paraId) {
         if (!s) return "";
         const bodyHtml = boldMarkup(escapeHtml(s.body || ""));
@@ -1299,7 +1152,6 @@
           `<p class="r-para" id="${paraId}">${bodyHtml}</p>` +
           `</div>`;
       }
-
       const sectionsHtml =
         `<div class="r-row-top">` +
         renderSection(byCategory["국내소식"], "rParaDomestic") +
@@ -1307,7 +1159,6 @@
         `</div>` +
         renderSection(byCategory["국내기업"]) +
         renderSection(byCategory["해외기업"]);
-
       summaryEl.innerHTML =
         `<div class="r-kicker">AI Data Center 일일 동향 레포트</div>` +
         `<div class="r-heading-row">` +
@@ -1319,7 +1170,6 @@
         `</div>` +
         `<div class="r-rule"></div>` +
         sectionsHtml;
-
       const refsHtml = (report.references || []).length
         ? `<div class="r-refs-title">참고 기사</div>` +
           report.references.map((r) =>
@@ -1331,7 +1181,6 @@
         : "";
       refsEl.innerHTML = refsHtml;
     }
-
     let _koreanFontReady = false;
     async function ensureKoreanFont(pdf) {
       if (_koreanFontReady) return;
@@ -1347,12 +1196,10 @@
       pdf.addFont("NanumGothic-Regular.ttf", "NanumGothic", "normal");
       _koreanFontReady = true;
     }
-
     function hexToRgb(hex) {
       const n = parseInt(hex.replace("#", ""), 16);
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     }
-
     async function downloadReportPDF() {
       const now = new Date();
       const kstNow = new Date(now.getTime() + 9 * 60 * 60000);
@@ -1367,17 +1214,14 @@
         const pageWidthMm = 210, pageHeightMm = 297;
         const marginTopMm = 15, marginBottomMm = 15;
         const usableHeightMm = pageHeightMm - marginTopMm - marginBottomMm;
-
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
-
         // ---- 1페이지: 요약 부분 (넘치면 한 페이지에 맞게 축소) ----
         const summaryEl = document.getElementById("reportSummaryPart");
         const summaryCanvas = await html2canvas(summaryEl, { scale: 2, backgroundColor: "#ffffff" });
         let sImgWidthMm = summaryEl.offsetWidth * PX_TO_MM;
         let sImgHeightMm = (summaryCanvas.height * sImgWidthMm) / summaryCanvas.width;
         let sMarginLeftMm = (pageWidthMm - sImgWidthMm) / 2 > 0 ? (pageWidthMm - sImgWidthMm) / 2 : 0;
-
         if (sImgHeightMm > usableHeightMm) {
           const scale = usableHeightMm / sImgHeightMm;
           sImgWidthMm *= scale;
@@ -1387,7 +1231,6 @@
         const sTopMm = marginTopMm + (usableHeightMm - sImgHeightMm) / 2 > marginTopMm
           ? marginTopMm : marginTopMm;
         pdf.addImage(summaryCanvas.toDataURL("image/png"), "PNG", sMarginLeftMm, marginTopMm, sImgWidthMm, sImgHeightMm);
-
         // ---- 2페이지부터: 참고 기사 (링크 포함, 여러 페이지로 이어질 수 있음) ----
         const refsEl = document.getElementById("reportRefsPart");
         const linkEls = Array.from(refsEl.querySelectorAll("a"));
@@ -1402,29 +1245,23 @@
             url: a.getAttribute("href"),
           };
         });
-
         const refsCanvas = await html2canvas(refsEl, { scale: 2, backgroundColor: "#ffffff" });
         const rImgWidthMm = refsEl.offsetWidth * PX_TO_MM;
         const rMarginLeftMm = (pageWidthMm - rImgWidthMm) / 2 > 0 ? (pageWidthMm - rImgWidthMm) / 2 : 0;
         const pxPerMm = refsCanvas.width / rImgWidthMm;
         const usableHeightPx = usableHeightMm * pxPerMm;
         const totalRefPages = Math.max(1, Math.ceil(refsCanvas.height / usableHeightPx));
-
         for (let p = 0; p < totalRefPages; p++) {
           pdf.addPage(); // 참고기사는 무조건 새 페이지(2페이지)부터 시작
-
           const srcY = p * usableHeightPx;
           const sliceHeightPx = Math.min(usableHeightPx, refsCanvas.height - srcY);
-
           const pageCanvas = document.createElement("canvas");
           pageCanvas.width = refsCanvas.width;
           pageCanvas.height = sliceHeightPx;
           const ctx = pageCanvas.getContext("2d");
           ctx.drawImage(refsCanvas, 0, srcY, refsCanvas.width, sliceHeightPx, 0, 0, refsCanvas.width, sliceHeightPx);
-
           const sliceHeightMm = sliceHeightPx / pxPerMm;
           pdf.addImage(pageCanvas.toDataURL("image/png"), "PNG", rMarginLeftMm, marginTopMm, rImgWidthMm, sliceHeightMm);
-
           const contentYStartMm = srcY / pxPerMm;
           linkRects.forEach((r) => {
             const yOnPage = marginTopMm + (r.y - contentYStartMm);
@@ -1433,7 +1270,6 @@
             }
           });
         }
-
         pdf.save(`AI_Data_Center_일일동향_보고서_${todayStr}.pdf`);
       } catch (e) {
         alert("PDF 생성에 실패했습니다: " + e);
@@ -1441,31 +1277,25 @@
         btn.disabled = false;
       }
     }
-
     function splitSentences(text) {
       return (text.match(/[^.!?]+[.!?]+(\s+|$)/g) || [text]).map((s) => s.trim()).filter(Boolean);
     }
-
     function trimParagraphsToMatch() {
       return; // 문장 높이 맞추기 로직 비활성화
   
       const domesticEl = document.getElementById("rParaDomestic");
       const overseasEl = document.getElementById("rParaOverseas");
       if (!domesticEl || !overseasEl || !_lastReportData) return;
-
       const byCategory = {};
       (_lastReportData.sections || []).forEach((s) => { byCategory[s.category] = s; });
       const domesticText = byCategory["국내소식"]?.body || "";
       const overseasText = byCategory["해외소식"]?.body || "";
-
       const domesticH = domesticEl.scrollHeight;
       const overseasH = overseasEl.scrollHeight;
       if (domesticH === overseasH) return;
-
       const [longerEl, longerText, targetH] = domesticH > overseasH
         ? [domesticEl, domesticText, overseasH]
         : [overseasEl, overseasText, domesticH];
-
       let sentences = splitSentences(longerText);
       let safety = 30;
       while (sentences.length > 1 && longerEl.scrollHeight > targetH && safety-- > 0) {
@@ -1473,43 +1303,24 @@
         longerEl.textContent = sentences.join(" ");
       }
     }
-
     function openReportModal() {
       document.getElementById("reportModal").style.display = "flex";
       requestAnimationFrame(() => requestAnimationFrame(trimParagraphsToMatch));
     }
-
     function closeReportModal() {
       document.getElementById("reportModal").style.display = "none";
     }
-
     async function loadLiveNews() {
       ["local", "listed", "overseas"].forEach(renderThead);
       try {
         const resp = await fetch(NEWS_WORKER_URL);
         const data = await resp.json();
-
-        panelState.gov.today = (data.gov_today || []).filter((it) => GOV_AGENCIES_LIST.includes(it.org));
-        panelState.gov.recent = (data.gov_recent || []).filter((it) => GOV_AGENCIES_LIST.includes(it.org));
-        panelState.public.today = (data.gov_today || []).filter((it) => PUBLIC_ENTERPRISES_LIST.includes(it.org));
-        panelState.public.recent = (data.gov_recent || []).filter((it) => PUBLIC_ENTERPRISES_LIST.includes(it.org));
-        panelState.gov.all = panelState.gov.today.concat(panelState.gov.recent);
-        panelState.public.all = panelState.public.today.concat(panelState.public.recent);
-        govFailedOrgs.clear();
-        (data.gov_failed || []).forEach((org) => govFailedOrgs.add(org));
-        renderGovPanel("gov", GOV_AGENCIES_LIST);
-        renderGovPanel("public", PUBLIC_ENTERPRISES_LIST);
-        const govTodayCount = (data.gov_today || []).length;
-        document.getElementById("stat-press-count").textContent = govTodayCount;
-
         panelState.local.all = data.region || [];
         panelState.listed.all = data.company || [];
         panelState.overseas.all = data.overseas || [];
-
         if (data.overview && data.overview.trim()) {
           document.getElementById("overviewText").innerHTML = linkifyOverviewText(data.overview);
         }
-
         if (data.updated_at) {
           const d = new Date(data.updated_at);
           const kst = new Date(d.getTime() + 9 * 60 * 60000);
@@ -1521,15 +1332,12 @@
           document.getElementById("metaUpdatedAt").textContent =
             `${y}년 ${mo}월 ${da}일 · ${hh}:${mi} 업데이트`;
         }
-
         renderReport(data.report || null);
-
         ["local", "listed", "overseas"].forEach((panelId) => {
           panelState[panelId].filtered = panelState[panelId].all;
           panelState[panelId].page = 1;
           renderPanelPage(panelId);
         });
-
         updateKeywordSidebar();
         updateRecent10();
       } catch (e) {
@@ -1543,7 +1351,6 @@
         });
       }
     }
-
     loadLiveNews();
   </script>
 </body>
