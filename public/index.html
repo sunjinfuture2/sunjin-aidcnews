@@ -280,6 +280,11 @@
   .row-summary { font-size: 13.5px; color: var(--ink-soft); line-height: 1.7; margin: 5px 0 0; }
   .row-meta { font-size: 12px; color: var(--ink-mute); margin: 7px 0 0; display: flex; gap: 14px; align-items: center; }
   .row-meta .tag { color: var(--ink-soft); }
+  .ai-link {
+    background: none; border: none; padding: 0; cursor: pointer;
+    font-family: inherit; font-size: 12px; color: var(--accent);
+  }
+  .ai-link:hover { color: var(--accent-hover); }
   details.row-expand { margin-top: 5px; }
   details.row-expand summary {
     font-size: 12.5px; color: var(--accent); cursor: pointer; list-style: none; display: inline;
@@ -330,18 +335,117 @@
     padding: 10px 0; border-bottom: 1px solid var(--line);
   }
   .shortcut:hover { color: var(--accent); }
-  /* ---------- REPORT 플로팅 버튼 ---------- */
+  /* ---------- 플로팅 AI 버튼 + 채팅 ---------- */
+  /* ---------- 플로팅 버튼(RECENT 10 / AI 채팅) ---------- */
   .floating-actions {
     position: fixed; right: 28px; bottom: 28px; z-index: 1000;
     display: flex; align-items: center; gap: 10px;
   }
-  #reportToggle {
+  #reportToggle, #recentToggle, #aiChatToggle {
     display: flex; align-items: center; gap: 8px;
     background: var(--ink); color: #fff; border: none; border-radius: 28px;
     padding: 14px 22px; font-family: inherit; font-size: 14px; font-weight: 600;
     cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   }
-  #reportToggle:hover { background: #000; }
+  #reportToggle:hover, #recentToggle:hover, #aiChatToggle:hover { background: #000; }
+  #aiChatPanel, #recentPanel {
+    position: fixed; right: 28px; bottom: 88px; z-index: 1000;
+    width: 380px; max-width: calc(100vw - 56px); height: 500px;
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+    display: none;
+    flex-direction: column; overflow: hidden;
+  }
+  #aiChatPanel.open, #recentPanel.open { display: flex; }
+  #aiChatPanel.drag-over {
+    background: rgba(255, 105, 0, 0.04);
+  }
+  #recent10List { flex: 1; overflow-y: auto; padding: 8px 14px; }
+  .recent10-row {
+    display: flex; flex-direction: column; gap: 5px; padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .r10-top { display: flex; align-items: center; gap: 8px; }
+  .r10-badge {
+    flex: 0 0 auto; font-size: 10.5px; font-weight: 700; color: var(--ink-soft);
+    background: var(--line); border-radius: 10px; padding: 2px 9px; white-space: nowrap;
+  }
+  .r10-org { font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+  .r10-title {
+    font-size: 13.5px; line-height: 1.5; color: var(--ink); text-decoration: none;
+  }
+  .r10-title:hover { text-decoration: underline; color: var(--accent); }
+  .r10-date { font-size: 11.5px; color: var(--ink-mute); }
+  .r10-bottom {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 4px;
+  }
+  .r10-empty { padding: 20px 14px; font-size: 13px; color: var(--ink-mute); }
+  .ai-chat-header {
+    background: var(--ink); color: #fff; padding: 16px 20px;
+    font-size: 13.5px; font-weight: 600; letter-spacing: 0.3px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .ai-chat-header-actions { display: flex; align-items: center; gap: 6px; }
+  .ai-chat-clear-btn {
+    cursor: pointer; font-size: 11px; font-weight: 600; color: #fff;
+    background: rgba(255,255,255,0.12); border: none; border-radius: 999px;
+    padding: 0 10px; height: 26px; white-space: nowrap;
+    display: inline-flex; align-items: center;
+    font-family: inherit; transition: background 0.15s ease;
+  }
+  .ai-chat-clear-btn:hover { background: rgba(255,255,255,0.28); }
+  .ai-chat-header button:not(.ai-chat-clear-btn) {
+    background: rgba(255,255,255,0.12); border: none; color: #fff; font-size: 13px;
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s ease;
+  }
+  .ai-chat-header button:hover { background: rgba(255,255,255,0.24); }
+  #aiChatMessages { flex: 1; overflow-y: auto; padding: 16px; font-size: 13.5px; background: var(--paper); }
+  .ai-msg { margin-bottom: 14px; line-height: 1.65; white-space: pre-wrap; word-break: break-all; }
+  .ai-msg.user { text-align: right; }
+  .ai-msg.user .bubble {
+    display: inline-block; background: var(--ink); color: #fff;
+    padding: 10px 14px; max-width: 85%; text-align: left;
+    border-radius: 16px 16px 4px 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .ai-msg-link { color: inherit; text-decoration: none; }
+  .ai-msg-link:hover { text-decoration: underline; }
+  .ai-msg.bot .bubble {
+    display: inline-block; background: #f1f0ea; color: var(--ink);
+    padding: 10px 14px; max-width: 85%;
+    border-radius: 16px 16px 16px 4px;
+  }
+  .ai-chat-input {
+    border-top: 1px solid var(--line); padding: 12px; display: flex; gap: 8px; align-items: center;
+    background: var(--paper);
+  }
+  .ai-chat-input input[type="text"] {
+    flex: 1; border: 1px solid var(--line); border-radius: 999px; padding: 9px 15px;
+    font-family: inherit; font-size: 13px; min-width: 0; background: #fff; color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+  .ai-chat-input input[type="text"]:focus { outline: none; border-color: var(--accent); }
+  .ai-chat-input button {
+    background: var(--ink); color: #fff; border: none; border-radius: 999px; padding: 9px 16px;
+    font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .ai-chat-input button:hover { background: var(--accent-hover); }
+  .ai-chat-input label {
+    background: #f1f0ea; color: var(--ink-soft); padding: 9px 13px; border-radius: 999px;
+    font-size: 13px; cursor: pointer; white-space: nowrap; transition: background 0.15s ease;
+  .ai-chat-input label:hover { background: #e4e2db; }
+  }
+  .ai-chat-input label {
+    background: #f1f0ea; color: var(--ink-soft); padding: 9px 11px;
+    font-size: 13px; cursor: pointer; white-space: nowrap;
+  }
+  .ai-chat-input input[type="file"] { display: none; }
+  
   /* ---------- 반응형 ---------- */
   @media (max-width: 900px) {
     .sheet { padding: 32px 22px 90px; }
@@ -390,7 +494,12 @@
     .kw-row .kw-count { font-size: 10.5px; }
     .shortcut { font-size: 12px; padding: 8px 0; }
     .floating-actions { right: 14px; bottom: 14px; gap: 6px; }
-    #reportToggle { padding: 10px 14px; font-size: 12px; gap: 5px; }
+    #reportToggle, #recentToggle, #aiChatToggle { padding: 10px 14px; font-size: 12px; gap: 5px; }
+    #aiChatPanel, #recentPanel { right: 10px; left: 10px; width: auto; bottom: 74px; height: 60vh; }
+    .r10-title { font-size: 12px; }
+    .r10-org { font-size: 11px; }
+    .r10-badge { font-size: 9.5px; padding: 1px 7px; }
+    .r10-date { font-size: 10.5px; }
     .page-footer { font-size: 10.5px; margin-top: 28px; }
     .live-search-wrap { width: 100%; max-width: none; }
     .live-search-input { font-size: 12px; }
@@ -408,16 +517,16 @@
   </div>
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 11월 02일 · 13:12 업데이트
+      2026년 11월 02일 · 15:00 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
       <div class="label">OVERVIEW</div>
     </div>
     <div class="inner">
-      <p class="summary" id="overviewText">오늘 <a href="https://www.msit.go.kr/bbs/list.do?sCode=user&amp;mPid=208&amp;mId=307" target="_blank" rel="noopener">과학기술정보통신부</a>·<a href="https://mcee.go.kr/home/web/index.do?menuId=10598" target="_blank" rel="noopener">기후에너지환경부</a>·<a href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c" target="_blank" rel="noopener">산업통상부</a>·<a href="https://www.kepco.co.kr/home/media/newsroom/pr/boardList.do" target="_blank" rel="noopener">한국전력공사</a>·<a href="https://nia.or.kr/site/nia_kor/ex/bbs/List.do?cbIdx=90549" target="_blank" rel="noopener">한국지능정보사회진흥원</a>에서 신규 보도자료 9건이 등록됨.</p>
+      <p class="summary" id="overviewText">오늘 <a href="https://www.msit.go.kr/bbs/list.do?sCode=user&amp;mPid=208&amp;mId=307" target="_blank" rel="noopener">과학기술정보통신부</a>·<a href="https://mcee.go.kr/home/web/index.do?menuId=10598" target="_blank" rel="noopener">기후에너지환경부</a>·<a href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c" target="_blank" rel="noopener">산업통상부</a>·<a href="https://www.kepco.co.kr/home/media/newsroom/pr/boardList.do" target="_blank" rel="noopener">한국전력공사</a>·<a href="https://nia.or.kr/site/nia_kor/ex/bbs/List.do?cbIdx=90549" target="_blank" rel="noopener">한국지능정보사회진흥원</a>에서 신규 보도자료 10건이 등록됨.</p>
       <div class="stats">
-        <div class="stat"><span class="k">신규 보도자료</span><span class="v">9</span></div>
+        <div class="stat"><span class="k">신규 보도자료</span><span class="v">10</span></div>
         <div class="stat"><span class="k">수집기사</span><span class="v" id="stat-news-total">0</span></div>
         <div class="stat"><span class="k">최다언급</span><span class="v word" id="stat-top-kw">-</span></div>
       </div>
@@ -444,7 +553,7 @@
           </svg>
         </span>
       </div>
-      <div id="tab-gov" class="tab-panel active"><div class="thead"><span class="c-org">기관</span><span class="c-title">제목</span><span class="c-date">게시일자</span></div><div class="org-group"><div class="og-org"><a href="https://www.msit.go.kr/bbs/list.do?sCode=user&amp;mPid=208&amp;mId=307" target="_blank" rel="noopener">과학기술정보통신부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187912" target="_blank" rel="noopener">표준과 지식재산(특허)으로 여는 피지컬 AI 시대, 글로벌 주도권 확보 나선다</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187910" target="_blank" rel="noopener">국가 슈퍼컴퓨터 6호기 ‘한강’ 본격 가동</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187911" target="_blank" rel="noopener">[연구행정 혁신+-⑨] “협력의 문은 넓게, 기술주권 수호는 확실하게”</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187909" target="_blank" rel="noopener">[연구행정 혁신+-⑧] “해외 논문 성과등록 논문 고유번호만 넣으면 끝!”범부처 통합연구지원시스템, 연구자 눈높이로 대폭 변신</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187908" target="_blank" rel="noopener">국민AI서비스혁신추진단장 김세웅 단장 취임</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187906" target="_blank" rel="noopener">과기정통부, 통신재난 대응 강화로 국민 일상 보호</a></div><span class="c-date">10-30</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://mcee.go.kr/home/web/index.do?menuId=10598" target="_blank" rel="noopener">기후에너지환경부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903480" target="_blank" rel="noopener">제17차 생물다양성협약 당사국총회 마무리</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903460" target="_blank" rel="noopener">원전 공론화위원회, 시민참여단 선정 위한 국민기초조사 시작</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903390" target="_blank" rel="noopener">지방정부 10곳 2026년도 환경교육도시로 선정… 지역 중심 탄소중립 사회 실현에 기여</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903380" target="_blank" rel="noopener">제21회 생물다양성 세밀화·인공지능 이미지 공모전 수상작 41점 공개</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903370" target="_blank" rel="noopener">야생동물 질병 전문인력 양성, 연구성과 공유의 장 마련</a></div><span class="c-date">11-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903360" target="_blank" rel="noopener">국립공원공단, 가을 산불 총력 대응 나선다</a></div><span class="c-date">11-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903400" target="_blank" rel="noopener">2026년 수소발전 입찰시장 개설</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903320" target="_blank" rel="noopener">고준위위원회, 고준위 방사성폐기물 관리시설 부적합지역 배제기준 확정</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903260" target="_blank" rel="noopener">한-독, 전기화 시대 산업경쟁력 확보 위한 에너지 협력 강화</a></div><span class="c-date">10-30</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c" target="_blank" rel="noopener">산업통상부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172363/view" target="_blank" rel="noopener">산업부, 체코 원전사업 비상관리체제 가동</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172362/view" target="_blank" rel="noopener">정상 경제외교 성과, 수출‧수주 본계약까지 잇는다</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172360/view" target="_blank" rel="noopener">2026년 10월 수출입 동향</a></div><span class="c-date">11-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172359/view" target="_blank" rel="noopener">(참고자료)EU, 수입 하이브리드 자동차에 대한 글로벌 세이프가드 조사 개시</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172358/view" target="_blank" rel="noopener">제1회 ‘공학인의 날’ 개최… 공학인의 도전과 미래를 응원한다</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172357/view" target="_blank" rel="noopener">통상교섭본부장, K-콘텐츠 기업과 함께중국 시장 진출 전략 모색</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172356/view" target="_blank" rel="noopener">민관 원팀으로 중동發 공급망 위기 넘어, 구조개편 가속화로 화학산업 재도약 다짐</a></div><span class="c-date">10-30</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.aikorea.go.kr/web/board/brdList.do?menu_cd=000012" target="_blank" rel="noopener">국가인공지능전략위원회</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1056" target="_blank" rel="noopener">(&#x27;26. 10. 22.) 국가AI전략위, 포항서 &#x27;제조 현장부터  AI 데이터센터까지&#x27; 경북 AI 생태계 살펴</a></div><span class="c-date">10-22</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1051" target="_blank" rel="noopener">(&#x27;26. 10. 21) 국가AI전략위, 소셜미디어 게시물 논란위원 해촉</a></div><span class="c-date">10-21</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1050" target="_blank" rel="noopener">(&#x27;26. 10. 21.) 국가AI전략위, 대구서 &#x27;제조·로봇·모빌리티 AX&#x27; 정책현장 방문</a></div><span class="c-date">10-21</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1044" target="_blank" rel="noopener">(&#x27;26. 10. 20.) 국가AI전략위, 강원서 ‘AI 기본의료·교통·데이터센터’ 정책현장 방문</a></div><span class="c-date">10-20</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1030" target="_blank" rel="noopener">(&#x27;26. 10. 15.) 국가AI전략위, 복지부와 함께 국가 의료·바이오 AI 혁신을 위한 바이오 데이터 기증에 솔선수범</a></div><span class="c-date">10-15</span></div></details></div></div></div>
+      <div id="tab-gov" class="tab-panel active"><div class="thead"><span class="c-org">기관</span><span class="c-title">제목</span><span class="c-date">게시일자</span></div><div class="org-group"><div class="og-org"><a href="https://www.msit.go.kr/bbs/list.do?sCode=user&amp;mPid=208&amp;mId=307" target="_blank" rel="noopener">과학기술정보통신부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187912" target="_blank" rel="noopener">표준과 지식재산(특허)으로 여는 피지컬 AI 시대, 글로벌 주도권 확보 나선다</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187910" target="_blank" rel="noopener">국가 슈퍼컴퓨터 6호기 ‘한강’ 본격 가동</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187911" target="_blank" rel="noopener">[연구행정 혁신+-⑨] “협력의 문은 넓게, 기술주권 수호는 확실하게”</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187909" target="_blank" rel="noopener">[연구행정 혁신+-⑧] “해외 논문 성과등록 논문 고유번호만 넣으면 끝!”범부처 통합연구지원시스템, 연구자 눈높이로 대폭 변신</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187908" target="_blank" rel="noopener">국민AI서비스혁신추진단장 김세웅 단장 취임</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.msit.go.kr/bbs/view.do?sCode=user&amp;bbsSeqNo=94&amp;nttSeqNo=3187906" target="_blank" rel="noopener">과기정통부, 통신재난 대응 강화로 국민 일상 보호</a></div><span class="c-date">10-30</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://mcee.go.kr/home/web/index.do?menuId=10598" target="_blank" rel="noopener">기후에너지환경부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903520" target="_blank" rel="noopener">우리의(지구를 위한) 기후행동, 전기차 전환 서명에 동참해 주세요</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903480" target="_blank" rel="noopener">제17차 생물다양성협약 당사국총회 마무리</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903460" target="_blank" rel="noopener">원전 공론화위원회, 시민참여단 선정 위한 국민기초조사 시작</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903390" target="_blank" rel="noopener">지방정부 10곳 2026년도 환경교육도시로 선정… 지역 중심 탄소중립 사회 실현에 기여</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903380" target="_blank" rel="noopener">제21회 생물다양성 세밀화·인공지능 이미지 공모전 수상작 41점 공개</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903370" target="_blank" rel="noopener">야생동물 질병 전문인력 양성, 연구성과 공유의 장 마련</a></div><span class="c-date">11-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903360" target="_blank" rel="noopener">국립공원공단, 가을 산불 총력 대응 나선다</a></div><span class="c-date">11-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903400" target="_blank" rel="noopener">2026년 수소발전 입찰시장 개설</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903320" target="_blank" rel="noopener">고준위위원회, 고준위 방사성폐기물 관리시설 부적합지역 배제기준 확정</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://mcee.go.kr/home/web/board/read.do?menuId=10598&amp;boardMasterId=939&amp;boardId=1903260" target="_blank" rel="noopener">한-독, 전기화 시대 산업경쟁력 확보 위한 에너지 협력 강화</a></div><span class="c-date">10-30</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c" target="_blank" rel="noopener">산업통상부</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172363/view" target="_blank" rel="noopener">산업부, 체코 원전사업 비상관리체제 가동</a></div><span class="c-date">11-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172362/view" target="_blank" rel="noopener">정상 경제외교 성과, 수출‧수주 본계약까지 잇는다</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172360/view" target="_blank" rel="noopener">2026년 10월 수출입 동향</a></div><span class="c-date">11-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172359/view" target="_blank" rel="noopener">(참고자료)EU, 수입 하이브리드 자동차에 대한 글로벌 세이프가드 조사 개시</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172358/view" target="_blank" rel="noopener">제1회 ‘공학인의 날’ 개최… 공학인의 도전과 미래를 응원한다</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172357/view" target="_blank" rel="noopener">통상교섭본부장, K-콘텐츠 기업과 함께중국 시장 진출 전략 모색</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172356/view" target="_blank" rel="noopener">민관 원팀으로 중동發 공급망 위기 넘어, 구조개편 가속화로 화학산업 재도약 다짐</a></div><span class="c-date">10-30</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.aikorea.go.kr/web/board/brdList.do?menu_cd=000012" target="_blank" rel="noopener">국가인공지능전략위원회</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1056" target="_blank" rel="noopener">(&#x27;26. 10. 22.) 국가AI전략위, 포항서 &#x27;제조 현장부터  AI 데이터센터까지&#x27; 경북 AI 생태계 살펴</a></div><span class="c-date">10-22</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1051" target="_blank" rel="noopener">(&#x27;26. 10. 21) 국가AI전략위, 소셜미디어 게시물 논란위원 해촉</a></div><span class="c-date">10-21</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1050" target="_blank" rel="noopener">(&#x27;26. 10. 21.) 국가AI전략위, 대구서 &#x27;제조·로봇·모빌리티 AX&#x27; 정책현장 방문</a></div><span class="c-date">10-21</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1044" target="_blank" rel="noopener">(&#x27;26. 10. 20.) 국가AI전략위, 강원서 ‘AI 기본의료·교통·데이터센터’ 정책현장 방문</a></div><span class="c-date">10-20</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&amp;num=1030" target="_blank" rel="noopener">(&#x27;26. 10. 15.) 국가AI전략위, 복지부와 함께 국가 의료·바이오 AI 혁신을 위한 바이오 데이터 기증에 솔선수범</a></div><span class="c-date">10-15</span></div></details></div></div></div>
       <div id="tab-public" class="tab-panel"><div class="thead"><span class="c-org">기관</span><span class="c-title">제목</span><span class="c-date">게시일자</span></div><div class="org-group"><div class="og-org"><a href="https://www.kepco.co.kr/home/media/newsroom/pr/boardList.do" target="_blank" rel="noopener">한국전력공사</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3180" target="_blank" rel="noopener">한전·권익위, 청년리더 정책 교류 세미나 개최</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3179" target="_blank" rel="noopener">한전, 「2026 K-ESG 경영대상」 종합 ESG 대상 및 고용노동부 장관상 수상</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3178" target="_blank" rel="noopener">[보도설명]호남권 반도체 산단 전력공급용 변압기 확보 관련 보도 설명</a></div><span class="c-date">10-29</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3177" target="_blank" rel="noopener">한전, BIXPO 2026 개최! 에너지 신기술의 사업화·투자 기회 넓힌다</a></div><span class="c-date">10-29</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3176" target="_blank" rel="noopener">한전, 「2026 공공기관 AI 혁신 챌린지」 최우수상 수상... AI로 국민 생명과 안전 지켰다</a></div><span class="c-date">10-29</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&amp;boardNo=3175" target="_blank" rel="noopener">한전, 제21회 인사혁신 우수사례 경진대회에서 대통령상·인사혁신처장상 동시 수상</a></div><span class="c-date">10-28</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.kwater.or.kr/news/repoList.do?brdId=KO26&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=141132&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, 농어촌공사·한수원과 새만금 조력발전 개발 협력 업무협약 체결</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=141130&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, ‘혁신챌린지’로 차세대 AI 물관리 혁신 솔루션 발굴 이끈다</a></div><span class="c-date">10-30</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=141126&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, 美 오스틴시와 AI 물관리 협력 본격화… 미국 물시장 진출 교두보 확대</a></div><span class="c-date">10-29</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=141125&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, 안동댐 50년 넘어 미래 100년 연다… 물관리 혁신·지역 상생 비전 선포</a></div><span class="c-date">10-28</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.kwater.or.kr/news/repoView.do?seq=141121&amp;brdId=KO26&amp;orderByField=&amp;orderByDirection=&amp;s_mid=36" target="_blank" rel="noopener">한국수자원공사, 마이크로소프트와 수도권·부산 물 복원 협력 계약 체결</a></div><span class="c-date">10-28</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://www.nipa.kr/home/4-4-1" target="_blank" rel="noopener">정보통신산업진흥원</a></div><div class="og-items"><div class="item"><div class="c-title"><span class="msg empty">오늘 등록된 보도자료 없음</span></div><span class="c-date">–</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16981" target="_blank" rel="noopener">정보통신산업진흥원, 도쿄에서 국내 디지털 기업의 일본 시장 개척 활동 추진</a></div><span class="c-date">10-29</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16978" target="_blank" rel="noopener">정보통신산업진흥원, ‘글로벌 피우다프로젝트’ 일본으로 확대… 한일 사회문제 해결에 나선다.</a></div><span class="c-date">10-27</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16961" target="_blank" rel="noopener">정보통신산업진흥원, 서비스형 소프트웨어(SaaS) 국내 기업의 일본 진출 지원 본격 추진</a></div><span class="c-date">10-06</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16942" target="_blank" rel="noopener">정보통신산업진흥원, 한국엔젤투자협회와 손잡고 스타트업 국내외 양방향 진출 지원 나선다.</a></div><span class="c-date">09-21</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://www.nipa.kr/home/4-4-1/16941" target="_blank" rel="noopener">정보통신산업진흥원, 호찌민시와 한-베 인공지능 전환 협력 맞손</a></div><span class="c-date">09-18</span></div></details></div></div><div class="org-group"><div class="og-org"><a href="https://nia.or.kr/site/nia_kor/ex/bbs/List.do?cbIdx=90549" target="_blank" rel="noopener">한국지능정보사회진흥원</a></div><div class="og-items"><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=30149&amp;parentSeq=30149" target="_blank" rel="noopener">NIA, 제2회 청소년 「AI윤리 ON」 캠프 개최</a></div><span class="c-date">11-02</span></div><details class="more"><summary>최근 게시글<span class="more-cta"></span></summary><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=30139&amp;parentSeq=30139" target="_blank" rel="noopener">NIA, AI 대전환 대응 위한 디지털 ESG 민관 협력 강화</a></div><span class="c-date">10-28</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=30078&amp;parentSeq=30078" target="_blank" rel="noopener">NIA, 공무원의 AI 활용 직접개발 산출물의 권리 귀속과 인센티브 방안 마련을 위한 「제1회 AI 정부 포럼」 개최</a></div><span class="c-date">10-19</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=30047&amp;parentSeq=30047" target="_blank" rel="noopener">NIA, 대학과 기업이 협력하고 국가가 지원하는 K-AI 네트워크 경쟁력 강화 사업 본격 출격</a></div><span class="c-date">10-02</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=30035&amp;parentSeq=30035" target="_blank" rel="noopener">NIA 가명정보 결합 지원 성과 창출</a></div><span class="c-date">10-01</span></div><div class="item"><div class="c-title"><a class="row-title" href="https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&amp;bcIdx=30023&amp;parentSeq=30023" target="_blank" rel="noopener">NIA,「AI데이터안심활용센터」개소</a></div><span class="c-date">09-30</span></div></details></div></div></div>
       <div id="tab-local" class="tab-panel">
       <div id="thead-local"></div>
@@ -492,9 +601,17 @@
       }
     }
   </script>
-  <!-- ===== REPORT ===== -->
+  <!-- ===== RECENT 10 / REPORT ===== -->
   <div class="floating-actions">
     <button id="reportToggle" onclick="openReportModal()" title="일일 동향 보고서">REPORT</button>
+    <button id="recentToggle" onclick="toggleRecentPanel()" title="최근 10건">RECENT 10</button>
+  </div>
+  <div id="recentPanel">
+    <div class="ai-chat-header">
+      <span>최근 10건</span>
+      <button type="button" onclick="toggleRecentPanel()">✕</button>
+    </div>
+    <div id="recent10List"><div class="r10-empty">불러오는 중...</div></div>
   </div>
   <!-- ===== 일일 동향 보고서 모달 ===== -->
   <div id="reportModal" style="display:none">
@@ -518,9 +635,210 @@
       </div>
     </div>
   </div>
+  <div id="aiChatPanel">
+    <div class="ai-chat-header">
+      <span>AI 요약 도우미</span>
+      <span class="ai-chat-header-actions">
+        <button type="button" class="ai-chat-clear-btn" onclick="aiClearChat()" title="대화 내용 지우기">대화 내용 지우기</button>
+        <button type="button" onclick="toggleAiChat()">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L10 10M10 1L1 10" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </span>
+    </div>
+    <div id="aiChatMessages">
+      <div class="ai-msg bot"><span class="bubble">안녕하세요! 저는 기사 전문 요약 도우미예요🙂<br><br>· 기사 옆 "AI 요약하기" 버튼 클릭<br>· 기사 링크 붙여넣기<br>· 텍스트 형식의 PDF 파일 첨부<br><br>세 가지 중 하나로 요청해주세요.</span></div>
+    </div>
+    <div class="ai-chat-input">
+      <label for="aiPdfInput">PDF</label>
+      <input type="file" id="aiPdfInput" accept="application/pdf" onchange="aiHandlePdf(this)">
+      <input type="text" id="aiChatText" placeholder="기사 링크 붙여넣기" onkeydown="if(event.key==='Enter')aiSendText()">
+      <button type="button" onclick="aiSendText()">전송</button>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const AI_WORKER_URL = "https://ai-summary-claude.sunjinfuture2.workers.dev/";
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    }
+    function toggleAiChat() {
+      document.getElementById('recentPanel').classList.remove('open');
+      document.getElementById('aiChatPanel').classList.toggle('open');
+    }
+    function toggleRecentPanel() {
+      document.getElementById('aiChatPanel').classList.remove('open');
+      document.getElementById('recentPanel').classList.toggle('open');
+    }
+    function aiAddMsg(role, text, linkUrl) {
+      const box = document.getElementById('aiChatMessages');
+      const div = document.createElement('div');
+      div.className = 'ai-msg ' + role;
+      const bubble = document.createElement('span');
+      bubble.className = 'bubble';
+      if (linkUrl) {
+        const a = document.createElement('a');
+        a.href = linkUrl;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = text;
+        a.className = 'ai-msg-link';
+        bubble.appendChild(a);
+      } else {
+        bubble.textContent = text;
+      }
+      div.appendChild(bubble);
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+      saveChatHistory();
+      return bubble;
+    }
+    function saveChatHistory() {
+      const box = document.getElementById('aiChatMessages');
+      const messages = Array.from(box.querySelectorAll('.ai-msg')).map((div) => {
+        const bubble = div.querySelector('.bubble');
+        const link = bubble.querySelector('a.ai-msg-link');
+        return {
+          role: div.classList.contains('user') ? 'user' : 'bot',
+          text: link ? link.textContent : bubble.textContent,
+          linkUrl: link ? link.getAttribute('href') : null,
+        };
+      }).slice(-50);
+      try {
+        localStorage.setItem('aiChatHistory', JSON.stringify(messages));
+      } catch (e) {
+        console.error('채팅 기록 저장 실패:', e);
+      }
+    }
+    function loadChatHistory() {
+      let saved;
+      try {
+        saved = JSON.parse(localStorage.getItem('aiChatHistory') || '[]');
+      } catch (e) {
+        saved = [];
+      }
+      if (!saved.length) return;
+      const box = document.getElementById('aiChatMessages');
+      box.innerHTML = '';
+      saved.forEach((m) => aiAddMsg(m.role, m.text, m.linkUrl || undefined));
+    }
+    function aiClearChat() {
+      localStorage.removeItem('aiChatHistory');
+      const box = document.getElementById('aiChatMessages');
+      box.innerHTML = '<div class="ai-msg bot"><span class="bubble">안녕하세요! 저는 기사 전문 요약 도우미예요🙂<br><br>· 기사 옆 "AI 요약하기" 버튼 클릭<br>· 기사 링크 붙여넣기<br>· 텍스트 형식의 PDF 파일 첨부<br><br>세 가지 중 하나로 요청해주세요.</span></div>';
+    }
+    async function aiCallWorker(payload, loadingBubble) {
+      try {
+        const resp = await fetch(AI_WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await resp.json();
+        if (data.summary) {
+          loadingBubble.textContent = data.summary;
+        } else {
+          loadingBubble.textContent = data.error || '요약에 실패했어요. 잠시 후 다시 시도해주세요.';
+          console.error('AI worker error:', data);
+        }
+        saveChatHistory();
+      } catch (e) {
+        loadingBubble.textContent = '요약 서버에 연결하지 못했어요.';
+        saveChatHistory();
+        console.error(e);
+      }
+    }
+    function aiSummarizeUrl(url, title) {
+      const panel = document.getElementById('aiChatPanel');
+      if (!panel.classList.contains('open')) panel.classList.add('open');
+      aiAddMsg('user', title || url, url);
+      const loading = aiAddMsg('bot', '기사를 읽고 요약하는 중...');
+      aiCallWorker({ url: url }, loading);
+    }
+    function aiSendText() {
+      const input = document.getElementById('aiChatText');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      aiAddMsg('user', text);
+      const loading = aiAddMsg('bot', '요약하는 중...');
+      if (/^https?:\/\//i.test(text)) {
+        aiCallWorker({ url: text }, loading);
+      } else {
+        aiCallWorker({ text: text }, loading);
+      }
+    }
+    async function processPdfFile(file) {
+      if (!file) return;
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        alert('PDF 파일만 첨부할 수 있어요.');
+        return;
+      }
+      const panel = document.getElementById('aiChatPanel');
+      if (!panel.classList.contains('open')) panel.classList.add('open');
+      aiAddMsg('user', 'PDF: ' + file.name);
+      const loading = aiAddMsg('bot', 'PDF에서 텍스트를 추출하는 중...');
+      try {
+        const buf = await file.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+        let fullText = '';
+        const maxPages = Math.min(pdf.numPages, 20);
+        for (let i = 1; i <= maxPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          fullText += content.items.map(it => it.str).join(' ') + '\n';
+          if (fullText.length > 12000) break;
+        }
+        fullText = fullText.replace(/\s+/g, ' ').trim();
+        if (!fullText) {
+          loading.textContent = 'PDF에서 텍스트를 찾지 못했어요. 스캔 이미지 PDF일 수 있어요.';
+          saveChatHistory();
+          return;
+        }
+        loading.textContent = '요약하는 중...';
+        aiCallWorker({ text: fullText.slice(0, 12000) }, loading);
+      } catch (e) {
+        loading.textContent = 'PDF를 읽는 데 실패했어요.';
+        console.error(e);
+        saveChatHistory();
+      }
+    }
+    async function aiHandlePdf(inputEl) {
+      const file = inputEl.files && inputEl.files[0];
+      inputEl.value = '';
+      await processPdfFile(file);
+    }
+    function aiSetupDragDrop() {
+      const panel = document.getElementById('aiChatPanel');
+      ['dragenter', 'dragover'].forEach((evt) => {
+        panel.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          panel.classList.add('drag-over');
+        });
+      });
+      ['dragleave', 'drop'].forEach((evt) => {
+        panel.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (evt === 'dragleave' && e.target !== panel) return;
+          panel.classList.remove('drag-over');
+        });
+      });
+      panel.addEventListener('drop', (e) => {
+        const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file) processPdfFile(file);
+      });
+    }
+    aiSetupDragDrop();
+    loadChatHistory();
+  </script>
   <!-- ===== 실시간 뉴스(지자체/국내기업/해외기업) ===== -->
+  <script type="application/json" id="gov-public-candidates">[{"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "표준과 지식재산(특허)으로 여는 피지컬 AI 시대, 글로벌 주도권 확보 나선다", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187912", "disp": "11-02"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "국가 슈퍼컴퓨터 6호기 ‘한강’ 본격 가동", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187910", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "[연구행정 혁신+-⑨] “협력의 문은 넓게, 기술주권 수호는 확실하게”", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187911", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "[연구행정 혁신+-⑧] “해외 논문 성과등록 논문 고유번호만 넣으면 끝!”범부처 통합연구지원시스템, 연구자 눈높이로 대폭 변신", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187909", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "국민AI서비스혁신추진단장 김세웅 단장 취임", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187908", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "과기정통부, 통신재난 대응 강화로 국민 일상 보호", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187906", "disp": "10-30"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "우리의(지구를 위한) 기후행동, 전기차 전환 서명에 동참해 주세요", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903520", "disp": "11-02"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "제17차 생물다양성협약 당사국총회 마무리", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903480", "disp": "11-02"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "원전 공론화위원회, 시민참여단 선정 위한 국민기초조사 시작", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903460", "disp": "11-02"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "지방정부 10곳 2026년도 환경교육도시로 선정… 지역 중심 탄소중립 사회 실현에 기여", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903390", "disp": "11-02"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "제21회 생물다양성 세밀화·인공지능 이미지 공모전 수상작 41점 공개", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903380", "disp": "11-02"}, {"sort_ts": "2026-11-01T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "야생동물 질병 전문인력 양성, 연구성과 공유의 장 마련", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903370", "disp": "11-01"}, {"sort_ts": "2026-11-01T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "국립공원공단, 가을 산불 총력 대응 나선다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903360", "disp": "11-01"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "2026년 수소발전 입찰시장 개설", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903400", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "고준위위원회, 고준위 방사성폐기물 관리시설 부적합지역 배제기준 확정", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903320", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "한-독, 전기화 시대 산업경쟁력 확보 위한 에너지 협력 강화", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1903260", "disp": "10-30"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "산업부, 체코 원전사업 비상관리체제 가동", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172363/view", "disp": "11-02"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "정상 경제외교 성과, 수출‧수주 본계약까지 잇는다", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172362/view", "disp": "11-02"}, {"sort_ts": "2026-11-01T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "2026년 10월 수출입 동향", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172360/view", "disp": "11-01"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "(참고자료)EU, 수입 하이브리드 자동차에 대한 글로벌 세이프가드 조사 개시", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172359/view", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "제1회 ‘공학인의 날’ 개최… 공학인의 도전과 미래를 응원한다", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172358/view", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "통상교섭본부장, K-콘텐츠 기업과 함께중국 시장 진출 전략 모색", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172357/view", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "민관 원팀으로 중동發 공급망 위기 넘어, 구조개편 가속화로 화학산업 재도약 다짐", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172356/view", "disp": "10-30"}, {"sort_ts": "2026-10-22T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 10. 22.) 국가AI전략위, 포항서 '제조 현장부터  AI 데이터센터까지' 경북 AI 생태계 살펴", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1056", "disp": "10-22"}, {"sort_ts": "2026-10-21T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 10. 21) 국가AI전략위, 소셜미디어 게시물 논란위원 해촉", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1051", "disp": "10-21"}, {"sort_ts": "2026-10-21T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 10. 21.) 국가AI전략위, 대구서 '제조·로봇·모빌리티 AX' 정책현장 방문", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1050", "disp": "10-21"}, {"sort_ts": "2026-10-20T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 10. 20.) 국가AI전략위, 강원서 ‘AI 기본의료·교통·데이터센터’ 정책현장 방문", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1044", "disp": "10-20"}, {"sort_ts": "2026-10-15T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 10. 15.) 국가AI전략위, 복지부와 함께 국가 의료·바이오 AI 혁신을 위한 바이오 데이터 기증에 솔선수범", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1030", "disp": "10-15"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전·권익위, 청년리더 정책 교류 세미나 개최", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3180", "disp": "11-02"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 「2026 K-ESG 경영대상」 종합 ESG 대상 및 고용노동부 장관상 수상", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3179", "disp": "10-30"}, {"sort_ts": "2026-10-29T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "[보도설명]호남권 반도체 산단 전력공급용 변압기 확보 관련 보도 설명", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3178", "disp": "10-29"}, {"sort_ts": "2026-10-29T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, BIXPO 2026 개최! 에너지 신기술의 사업화·투자 기회 넓힌다", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3177", "disp": "10-29"}, {"sort_ts": "2026-10-29T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 「2026 공공기관 AI 혁신 챌린지」 최우수상 수상... AI로 국민 생명과 안전 지켰다", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3176", "disp": "10-29"}, {"sort_ts": "2026-10-28T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 제21회 인사혁신 우수사례 경진대회에서 대통령상·인사혁신처장상 동시 수상", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3175", "disp": "10-28"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 농어촌공사·한수원과 새만금 조력발전 개발 협력 업무협약 체결", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141132&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "10-30"}, {"sort_ts": "2026-10-30T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, ‘혁신챌린지’로 차세대 AI 물관리 혁신 솔루션 발굴 이끈다", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141130&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "10-30"}, {"sort_ts": "2026-10-29T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 美 오스틴시와 AI 물관리 협력 본격화… 미국 물시장 진출 교두보 확대", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141126&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "10-29"}, {"sort_ts": "2026-10-28T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 안동댐 50년 넘어 미래 100년 연다… 물관리 혁신·지역 상생 비전 선포", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141125&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "10-28"}, {"sort_ts": "2026-10-28T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 마이크로소프트와 수도권·부산 물 복원 협력 계약 체결", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141121&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "10-28"}, {"sort_ts": "2026-10-29T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 도쿄에서 국내 디지털 기업의 일본 시장 개척 활동 추진", "link": "https://www.nipa.kr/home/4-4-1/16981", "disp": "10-29"}, {"sort_ts": "2026-10-27T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, ‘글로벌 피우다프로젝트’ 일본으로 확대… 한일 사회문제 해결에 나선다.", "link": "https://www.nipa.kr/home/4-4-1/16978", "disp": "10-27"}, {"sort_ts": "2026-10-06T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 서비스형 소프트웨어(SaaS) 국내 기업의 일본 진출 지원 본격 추진", "link": "https://www.nipa.kr/home/4-4-1/16961", "disp": "10-06"}, {"sort_ts": "2026-09-21T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 한국엔젤투자협회와 손잡고 스타트업 국내외 양방향 진출 지원 나선다.", "link": "https://www.nipa.kr/home/4-4-1/16942", "disp": "09-21"}, {"sort_ts": "2026-09-18T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 호찌민시와 한-베 인공지능 전환 협력 맞손", "link": "https://www.nipa.kr/home/4-4-1/16941", "disp": "09-18"}, {"sort_ts": "2026-11-02T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, 제2회 청소년 「AI윤리 ON」 캠프 개최", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30149&parentSeq=30149", "disp": "11-02"}, {"sort_ts": "2026-10-28T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, AI 대전환 대응 위한 디지털 ESG 민관 협력 강화", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30139&parentSeq=30139", "disp": "10-28"}, {"sort_ts": "2026-10-19T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, 공무원의 AI 활용 직접개발 산출물의 권리 귀속과 인센티브 방안 마련을 위한 「제1회 AI 정부 포럼」 개최", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30078&parentSeq=30078", "disp": "10-19"}, {"sort_ts": "2026-10-02T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, 대학과 기업이 협력하고 국가가 지원하는 K-AI 네트워크 경쟁력 강화 사업 본격 출격", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30047&parentSeq=30047", "disp": "10-02"}, {"sort_ts": "2026-10-01T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA 가명정보 결합 지원 성과 창출", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30035&parentSeq=30035", "disp": "10-01"}, {"sort_ts": "2026-09-30T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA,「AI데이터안심활용센터」개소", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30023&parentSeq=30023", "disp": "09-30"}]</script>
   <script>
     const NEWS_WORKER_URL = "https://naver-news-cache.sunjinfuture2.workers.dev";
     const PAGE_SIZE = 20;
@@ -577,7 +895,8 @@
     function itemToHtml(item, tagKey) {
       const tag = item[tagKey] || "";
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(item.summary, 150))}</p>` : "";
-      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(tag)}</span></p>`;
+      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(tag)}</span>` +
+        `<button type="button" class="ai-link" data-title="${escapeHtml(item.title)}" onclick="aiSummarizeUrl('${escapeHtml(item.link)}', this.dataset.title)">AI 요약하기</button></p>`;
       return `<div class="org-group" data-tag="${escapeHtml(tag)}">` +
         `<div class="og-org"><span class="press">${escapeHtml(item.press || "")}</span></div>` +
         `<div class="og-items"><div class="item">` +
@@ -629,7 +948,8 @@
     }
     function keywordItemToHtml(item) {
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(item.summary, 150))}</p>` : "";
-      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(item._tagValue)}</span></p>`;
+      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(item._tagValue)}</span>` +
+        `<button type="button" class="ai-link" data-title="${escapeHtml(item.title)}" onclick="aiSummarizeUrl('${escapeHtml(item.link)}', this.dataset.title)">AI 요약하기</button></p>`;
       return `<div class="org-group">` +
         `<div class="og-org"><span class="press cat-badge">${escapeHtml(item._category)}</span></div>` +
         `<div class="og-items"><div class="item">` +
@@ -750,29 +1070,74 @@
       document.getElementById("stat-news-total").textContent = totalNews;
       document.getElementById("stat-top-kw").textContent = sorted.length ? sorted[0][0] : "-";
     }
-    let _lastReportData = null;
-        let _lastUpdatedAtIso = null; // data.updated_at을 저장해 상단 배지·리포트 날짜가 항상 같은 값을 쓰게 함
-    function todayDateStr() {
-      if (!_lastUpdatedAtIso) {
-        const kst = new Date(Date.now() + 9 * 60 * 60000);
-        return `${kst.getUTCFullYear()}-${String(kst.getUTCMonth() + 1).padStart(2, "0")}-${String(kst.getUTCDate()).padStart(2, "0")}`;
+    function updateRecent10() {
+      const govPublic = JSON.parse(document.getElementById("gov-public-candidates").textContent)
+        .map((c) => ({
+          ts: new Date(c.sort_ts).getTime(), category: c.category, org: c.org,
+          title: c.title, link: c.link, disp: c.disp,
+        }));
+      const liveCandidates = [];
+      panelState.local.all.forEach((it) => {
+        liveCandidates.push({
+          ts: new Date(it.pubDate).getTime(), category: "지자체", org: it.region || "지자체",
+          title: it.title, link: it.link,
+          disp: formatDateLabel(it.pubDate).replace("<br>", " "),
+        });
+      });
+      panelState.listed.all.forEach((it) => {
+        liveCandidates.push({
+          ts: new Date(it.pubDate).getTime(), category: "국내기업", org: it.company || "국내기업",
+          title: it.title, link: it.link,
+          disp: formatDateLabel(it.pubDate).replace("<br>", " "),
+        });
+      });
+      panelState.overseas.all.forEach((it) => {
+        liveCandidates.push({
+          ts: new Date(it.pubDate).getTime(), category: "해외기업", org: it.company || "해외기업",
+          title: it.title, link: it.link,
+          disp: formatDateLabel(it.pubDate).replace("<br>", " "),
+        });
+      });
+      const merged = govPublic.concat(liveCandidates).sort((a, b) => b.ts - a.ts).slice(0, 10);
+      const listEl = document.getElementById("recent10List");
+      if (merged.length === 0) {
+        listEl.innerHTML = '<div class="r10-empty">표시할 자료가 없습니다</div>';
+        return;
       }
-      const kst = new Date(new Date(_lastUpdatedAtIso).getTime() + 9 * 60 * 60000);
-      const y = kst.getUTCFullYear();
-      const m = String(kst.getUTCMonth() + 1).padStart(2, "0");
-      const d = String(kst.getUTCDate()).padStart(2, "0");
+      listEl.innerHTML = merged.map((c) =>
+        `<div class="recent10-row"><div class="r10-top">` +
+        `<span class="r10-badge">${escapeHtml(c.category)}</span>` +
+        `<span class="r10-org">${escapeHtml(c.org)}</span></div>` +
+        `<a class="r10-title" href="${escapeHtml(c.link)}" target="_blank" rel="noopener">${escapeHtml(c.title)}</a>` +
+        `<div class="r10-bottom">` +
+        `<span class="r10-date">${escapeHtml(c.disp)}</span>` +
+        `<button type="button" class="ai-link" data-title="${escapeHtml(c.title)}" onclick="aiSummarizeUrl('${escapeHtml(c.link)}', this.dataset.title)">AI 요약하기</button>` +
+        `</div></div>`
+      ).join("");
+    }
+    let _lastReportData = null;
+    function todayDateStr() {
+      const kst = new Date(Date.now() + 9 * 60 * 60000);
+      const dayOfWeek = kst.getUTCDay(); // 0=일, 6=토
+      // 주말엔 REPORT가 새로 생성되지 않으므로, 화면 날짜도 마지막 생성일(금요일)에 고정한다.
+      let daysBack = 0;
+      if (dayOfWeek === 6) daysBack = 1;       // 토요일 -> 금요일
+      else if (dayOfWeek === 0) daysBack = 2;  // 일요일 -> 금요일
+      const target = new Date(kst.getTime() - daysBack * 24 * 60 * 60000);
+      const y = target.getUTCFullYear();
+      const m = String(target.getUTCMonth() + 1).padStart(2, "0");
+      const d = String(target.getUTCDate()).padStart(2, "0");
       return `${y}-${m}-${d}`;
     }
     function boldMarkup(escapedText) {
       return escapedText.replace(/\*\*(.+?)\*\*/g, "$1");
     }
-    function renderReport(report, reportStatus, isPrevious) {
+    function renderReport(report) {
       _lastReportData = report;
       const summaryEl = document.getElementById("reportSummaryPart");
       const refsEl = document.getElementById("reportRefsPart");
       if (!report) {
-        summaryEl.innerHTML = '<p class="r-empty">' +
-          (reportStatus?.status === "failed" ? "원문 근거를 확인한 보고서를 생성하지 못했습니다. 다음 갱신을 기다려주세요." : "아직 생성된 보고서가 없습니다. 평일 오전 8시에 자동 생성됩니다.") + '</p>';
+        summaryEl.innerHTML = '<p class="r-empty">아직 생성된 보고서가 없습니다. 매일 오전 8시에 자동 생성됩니다.</p>';
         refsEl.innerHTML = "";
         return;
       }
@@ -815,12 +1180,6 @@
           ).join("")
         : "";
       refsEl.innerHTML = refsHtml;
-      if (isPrevious) {
-        const notice = document.createElement("p");
-        notice.className = "r-empty";
-        notice.textContent = "이번 보고서 생성에 실패해 이전 보고서를 표시합니다.";
-        summaryEl.prepend(notice);
-      }
     }
     let _koreanFontReady = false;
     async function ensureKoreanFont(pdf) {
@@ -841,66 +1200,6 @@
       const n = parseInt(hex.replace("#", ""), 16);
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     }
-// 참고 기사는 읽을 수 있는 기존 12px 글꼴로 고정 폭에 렌더링합니다.
-// Worker와 동일하게 최대 8건이며, 초과/오버플로는 내보내기를 중단합니다.
-// 출처 누락이나 자동 축소, 세 번째 PDF 페이지 생성은 하지 않습니다.
-async function addReferencesPage(pdf, report) {
-  const references = report?.references || [];
-  if (!references.length) return;
-  if (references.length > 8) throw new Error('이전 형식의 보고서입니다. 새 Worker에서 보고서를 다시 생성해주세요. 참고 기사는 8건까지 지원합니다.');
-  const shorten = (text, max) => {
-    const chars = Array.from(String(text || '').replace(/\s+/g, ' ').trim());
-    return chars.length > max ? chars.slice(0, max - 1).join('') + '…' : chars.join('');
-  };
-  const container = document.createElement('div');
-  Object.assign(container.style, {
-    position: 'absolute', left: '-10000px', top: '0', width: '680px', padding: '0', margin: '0',
-    fontFamily: '"Malgun Gothic", "Apple SD Gothic Neo", sans-serif', fontSize: '12px',
-    lineHeight: '1.8', fontWeight: '600', color: '#111', backgroundColor: '#fff',
-    boxSizing: 'border-box', wordBreak: 'break-word', overflowWrap: 'anywhere',
-  });
-  const heading = document.createElement('div');
-  heading.textContent = '참고 기사';
-  Object.assign(heading.style, { fontSize: '13px', fontWeight: '700', marginBottom: '10px' });
-  container.appendChild(heading);
-  for (const reference of references) {
-    const url = new URL(reference.link);
-    if (!['http:', 'https:'].includes(url.protocol)) throw new Error('참고 기사 링크 형식이 올바르지 않습니다.');
-    const row = document.createElement('div');
-    row.style.marginBottom = '8px';
-    row.appendChild(document.createTextNode(`[${reference.index}] ${shorten(reference.press, 24)} · `));
-    const anchor = document.createElement('a');
-    anchor.textContent = shorten(reference.display_title || reference.title, 90);
-    anchor.href = url.href;
-    anchor.style.color = '#111';
-    anchor.style.textDecoration = 'none';
-    row.appendChild(anchor);
-    container.appendChild(row);
-  }
-  document.body.appendChild(container);
-  try {
-    if (document.fonts?.ready) await document.fonts.ready;
-    const widthMm = 180, maxHeightMm = 267, leftMm = 15, topMm = 15;
-    const rect = container.getBoundingClientRect();
-    const mmPerPixel = widthMm / rect.width;
-    const linkRects = Array.from(container.querySelectorAll('a')).flatMap((anchor) =>
-      Array.from(anchor.getClientRects()).map((r) => ({
-        x: (r.left - rect.left) * mmPerPixel, y: (r.top - rect.top) * mmPerPixel,
-        w: r.width * mmPerPixel, h: r.height * mmPerPixel, url: anchor.href,
-      })));
-    const canvas = await html2canvas(container, { scale: 2, backgroundColor: '#ffffff', windowWidth: 1024 });
-    const heightMm = canvas.height * widthMm / canvas.width;
-    if (!Number.isFinite(heightMm) || heightMm <= 0 || heightMm > maxHeightMm) {
-      throw new Error('참고 기사가 한 페이지 높이를 초과했습니다. 출처를 누락하지 않기 위해 PDF 저장을 중단했습니다.');
-    }
-    pdf.addPage();
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', leftMm, topMm, widthMm, heightMm);
-    for (const link of linkRects) pdf.link(leftMm + link.x, topMm + link.y, link.w, link.h, { url: link.url });
-  } finally {
-    container.remove();
-  }
-}
-
     async function downloadReportPDF() {
       const now = new Date();
       const kstNow = new Date(now.getTime() + 9 * 60 * 60000);
@@ -932,8 +1231,45 @@ async function addReferencesPage(pdf, report) {
         const sTopMm = marginTopMm + (usableHeightMm - sImgHeightMm) / 2 > marginTopMm
           ? marginTopMm : marginTopMm;
         pdf.addImage(summaryCanvas.toDataURL("image/png"), "PNG", sMarginLeftMm, marginTopMm, sImgWidthMm, sImgHeightMm);
-        // ---- 2페이지: 참고 기사 한 페이지 고정 (넘치면 저장 중단) ----
-        await addReferencesPage(pdf, _lastReportData);
+        // ---- 2페이지부터: 참고 기사 (링크 포함, 여러 페이지로 이어질 수 있음) ----
+        const refsEl = document.getElementById("reportRefsPart");
+        const linkEls = Array.from(refsEl.querySelectorAll("a"));
+        const linkRects = linkEls.map((a) => {
+          const rect = a.getBoundingClientRect();
+          const elRect = refsEl.getBoundingClientRect();
+          return {
+            x: (rect.left - elRect.left) * PX_TO_MM,
+            y: (rect.top - elRect.top) * PX_TO_MM,
+            w: rect.width * PX_TO_MM,
+            h: rect.height * PX_TO_MM,
+            url: a.getAttribute("href"),
+          };
+        });
+        const refsCanvas = await html2canvas(refsEl, { scale: 2, backgroundColor: "#ffffff" });
+        const rImgWidthMm = refsEl.offsetWidth * PX_TO_MM;
+        const rMarginLeftMm = (pageWidthMm - rImgWidthMm) / 2 > 0 ? (pageWidthMm - rImgWidthMm) / 2 : 0;
+        const pxPerMm = refsCanvas.width / rImgWidthMm;
+        const usableHeightPx = usableHeightMm * pxPerMm;
+        const totalRefPages = Math.max(1, Math.ceil(refsCanvas.height / usableHeightPx));
+        for (let p = 0; p < totalRefPages; p++) {
+          pdf.addPage(); // 참고기사는 무조건 새 페이지(2페이지)부터 시작
+          const srcY = p * usableHeightPx;
+          const sliceHeightPx = Math.min(usableHeightPx, refsCanvas.height - srcY);
+          const pageCanvas = document.createElement("canvas");
+          pageCanvas.width = refsCanvas.width;
+          pageCanvas.height = sliceHeightPx;
+          const ctx = pageCanvas.getContext("2d");
+          ctx.drawImage(refsCanvas, 0, srcY, refsCanvas.width, sliceHeightPx, 0, 0, refsCanvas.width, sliceHeightPx);
+          const sliceHeightMm = sliceHeightPx / pxPerMm;
+          pdf.addImage(pageCanvas.toDataURL("image/png"), "PNG", rMarginLeftMm, marginTopMm, rImgWidthMm, sliceHeightMm);
+          const contentYStartMm = srcY / pxPerMm;
+          linkRects.forEach((r) => {
+            const yOnPage = marginTopMm + (r.y - contentYStartMm);
+            if (yOnPage + r.h > marginTopMm - 1 && yOnPage < marginTopMm + sliceHeightMm + 1) {
+              pdf.link(rMarginLeftMm + r.x, yOnPage, r.w, r.h, { url: r.url });
+            }
+          });
+        }
         pdf.save(`AI_Data_Center_일일동향_보고서_${todayStr}.pdf`);
       } catch (e) {
         alert("PDF 생성에 실패했습니다: " + e);
@@ -986,7 +1322,6 @@ async function addReferencesPage(pdf, report) {
           document.getElementById("overviewText").innerHTML = linkifyOverviewText(data.overview);
         }
         if (data.updated_at) {
-          _lastUpdatedAtIso = data.updated_at;  // 리포트 날짜(todayDateStr)와 상단 배지가 같은 기준을 쓰게 함
           const d = new Date(data.updated_at);
           const kst = new Date(d.getTime() + 9 * 60 * 60000);
           const y = kst.getUTCFullYear();
@@ -997,13 +1332,14 @@ async function addReferencesPage(pdf, report) {
           document.getElementById("metaUpdatedAt").textContent =
             `${y}년 ${mo}월 ${da}일 · ${hh}:${mi} 업데이트`;
         }
-        renderReport(data.report || null, data.report_status, data.report_is_previous);
+        renderReport(data.report || null);
         ["local", "listed", "overseas"].forEach((panelId) => {
           panelState[panelId].filtered = panelState[panelId].all;
           panelState[panelId].page = 1;
           renderPanelPage(panelId);
         });
         updateKeywordSidebar();
+        updateRecent10();
       } catch (e) {
         console.error("실시간 뉴스 로드 실패:", e);
         ["local", "listed", "overseas"].forEach((panelId) => {
