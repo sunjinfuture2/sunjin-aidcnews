@@ -280,11 +280,6 @@
   .row-summary { font-size: 13.5px; color: var(--ink-soft); line-height: 1.7; margin: 5px 0 0; }
   .row-meta { font-size: 12px; color: var(--ink-mute); margin: 7px 0 0; display: flex; gap: 14px; align-items: center; }
   .row-meta .tag { color: var(--ink-soft); }
-  .ai-link {
-    background: none; border: none; padding: 0; cursor: pointer;
-    font-family: inherit; font-size: 12px; color: var(--accent);
-  }
-  .ai-link:hover { color: var(--accent-hover); }
   details.row-expand { margin-top: 5px; }
   details.row-expand summary {
     font-size: 12.5px; color: var(--accent); cursor: pointer; list-style: none; display: inline;
@@ -335,117 +330,18 @@
     padding: 10px 0; border-bottom: 1px solid var(--line);
   }
   .shortcut:hover { color: var(--accent); }
-  /* ---------- 플로팅 AI 버튼 + 채팅 ---------- */
-  /* ---------- 플로팅 버튼(RECENT 10 / AI 채팅) ---------- */
+  /* ---------- REPORT 플로팅 버튼 ---------- */
   .floating-actions {
     position: fixed; right: 28px; bottom: 28px; z-index: 1000;
     display: flex; align-items: center; gap: 10px;
   }
-  #reportToggle, #recentToggle, #aiChatToggle {
+  #reportToggle {
     display: flex; align-items: center; gap: 8px;
     background: var(--ink); color: #fff; border: none; border-radius: 28px;
     padding: 14px 22px; font-family: inherit; font-size: 14px; font-weight: 600;
     cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   }
-  #reportToggle:hover, #recentToggle:hover, #aiChatToggle:hover { background: #000; }
-  #aiChatPanel, #recentPanel {
-    position: fixed; right: 28px; bottom: 88px; z-index: 1000;
-    width: 380px; max-width: calc(100vw - 56px); height: 500px;
-    background: var(--paper); border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
-    display: none;
-    flex-direction: column; overflow: hidden;
-  }
-  #aiChatPanel.open, #recentPanel.open { display: flex; }
-  #aiChatPanel.drag-over {
-    background: rgba(255, 105, 0, 0.04);
-  }
-  #recent10List { flex: 1; overflow-y: auto; padding: 8px 14px; }
-  .recent10-row {
-    display: flex; flex-direction: column; gap: 5px; padding: 12px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .r10-top { display: flex; align-items: center; gap: 8px; }
-  .r10-badge {
-    flex: 0 0 auto; font-size: 10.5px; font-weight: 700; color: var(--ink-soft);
-    background: var(--line); border-radius: 10px; padding: 2px 9px; white-space: nowrap;
-  }
-  .r10-org { font-size: 12px; font-weight: 600; color: var(--ink-soft); }
-  .r10-title {
-    font-size: 13.5px; line-height: 1.5; color: var(--ink); text-decoration: none;
-  }
-  .r10-title:hover { text-decoration: underline; color: var(--accent); }
-  .r10-date { font-size: 11.5px; color: var(--ink-mute); }
-  .r10-bottom {
-    display: flex; align-items: center; gap: 10px;
-    margin-top: 4px;
-  }
-  .r10-empty { padding: 20px 14px; font-size: 13px; color: var(--ink-mute); }
-  .ai-chat-header {
-    background: var(--ink); color: #fff; padding: 16px 20px;
-    font-size: 13.5px; font-weight: 600; letter-spacing: 0.3px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .ai-chat-header-actions { display: flex; align-items: center; gap: 6px; }
-  .ai-chat-clear-btn {
-    cursor: pointer; font-size: 11px; font-weight: 600; color: #fff;
-    background: rgba(255,255,255,0.12); border: none; border-radius: 999px;
-    padding: 0 10px; height: 26px; white-space: nowrap;
-    display: inline-flex; align-items: center;
-    font-family: inherit; transition: background 0.15s ease;
-  }
-  .ai-chat-clear-btn:hover { background: rgba(255,255,255,0.28); }
-  .ai-chat-header button:not(.ai-chat-clear-btn) {
-    background: rgba(255,255,255,0.12); border: none; color: #fff; font-size: 13px;
-    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s ease;
-  }
-  .ai-chat-header button:hover { background: rgba(255,255,255,0.24); }
-  #aiChatMessages { flex: 1; overflow-y: auto; padding: 16px; font-size: 13.5px; background: var(--paper); }
-  .ai-msg { margin-bottom: 14px; line-height: 1.65; white-space: pre-wrap; word-break: break-all; }
-  .ai-msg.user { text-align: right; }
-  .ai-msg.user .bubble {
-    display: inline-block; background: var(--ink); color: #fff;
-    padding: 10px 14px; max-width: 85%; text-align: left;
-    border-radius: 16px 16px 4px 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
-  .ai-msg-link { color: inherit; text-decoration: none; }
-  .ai-msg-link:hover { text-decoration: underline; }
-  .ai-msg.bot .bubble {
-    display: inline-block; background: #f1f0ea; color: var(--ink);
-    padding: 10px 14px; max-width: 85%;
-    border-radius: 16px 16px 16px 4px;
-  }
-  .ai-chat-input {
-    border-top: 1px solid var(--line); padding: 12px; display: flex; gap: 8px; align-items: center;
-    background: var(--paper);
-  }
-  .ai-chat-input input[type="text"] {
-    flex: 1; border: 1px solid var(--line); border-radius: 999px; padding: 9px 15px;
-    font-family: inherit; font-size: 13px; min-width: 0; background: #fff; color: var(--ink);
-    transition: border-color 0.15s ease;
-  }
-  .ai-chat-input input[type="text"]:focus { outline: none; border-color: var(--accent); }
-  .ai-chat-input button {
-    background: var(--ink); color: #fff; border: none; border-radius: 999px; padding: 9px 16px;
-    font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
-    transition: background 0.15s ease;
-  }
-  .ai-chat-input button:hover { background: var(--accent-hover); }
-  .ai-chat-input label {
-    background: #f1f0ea; color: var(--ink-soft); padding: 9px 13px; border-radius: 999px;
-    font-size: 13px; cursor: pointer; white-space: nowrap; transition: background 0.15s ease;
-  .ai-chat-input label:hover { background: #e4e2db; }
-  }
-  .ai-chat-input label {
-    background: #f1f0ea; color: var(--ink-soft); padding: 9px 11px;
-    font-size: 13px; cursor: pointer; white-space: nowrap;
-  }
-  .ai-chat-input input[type="file"] { display: none; }
-  
+  #reportToggle:hover { background: #000; }
   /* ---------- 반응형 ---------- */
   @media (max-width: 900px) {
     .sheet { padding: 32px 22px 90px; }
@@ -494,12 +390,7 @@
     .kw-row .kw-count { font-size: 10.5px; }
     .shortcut { font-size: 12px; padding: 8px 0; }
     .floating-actions { right: 14px; bottom: 14px; gap: 6px; }
-    #reportToggle, #recentToggle, #aiChatToggle { padding: 10px 14px; font-size: 12px; gap: 5px; }
-    #aiChatPanel, #recentPanel { right: 10px; left: 10px; width: auto; bottom: 74px; height: 60vh; }
-    .r10-title { font-size: 12px; }
-    .r10-org { font-size: 11px; }
-    .r10-badge { font-size: 9.5px; padding: 1px 7px; }
-    .r10-date { font-size: 10.5px; }
+    #reportToggle { padding: 10px 14px; font-size: 12px; gap: 5px; }
     .page-footer { font-size: 10.5px; margin-top: 28px; }
     .live-search-wrap { width: 100%; max-width: none; }
     .live-search-input { font-size: 12px; }
@@ -517,7 +408,7 @@
   </div>
   <div class="overview">
     <div class="meta-right" id="metaUpdatedAt">
-      2026년 11월 25일 · 15:00 업데이트
+      2026년 11월 25일 · 16:46 업데이트
     </div>
     <div class="rule"></div>
     <div class="overview-head">
@@ -601,17 +492,9 @@
       }
     }
   </script>
-  <!-- ===== RECENT 10 / REPORT ===== -->
+  <!-- ===== REPORT ===== -->
   <div class="floating-actions">
     <button id="reportToggle" onclick="openReportModal()" title="일일 동향 보고서">REPORT</button>
-    <button id="recentToggle" onclick="toggleRecentPanel()" title="최근 10건">RECENT 10</button>
-  </div>
-  <div id="recentPanel">
-    <div class="ai-chat-header">
-      <span>최근 10건</span>
-      <button type="button" onclick="toggleRecentPanel()">✕</button>
-    </div>
-    <div id="recent10List"><div class="r10-empty">불러오는 중...</div></div>
   </div>
   <!-- ===== 일일 동향 보고서 모달 ===== -->
   <div id="reportModal" style="display:none">
@@ -635,210 +518,9 @@
       </div>
     </div>
   </div>
-  <div id="aiChatPanel">
-    <div class="ai-chat-header">
-      <span>AI 요약 도우미</span>
-      <span class="ai-chat-header-actions">
-        <button type="button" class="ai-chat-clear-btn" onclick="aiClearChat()" title="대화 내용 지우기">대화 내용 지우기</button>
-        <button type="button" onclick="toggleAiChat()">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L10 10M10 1L1 10" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </span>
-    </div>
-    <div id="aiChatMessages">
-      <div class="ai-msg bot"><span class="bubble">안녕하세요! 저는 기사 전문 요약 도우미예요🙂<br><br>· 기사 옆 "AI 요약하기" 버튼 클릭<br>· 기사 링크 붙여넣기<br>· 텍스트 형식의 PDF 파일 첨부<br><br>세 가지 중 하나로 요청해주세요.</span></div>
-    </div>
-    <div class="ai-chat-input">
-      <label for="aiPdfInput">PDF</label>
-      <input type="file" id="aiPdfInput" accept="application/pdf" onchange="aiHandlePdf(this)">
-      <input type="text" id="aiChatText" placeholder="기사 링크 붙여넣기" onkeydown="if(event.key==='Enter')aiSendText()">
-      <button type="button" onclick="aiSendText()">전송</button>
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
-    const AI_WORKER_URL = "https://ai-summary-claude.sunjinfuture2.workers.dev/";
-    if (window.pdfjsLib) {
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-    }
-    function toggleAiChat() {
-      document.getElementById('recentPanel').classList.remove('open');
-      document.getElementById('aiChatPanel').classList.toggle('open');
-    }
-    function toggleRecentPanel() {
-      document.getElementById('aiChatPanel').classList.remove('open');
-      document.getElementById('recentPanel').classList.toggle('open');
-    }
-    function aiAddMsg(role, text, linkUrl) {
-      const box = document.getElementById('aiChatMessages');
-      const div = document.createElement('div');
-      div.className = 'ai-msg ' + role;
-      const bubble = document.createElement('span');
-      bubble.className = 'bubble';
-      if (linkUrl) {
-        const a = document.createElement('a');
-        a.href = linkUrl;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.textContent = text;
-        a.className = 'ai-msg-link';
-        bubble.appendChild(a);
-      } else {
-        bubble.textContent = text;
-      }
-      div.appendChild(bubble);
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
-      saveChatHistory();
-      return bubble;
-    }
-    function saveChatHistory() {
-      const box = document.getElementById('aiChatMessages');
-      const messages = Array.from(box.querySelectorAll('.ai-msg')).map((div) => {
-        const bubble = div.querySelector('.bubble');
-        const link = bubble.querySelector('a.ai-msg-link');
-        return {
-          role: div.classList.contains('user') ? 'user' : 'bot',
-          text: link ? link.textContent : bubble.textContent,
-          linkUrl: link ? link.getAttribute('href') : null,
-        };
-      }).slice(-50);
-      try {
-        localStorage.setItem('aiChatHistory', JSON.stringify(messages));
-      } catch (e) {
-        console.error('채팅 기록 저장 실패:', e);
-      }
-    }
-    function loadChatHistory() {
-      let saved;
-      try {
-        saved = JSON.parse(localStorage.getItem('aiChatHistory') || '[]');
-      } catch (e) {
-        saved = [];
-      }
-      if (!saved.length) return;
-      const box = document.getElementById('aiChatMessages');
-      box.innerHTML = '';
-      saved.forEach((m) => aiAddMsg(m.role, m.text, m.linkUrl || undefined));
-    }
-    function aiClearChat() {
-      localStorage.removeItem('aiChatHistory');
-      const box = document.getElementById('aiChatMessages');
-      box.innerHTML = '<div class="ai-msg bot"><span class="bubble">안녕하세요! 저는 기사 전문 요약 도우미예요🙂<br><br>· 기사 옆 "AI 요약하기" 버튼 클릭<br>· 기사 링크 붙여넣기<br>· 텍스트 형식의 PDF 파일 첨부<br><br>세 가지 중 하나로 요청해주세요.</span></div>';
-    }
-    async function aiCallWorker(payload, loadingBubble) {
-      try {
-        const resp = await fetch(AI_WORKER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        const data = await resp.json();
-        if (data.summary) {
-          loadingBubble.textContent = data.summary;
-        } else {
-          loadingBubble.textContent = data.error || '요약에 실패했어요. 잠시 후 다시 시도해주세요.';
-          console.error('AI worker error:', data);
-        }
-        saveChatHistory();
-      } catch (e) {
-        loadingBubble.textContent = '요약 서버에 연결하지 못했어요.';
-        saveChatHistory();
-        console.error(e);
-      }
-    }
-    function aiSummarizeUrl(url, title) {
-      const panel = document.getElementById('aiChatPanel');
-      if (!panel.classList.contains('open')) panel.classList.add('open');
-      aiAddMsg('user', title || url, url);
-      const loading = aiAddMsg('bot', '기사를 읽고 요약하는 중...');
-      aiCallWorker({ url: url }, loading);
-    }
-    function aiSendText() {
-      const input = document.getElementById('aiChatText');
-      const text = input.value.trim();
-      if (!text) return;
-      input.value = '';
-      aiAddMsg('user', text);
-      const loading = aiAddMsg('bot', '요약하는 중...');
-      if (/^https?:\/\//i.test(text)) {
-        aiCallWorker({ url: text }, loading);
-      } else {
-        aiCallWorker({ text: text }, loading);
-      }
-    }
-    async function processPdfFile(file) {
-      if (!file) return;
-      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-        alert('PDF 파일만 첨부할 수 있어요.');
-        return;
-      }
-      const panel = document.getElementById('aiChatPanel');
-      if (!panel.classList.contains('open')) panel.classList.add('open');
-      aiAddMsg('user', 'PDF: ' + file.name);
-      const loading = aiAddMsg('bot', 'PDF에서 텍스트를 추출하는 중...');
-      try {
-        const buf = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
-        let fullText = '';
-        const maxPages = Math.min(pdf.numPages, 20);
-        for (let i = 1; i <= maxPages; i++) {
-          const page = await pdf.getPage(i);
-          const content = await page.getTextContent();
-          fullText += content.items.map(it => it.str).join(' ') + '\n';
-          if (fullText.length > 12000) break;
-        }
-        fullText = fullText.replace(/\s+/g, ' ').trim();
-        if (!fullText) {
-          loading.textContent = 'PDF에서 텍스트를 찾지 못했어요. 스캔 이미지 PDF일 수 있어요.';
-          saveChatHistory();
-          return;
-        }
-        loading.textContent = '요약하는 중...';
-        aiCallWorker({ text: fullText.slice(0, 12000) }, loading);
-      } catch (e) {
-        loading.textContent = 'PDF를 읽는 데 실패했어요.';
-        console.error(e);
-        saveChatHistory();
-      }
-    }
-    async function aiHandlePdf(inputEl) {
-      const file = inputEl.files && inputEl.files[0];
-      inputEl.value = '';
-      await processPdfFile(file);
-    }
-    function aiSetupDragDrop() {
-      const panel = document.getElementById('aiChatPanel');
-      ['dragenter', 'dragover'].forEach((evt) => {
-        panel.addEventListener(evt, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          panel.classList.add('drag-over');
-        });
-      });
-      ['dragleave', 'drop'].forEach((evt) => {
-        panel.addEventListener(evt, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (evt === 'dragleave' && e.target !== panel) return;
-          panel.classList.remove('drag-over');
-        });
-      });
-      panel.addEventListener('drop', (e) => {
-        const file = e.dataTransfer.files && e.dataTransfer.files[0];
-        if (file) processPdfFile(file);
-      });
-    }
-    aiSetupDragDrop();
-    loadChatHistory();
-  </script>
   <!-- ===== 실시간 뉴스(지자체/국내기업/해외기업) ===== -->
-  <script type="application/json" id="gov-public-candidates">[{"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "과기정통부, 개정 정보통신망법·시행령의 현장 안착을 위한 기업 대상 설명회 개최", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3188006", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "2026 인공지능·소프트웨어 인재 축제 개최", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3188005", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "초격차 소버린 에너지 기술 확보를 위한 국가연구소 개소(성균관대)", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3188004", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "과기정통부, 정보보호 공시 의무 대상 확대에 따른 기업 대상 전국 순회 설명회 개최", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3188007", "disp": "11-25"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "과기정통부, 인공지능 자율화가 바꿀 미래 산업·사회 질서 논의", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3188002", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "구혁채 1차관, 주요 기관 연구 안보 협의회 개최", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187998", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "국가 연구개발 특허, 출원부터 성과 등록까지 정보 입력 자동으로", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187999", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "태양전지 안정성 향상, 핵심 광물 소재 국산화 등 나노기술 성과 선보여", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3188001", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "과학기술정보통신부", "title": "기업이 제안한 기술수요, 정부 연구개발로 이어진다", "link": "https://www.msit.go.kr/bbs/view.do?sCode=user&bbsSeqNo=94&nttSeqNo=3187995", "disp": "11-24"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "(참고) 동서울변환소 사업 협의서(안) 합의… 감일지구 주민투표 거쳐 최종 확정 예정", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1910230", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "동물대체시험 전문인력 양성 정부·공공기관·대학이 함께 나선다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1910190", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "“공사장 소음부터 밭 옆 가로등까지” 생활 속 환경분쟁, 이야기로 쉽게 푼다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1910030", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "제31차 유엔기후변화협약 당사국총회가 남긴 과제, 국민과 함께 답을 찾다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1910020", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "자동차 온실가스 전과정평가, 민관이 함께 준비한다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1910010", "disp": "11-25"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "한 총리, “맑고 깨끗한 공기와 푸른 하늘, 국민의 삶에 꼭 필요”", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1909860", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "전기택시 전환 활성화 위해 기후부-국토부-택시업계 맞손", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1909790", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "투명한 환경정보, 앞선 환경경영이 경쟁력… 우수기업 11곳 시상", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1909520", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "인공지능 활용, 안전한 지하수 이용을 위한 관리 기반 다진다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1909500", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "기후에너지환경부", "title": "조류 독소, 유전자 검사로 미리 진단한다", "link": "https://mcee.go.kr/home/web/board/read.do?menuId=10598&boardMasterId=939&boardId=1909400", "disp": "11-24"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "걸프 7개국과 기술규제·인증 애로 해소 설명회 개최", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172452/view", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "K-Quality로 완성하는 초격차 대한민국", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172451/view", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "AI 시대, K-팹리스 도약의 열쇠는 ‘상생’", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172450/view", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "'26년 10월 주요 유통업체 매출 동향", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172449/view", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "기술보호 종합대책 발표 앞두고, 관계부처 최종 점검", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172448/view", "disp": "11-25"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "대한민국 디자인의 무한한 스펙트럼, 「디자인코리아」에서 펼쳐진다", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172447/view", "disp": "11-25"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "(참고자료)EU, 수입 하이브리드 자동차에 대한 글로벌 세이프가드 잠정조치 발표", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172446/view", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "「2026 다자개발은행(MDB) 프로젝트 플라자」 개최, 우리 기업의 해외 조달 시장 진출 지원한다", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172445/view", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "나노기술 성과를 산업 경쟁력으로...산학연 혁신·동행 다짐", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172444/view", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "산업통상부", "title": "1초만에 새어나가는 10년의 땀... 예방·점검·처벌 강화로 기술 사수", "link": "https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/172443/view", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 11. 24.) 국가AI전략위, 창원지역 방위산업 현장 찾아 AX 가속화 방안 모색", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1160", "disp": "11-24"}, {"sort_ts": "2026-11-23T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 11. 23.) 국내 첫 ‘보안취약점 상시 신고조치제’  시범사업 성과공유회 개최", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1157", "disp": "11-23"}, {"sort_ts": "2026-11-20T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 11. 20.) 국가AI전략위, 전남광주서 국산 NPU, 조선 AX, 국가AI컴퓨팅센터 정책현장 방문", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1154", "disp": "11-20"}, {"sort_ts": "2026-11-17T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 11. 17.) 국가AI전략위, 대전서  ‘과학기술 AI·창업·인재’ 현장 소통", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1141", "disp": "11-17"}, {"sort_ts": "2026-11-13T00:00:00+09:00", "category": "정부기관", "org": "국가인공지능전략위원회", "title": "('26. 11. 13.) 국가AI전략위, 엔비디아 최고경영진 변화에 따른 긴급 점검회의 개최", "link": "https://www.aikorea.go.kr/web/board/brdDetail.do?menu_cd=000012&num=1130", "disp": "11-13"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, “고객정보 유출 2차피해, 끝까지 막는다” 안내부터 보상까지...“3단계 선제적 보호대책” 즉시 가동", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3202", "disp": "11-25"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "[보도설명] 다크웹에 올라온 한전 유출정보... 해커 “입찰 정보도 있어” 보도 관련 설명", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3201", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 전기·전자파 체험형 과학 전시공간 조성", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3200", "disp": "11-24"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 자체 개발 AI서비스 ‘PowerBook’ 공공 확산... 공공기관 AI 대전환 선도", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3199", "disp": "11-24"}, {"sort_ts": "2026-11-23T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 전국 267개 전 사업장 근로자 대표에게 ‘안전 감독권’ 맡긴다", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3198", "disp": "11-23"}, {"sort_ts": "2026-11-22T00:00:00+09:00", "category": "공기업", "org": "한국전력공사", "title": "한전, 사이버 침해로 개인정보 유출... “국민께 깊은 사과”... 피해 예방에 총력", "link": "https://www.kepco.co.kr/home/media/newsroom/pr/boardView.do?boardMngNo=15&boardNo=3197", "disp": "11-22"}, {"sort_ts": "2026-11-25T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 공공기관 최초로 중기부 ‘윈윈 아너스 프로젝트’ 3년 연속 선정", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141207&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "11-25"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "양승조 한국수자원공사 사장, 충주댐 찾아 “기후위기 시대에 맞춰 댐 안전도 새롭게”", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141204&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "11-24"}, {"sort_ts": "2026-11-23T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 소방청과 재난 현장 담당자 합동 교육", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141191&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "11-23"}, {"sort_ts": "2026-11-23T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, KT와 물관리 분야 피지컬AI 구축 협력... 안전과 혁신 도약 나서", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141190&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "11-23"}, {"sort_ts": "2026-11-20T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "양승조 한국수자원공사 사장, “호남권 반도체 도약, 차질 없는 용수 공급” 강조", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141188&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "11-20"}, {"sort_ts": "2026-11-20T00:00:00+09:00", "category": "공기업", "org": "한국수자원공사", "title": "한국수자원공사, 반도체 생명수 ‘초순수’ 국내 기술 완성에 한 걸음 더 전진", "link": "https://www.kwater.or.kr/news/repoView.do?seq=141187&brdId=KO26&orderByField=&orderByDirection=&s_mid=36", "disp": "11-20"}, {"sort_ts": "2026-11-24T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 금융결제원과 손잡고 국산 인공지능 반도체 금융권 실증 넓힌다.", "link": "https://www.nipa.kr/home/4-4-1/17012", "disp": "11-24"}, {"sort_ts": "2026-11-09T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "\"베트남도 한국 인공지능에 대한 관심 뜨거워\", 정보통신산업진흥원, 한-베트남 인공지능(AI)·디지털 포럼 성료", "link": "https://www.nipa.kr/home/4-4-1/16993", "disp": "11-09"}, {"sort_ts": "2026-11-06T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 한-아세안 인공지능 개발 창업 경진대회 ‘인공지능 유스 페스타 2026’ 필리핀에서 성황리 개최", "link": "https://www.nipa.kr/home/4-4-1/16992", "disp": "11-06"}, {"sort_ts": "2026-10-29T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, 도쿄에서 국내 디지털 기업의 일본 시장 개척 활동 추진", "link": "https://www.nipa.kr/home/4-4-1/16981", "disp": "10-29"}, {"sort_ts": "2026-10-27T00:00:00+09:00", "category": "공기업", "org": "정보통신산업진흥원", "title": "정보통신산업진흥원, ‘글로벌 피우다프로젝트’ 일본으로 확대… 한일 사회문제 해결에 나선다.", "link": "https://www.nipa.kr/home/4-4-1/16978", "disp": "10-27"}, {"sort_ts": "2026-11-20T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "한국지능정보사회진흥원·한국뇌연구원, 대구 동구 이웃에 사랑의 연탄 5,000장 전달", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30214&parentSeq=30214", "disp": "11-20"}, {"sort_ts": "2026-11-13T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "KOREN, 대한민국 인터넷 31년의 역사를 넘어 AI 네트워크의 미래를 잇다", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30190&parentSeq=30190", "disp": "11-13"}, {"sort_ts": "2026-11-12T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "한국지능정보사회진흥원, 「ESG 어워즈 2026」 동반성장 부문 최우수상 수상", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30189&parentSeq=30189", "disp": "11-12"}, {"sort_ts": "2026-11-04T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, AI 3대 강국 위한 해저케이블 육양국 현장방문", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30165&parentSeq=30165", "disp": "11-04"}, {"sort_ts": "2026-11-04T00:00:00+09:00", "category": "공기업", "org": "한국지능정보사회진흥원", "title": "NIA, 공공부문 AI 서비스 지원사업 중간보고회 개최", "link": "https://nia.or.kr/site/nia_kor/ex/bbs/View.do?cbIdx=90549&bcIdx=30161&parentSeq=30161", "disp": "11-04"}]</script>
   <script>
     const NEWS_WORKER_URL = "https://naver-news-cache.sunjinfuture2.workers.dev";
     const PAGE_SIZE = 20;
@@ -895,8 +577,7 @@
     function itemToHtml(item, tagKey) {
       const tag = item[tagKey] || "";
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(item.summary, 150))}</p>` : "";
-      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(tag)}</span>` +
-        `<button type="button" class="ai-link" data-title="${escapeHtml(item.title)}" onclick="aiSummarizeUrl('${escapeHtml(item.link)}', this.dataset.title)">AI 요약하기</button></p>`;
+      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(tag)}</span></p>`;
       return `<div class="org-group" data-tag="${escapeHtml(tag)}">` +
         `<div class="og-org"><span class="press">${escapeHtml(item.press || "")}</span></div>` +
         `<div class="og-items"><div class="item">` +
@@ -948,8 +629,7 @@
     }
     function keywordItemToHtml(item) {
       const summaryHtml = item.summary ? `<p class="row-summary">${escapeHtml(truncateSummary(item.summary, 150))}</p>` : "";
-      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(item._tagValue)}</span>` +
-        `<button type="button" class="ai-link" data-title="${escapeHtml(item.title)}" onclick="aiSummarizeUrl('${escapeHtml(item.link)}', this.dataset.title)">AI 요약하기</button></p>`;
+      const metaHtml = `<p class="row-meta"><span class="tag">${escapeHtml(item._tagValue)}</span></p>`;
       return `<div class="org-group">` +
         `<div class="og-org"><span class="press cat-badge">${escapeHtml(item._category)}</span></div>` +
         `<div class="og-items"><div class="item">` +
@@ -1070,74 +750,29 @@
       document.getElementById("stat-news-total").textContent = totalNews;
       document.getElementById("stat-top-kw").textContent = sorted.length ? sorted[0][0] : "-";
     }
-    function updateRecent10() {
-      const govPublic = JSON.parse(document.getElementById("gov-public-candidates").textContent)
-        .map((c) => ({
-          ts: new Date(c.sort_ts).getTime(), category: c.category, org: c.org,
-          title: c.title, link: c.link, disp: c.disp,
-        }));
-      const liveCandidates = [];
-      panelState.local.all.forEach((it) => {
-        liveCandidates.push({
-          ts: new Date(it.pubDate).getTime(), category: "지자체", org: it.region || "지자체",
-          title: it.title, link: it.link,
-          disp: formatDateLabel(it.pubDate).replace("<br>", " "),
-        });
-      });
-      panelState.listed.all.forEach((it) => {
-        liveCandidates.push({
-          ts: new Date(it.pubDate).getTime(), category: "국내기업", org: it.company || "국내기업",
-          title: it.title, link: it.link,
-          disp: formatDateLabel(it.pubDate).replace("<br>", " "),
-        });
-      });
-      panelState.overseas.all.forEach((it) => {
-        liveCandidates.push({
-          ts: new Date(it.pubDate).getTime(), category: "해외기업", org: it.company || "해외기업",
-          title: it.title, link: it.link,
-          disp: formatDateLabel(it.pubDate).replace("<br>", " "),
-        });
-      });
-      const merged = govPublic.concat(liveCandidates).sort((a, b) => b.ts - a.ts).slice(0, 10);
-      const listEl = document.getElementById("recent10List");
-      if (merged.length === 0) {
-        listEl.innerHTML = '<div class="r10-empty">표시할 자료가 없습니다</div>';
-        return;
-      }
-      listEl.innerHTML = merged.map((c) =>
-        `<div class="recent10-row"><div class="r10-top">` +
-        `<span class="r10-badge">${escapeHtml(c.category)}</span>` +
-        `<span class="r10-org">${escapeHtml(c.org)}</span></div>` +
-        `<a class="r10-title" href="${escapeHtml(c.link)}" target="_blank" rel="noopener">${escapeHtml(c.title)}</a>` +
-        `<div class="r10-bottom">` +
-        `<span class="r10-date">${escapeHtml(c.disp)}</span>` +
-        `<button type="button" class="ai-link" data-title="${escapeHtml(c.title)}" onclick="aiSummarizeUrl('${escapeHtml(c.link)}', this.dataset.title)">AI 요약하기</button>` +
-        `</div></div>`
-      ).join("");
-    }
     let _lastReportData = null;
+        let _lastUpdatedAtIso = null; // data.updated_at을 저장해 상단 배지·리포트 날짜가 항상 같은 값을 쓰게 함
     function todayDateStr() {
-      const kst = new Date(Date.now() + 9 * 60 * 60000);
-      const dayOfWeek = kst.getUTCDay(); // 0=일, 6=토
-      // 주말엔 REPORT가 새로 생성되지 않으므로, 화면 날짜도 마지막 생성일(금요일)에 고정한다.
-      let daysBack = 0;
-      if (dayOfWeek === 6) daysBack = 1;       // 토요일 -> 금요일
-      else if (dayOfWeek === 0) daysBack = 2;  // 일요일 -> 금요일
-      const target = new Date(kst.getTime() - daysBack * 24 * 60 * 60000);
-      const y = target.getUTCFullYear();
-      const m = String(target.getUTCMonth() + 1).padStart(2, "0");
-      const d = String(target.getUTCDate()).padStart(2, "0");
+      if (!_lastUpdatedAtIso) {
+        const kst = new Date(Date.now() + 9 * 60 * 60000);
+        return `${kst.getUTCFullYear()}-${String(kst.getUTCMonth() + 1).padStart(2, "0")}-${String(kst.getUTCDate()).padStart(2, "0")}`;
+      }
+      const kst = new Date(new Date(_lastUpdatedAtIso).getTime() + 9 * 60 * 60000);
+      const y = kst.getUTCFullYear();
+      const m = String(kst.getUTCMonth() + 1).padStart(2, "0");
+      const d = String(kst.getUTCDate()).padStart(2, "0");
       return `${y}-${m}-${d}`;
     }
     function boldMarkup(escapedText) {
       return escapedText.replace(/\*\*(.+?)\*\*/g, "$1");
     }
-    function renderReport(report) {
+    function renderReport(report, reportStatus, isPrevious) {
       _lastReportData = report;
       const summaryEl = document.getElementById("reportSummaryPart");
       const refsEl = document.getElementById("reportRefsPart");
       if (!report) {
-        summaryEl.innerHTML = '<p class="r-empty">아직 생성된 보고서가 없습니다. 매일 오전 8시에 자동 생성됩니다.</p>';
+        summaryEl.innerHTML = '<p class="r-empty">' +
+          (reportStatus?.status === "failed" ? "원문 근거를 확인한 보고서를 생성하지 못했습니다. 다음 갱신을 기다려주세요." : "아직 생성된 보고서가 없습니다. 평일 오전 8시에 자동 생성됩니다.") + '</p>';
         refsEl.innerHTML = "";
         return;
       }
@@ -1180,6 +815,12 @@
           ).join("")
         : "";
       refsEl.innerHTML = refsHtml;
+      if (isPrevious) {
+        const notice = document.createElement("p");
+        notice.className = "r-empty";
+        notice.textContent = "이번 보고서 생성에 실패해 이전 보고서를 표시합니다.";
+        summaryEl.prepend(notice);
+      }
     }
     let _koreanFontReady = false;
     async function ensureKoreanFont(pdf) {
@@ -1200,6 +841,66 @@
       const n = parseInt(hex.replace("#", ""), 16);
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     }
+// 참고 기사는 읽을 수 있는 기존 12px 글꼴로 고정 폭에 렌더링합니다.
+// Worker와 동일하게 최대 8건이며, 초과/오버플로는 내보내기를 중단합니다.
+// 출처 누락이나 자동 축소, 세 번째 PDF 페이지 생성은 하지 않습니다.
+async function addReferencesPage(pdf, report) {
+  const references = report?.references || [];
+  if (!references.length) return;
+  if (references.length > 8) throw new Error('이전 형식의 보고서입니다. 새 Worker에서 보고서를 다시 생성해주세요. 참고 기사는 8건까지 지원합니다.');
+  const shorten = (text, max) => {
+    const chars = Array.from(String(text || '').replace(/\s+/g, ' ').trim());
+    return chars.length > max ? chars.slice(0, max - 1).join('') + '…' : chars.join('');
+  };
+  const container = document.createElement('div');
+  Object.assign(container.style, {
+    position: 'absolute', left: '-10000px', top: '0', width: '680px', padding: '0', margin: '0',
+    fontFamily: '"Malgun Gothic", "Apple SD Gothic Neo", sans-serif', fontSize: '12px',
+    lineHeight: '1.8', fontWeight: '600', color: '#111', backgroundColor: '#fff',
+    boxSizing: 'border-box', wordBreak: 'break-word', overflowWrap: 'anywhere',
+  });
+  const heading = document.createElement('div');
+  heading.textContent = '참고 기사';
+  Object.assign(heading.style, { fontSize: '13px', fontWeight: '700', marginBottom: '10px' });
+  container.appendChild(heading);
+  for (const reference of references) {
+    const url = new URL(reference.link);
+    if (!['http:', 'https:'].includes(url.protocol)) throw new Error('참고 기사 링크 형식이 올바르지 않습니다.');
+    const row = document.createElement('div');
+    row.style.marginBottom = '8px';
+    row.appendChild(document.createTextNode(`[${reference.index}] ${shorten(reference.press, 24)} · `));
+    const anchor = document.createElement('a');
+    anchor.textContent = shorten(reference.display_title || reference.title, 90);
+    anchor.href = url.href;
+    anchor.style.color = '#111';
+    anchor.style.textDecoration = 'none';
+    row.appendChild(anchor);
+    container.appendChild(row);
+  }
+  document.body.appendChild(container);
+  try {
+    if (document.fonts?.ready) await document.fonts.ready;
+    const widthMm = 180, maxHeightMm = 267, leftMm = 15, topMm = 15;
+    const rect = container.getBoundingClientRect();
+    const mmPerPixel = widthMm / rect.width;
+    const linkRects = Array.from(container.querySelectorAll('a')).flatMap((anchor) =>
+      Array.from(anchor.getClientRects()).map((r) => ({
+        x: (r.left - rect.left) * mmPerPixel, y: (r.top - rect.top) * mmPerPixel,
+        w: r.width * mmPerPixel, h: r.height * mmPerPixel, url: anchor.href,
+      })));
+    const canvas = await html2canvas(container, { scale: 2, backgroundColor: '#ffffff', windowWidth: 1024 });
+    const heightMm = canvas.height * widthMm / canvas.width;
+    if (!Number.isFinite(heightMm) || heightMm <= 0 || heightMm > maxHeightMm) {
+      throw new Error('참고 기사가 한 페이지 높이를 초과했습니다. 출처를 누락하지 않기 위해 PDF 저장을 중단했습니다.');
+    }
+    pdf.addPage();
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', leftMm, topMm, widthMm, heightMm);
+    for (const link of linkRects) pdf.link(leftMm + link.x, topMm + link.y, link.w, link.h, { url: link.url });
+  } finally {
+    container.remove();
+  }
+}
+
     async function downloadReportPDF() {
       const now = new Date();
       const kstNow = new Date(now.getTime() + 9 * 60 * 60000);
@@ -1231,45 +932,8 @@
         const sTopMm = marginTopMm + (usableHeightMm - sImgHeightMm) / 2 > marginTopMm
           ? marginTopMm : marginTopMm;
         pdf.addImage(summaryCanvas.toDataURL("image/png"), "PNG", sMarginLeftMm, marginTopMm, sImgWidthMm, sImgHeightMm);
-        // ---- 2페이지부터: 참고 기사 (링크 포함, 여러 페이지로 이어질 수 있음) ----
-        const refsEl = document.getElementById("reportRefsPart");
-        const linkEls = Array.from(refsEl.querySelectorAll("a"));
-        const linkRects = linkEls.map((a) => {
-          const rect = a.getBoundingClientRect();
-          const elRect = refsEl.getBoundingClientRect();
-          return {
-            x: (rect.left - elRect.left) * PX_TO_MM,
-            y: (rect.top - elRect.top) * PX_TO_MM,
-            w: rect.width * PX_TO_MM,
-            h: rect.height * PX_TO_MM,
-            url: a.getAttribute("href"),
-          };
-        });
-        const refsCanvas = await html2canvas(refsEl, { scale: 2, backgroundColor: "#ffffff" });
-        const rImgWidthMm = refsEl.offsetWidth * PX_TO_MM;
-        const rMarginLeftMm = (pageWidthMm - rImgWidthMm) / 2 > 0 ? (pageWidthMm - rImgWidthMm) / 2 : 0;
-        const pxPerMm = refsCanvas.width / rImgWidthMm;
-        const usableHeightPx = usableHeightMm * pxPerMm;
-        const totalRefPages = Math.max(1, Math.ceil(refsCanvas.height / usableHeightPx));
-        for (let p = 0; p < totalRefPages; p++) {
-          pdf.addPage(); // 참고기사는 무조건 새 페이지(2페이지)부터 시작
-          const srcY = p * usableHeightPx;
-          const sliceHeightPx = Math.min(usableHeightPx, refsCanvas.height - srcY);
-          const pageCanvas = document.createElement("canvas");
-          pageCanvas.width = refsCanvas.width;
-          pageCanvas.height = sliceHeightPx;
-          const ctx = pageCanvas.getContext("2d");
-          ctx.drawImage(refsCanvas, 0, srcY, refsCanvas.width, sliceHeightPx, 0, 0, refsCanvas.width, sliceHeightPx);
-          const sliceHeightMm = sliceHeightPx / pxPerMm;
-          pdf.addImage(pageCanvas.toDataURL("image/png"), "PNG", rMarginLeftMm, marginTopMm, rImgWidthMm, sliceHeightMm);
-          const contentYStartMm = srcY / pxPerMm;
-          linkRects.forEach((r) => {
-            const yOnPage = marginTopMm + (r.y - contentYStartMm);
-            if (yOnPage + r.h > marginTopMm - 1 && yOnPage < marginTopMm + sliceHeightMm + 1) {
-              pdf.link(rMarginLeftMm + r.x, yOnPage, r.w, r.h, { url: r.url });
-            }
-          });
-        }
+        // ---- 2페이지: 참고 기사 한 페이지 고정 (넘치면 저장 중단) ----
+        await addReferencesPage(pdf, _lastReportData);
         pdf.save(`AI_Data_Center_일일동향_보고서_${todayStr}.pdf`);
       } catch (e) {
         alert("PDF 생성에 실패했습니다: " + e);
@@ -1322,6 +986,7 @@
           document.getElementById("overviewText").innerHTML = linkifyOverviewText(data.overview);
         }
         if (data.updated_at) {
+          _lastUpdatedAtIso = data.updated_at;  // 리포트 날짜(todayDateStr)와 상단 배지가 같은 기준을 쓰게 함
           const d = new Date(data.updated_at);
           const kst = new Date(d.getTime() + 9 * 60 * 60000);
           const y = kst.getUTCFullYear();
@@ -1332,14 +997,13 @@
           document.getElementById("metaUpdatedAt").textContent =
             `${y}년 ${mo}월 ${da}일 · ${hh}:${mi} 업데이트`;
         }
-        renderReport(data.report || null);
+        renderReport(data.report || null, data.report_status, data.report_is_previous);
         ["local", "listed", "overseas"].forEach((panelId) => {
           panelState[panelId].filtered = panelState[panelId].all;
           panelState[panelId].page = 1;
           renderPanelPage(panelId);
         });
         updateKeywordSidebar();
-        updateRecent10();
       } catch (e) {
         console.error("실시간 뉴스 로드 실패:", e);
         ["local", "listed", "overseas"].forEach((panelId) => {
